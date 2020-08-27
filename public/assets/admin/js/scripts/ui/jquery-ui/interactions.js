@@ -136,7 +136,7 @@ $(document).ready(function(){
 		scroll: false
 	});
 
-	// Return The Helper
+	// Return The Helpers
 	$( ".draggable-revert-helper" ).draggable({
 		revert: true,
 		helper: "clone",

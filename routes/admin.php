@@ -12,12 +12,30 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['namespace'=>'Dashboard','middleware'=>'guest:admin'],function (){
-    Route::get('login','LoginController@index')->name('admin.login');
-    Route::post('login','LoginController@login')->name('admin.getlogin');
-});
 
-Route::group(['namespace'=>'Dashboard','middleware'=>'auth:admin'],function (){
-    Route::get('/','DashboardController@index')->name('admin.dashboard');
-});
 
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+    ], function () {
+
+
+
+    Route::group(['namespace' => 'Dashboard' ,'prefix'=>'admin','middleware' => 'guest:admin'], function () {
+        Route::get('login', 'LoginController@index')->name('admin.login');
+        Route::post('login', 'LoginController@login')->name('admin.getlogin');
+    });
+
+    Route::group(['namespace' => 'Dashboard','prefix'=>'admin', 'middleware' => 'auth:admin'], function () {
+        Route::get('/', 'DashboardController@index')->name('admin.dashboard');
+
+        Route::group(['prefix' => 'settings'], function () {
+            Route::get('shipping-methods/{type}', 'SettingsController@editShipping')->name('edit.shipping');
+            Route::PUT('shipping-methods/{id}', 'SettingsController@updateShipping')->name('update.shipping');
+        });
+
+
+    });
+
+});

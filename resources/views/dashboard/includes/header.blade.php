@@ -32,7 +32,7 @@
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                 <span class="mr-1">مرجبا
                   <span
-                      class="user-name text-bold-700">  على اسامة</span>
+                      class="user-name text-bold-700">{{__('messages.ali osama')}}</span>
                 </span>
                             <span class="avatar avatar-online">
                   <img  style="height: 35px;" src="" alt="avatar"><i></i></span>
