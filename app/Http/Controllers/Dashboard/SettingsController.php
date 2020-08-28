@@ -40,9 +40,9 @@ class SettingsController extends Controller
             $shippingmethod->value = $request->value;
             $shippingmethod->save();
             DB::commit();
-            return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+            return redirect()->back()->with(['success' => __('messages.success')]);
         } catch (\Exception $e) {
-            return redirect()->back()->with(['error' => 'هناك خطأ ما برجاء المحاولة لاحقا']);
+            return redirect()->back()->with(['error' => __('messages.error')]);
 
             DB::rollBack();
 

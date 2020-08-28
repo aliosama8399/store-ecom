@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37bb898a-c21f-483a-9e06-81b93bccc6aa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/lang/ar/admin/validation.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/en/admin/validation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SettingsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/ShippingsRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/ShippingsRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/settings/shippings/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/settings/shippings/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ar/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/messages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/messages.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,20 +149,20 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/en/admin" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\xampp\htdocs\ecommercev2\resources\views" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Models" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\en\admin" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\ar\admin" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\en" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\settings\shippings" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\lang" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Models" />
     </key>
   </component>
   <component name="RunManager">
@@ -193,7 +196,7 @@
       <workItem from="1598628398231" duration="37000" />
       <workItem from="1598628442168" duration="61000" />
       <workItem from="1598628513466" duration="6000" />
-      <workItem from="1598628555248" duration="3905000" />
+      <workItem from="1598628555248" duration="5120000" />
     </task>
     <servers />
   </component>
