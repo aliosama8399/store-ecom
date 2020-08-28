@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ShippingsRequest;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SettingsController extends Controller
 {
@@ -18,16 +20,32 @@ class SettingsController extends Controller
         } elseif ($type === 'outer') {
             $shippingmethod = Setting::where('key', 'outer_label')->first();
         } else {
-            $shippingmethod = Setting::where('key', 'free_shipping_label')->first();
+            return $shippingmethod = Setting::where('key', 'free_shipping_label')->first();
 
         }
 
-        return view('dasboard.settings.shippings.edit',compact('shippingmethod'));
+        return view('dashboard.settings.shippings.edit', compact('shippingmethod'));
 
     }
 
-    public function updateShipping(Request $request, $id)
+    public function updateShipping(ShippingsRequest $request, $id)
     {
 
+        try {
+
+
+            $shippingmethod = Setting::find($id);
+            DB::beginTransaction();
+            $shippingmethod->update(['plain_value' => $request->plain_value]);
+            $shippingmethod->value = $request->value;
+            $shippingmethod->save();
+            DB::commit();
+            return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => 'هناك خطأ ما برجاء المحاولة لاحقا']);
+
+            DB::rollBack();
+
+        }
     }
 }

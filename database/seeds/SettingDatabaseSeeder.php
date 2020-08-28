@@ -30,10 +30,16 @@ class SettingDatabaseSeeder extends Seeder
             'outer_shipping_cost'=>0,
             'free_shipping_cost'=>0,
             'translatable'=>[
-                'store_name'=>'Alol Store',
-                'free_shipping_label'=>'Free Shipping',
-                'local_label'=>'Local Shipping',
-                'outer_label'=>'Outer Shipping',
+//                'store_name'=>'Alol Store',
+//                'free_shipping_label'=>'Free Shipping',
+//                'local_label'=>'Local Shipping',
+//                'outer_label'=>'Outer Shipping',
+
+
+                'store_name'=>'متجر علول',
+                'free_shipping_label'=>'توصيل مجانى',
+                'local_label'=>'توصيل داخلى',
+                'outer_label'=>'نوصيل خارجى',
 
             ],
 

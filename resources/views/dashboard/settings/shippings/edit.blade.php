@@ -8,7 +8,7 @@
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="">الرئيسية </a>
+                                <li class="breadcrumb-item"><a href="">{{__('messages.main')}} </a>
                                 </li>
                                 </li>
 
@@ -26,7 +26,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title" id="basic-layout-form"> تعديل  وسيلة التوصيل </h4>
+                                    <h4 class="card-title" id="basic-layout-form">{{__('admin/edit.editshipmetho')}} </h4>
                                     <a class="heading-elements-toggle"><i
                                             class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
@@ -38,12 +38,12 @@
                                         </ul>
                                     </div>
                                 </div>
-                                @include('admin.includes.alerts.success')
-                                @include('admin.includes.alerts.errors')
+                                @include('dashboard.includes.alerts.success')
+                                @include('dashboard.includes.alerts.errors')
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form" action="{{route('update.shipping',$shippingmethod -> id)}}"
-                                              method="Put"
+                                              method="post"
                                               enctype="multipart/form-data">
                                             @csrf
                                              @method('PUT')
@@ -55,65 +55,30 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1"> الاسم </label>
-                                                            <input type="text" value="{{$shippingmethod -> name}}" id="name"
+                                                            <label for="projectinput1"> {{__('admin/edit.name')}} </label>
+                                                            <input type="text" value="{{$shippingmethod -> value}}" id="name"
                                                                    class="form-control"
                                                                    placeholder="  "
-                                                                   name="name">
-                                                            @error("name")
+                                                                   name="value">
+                                                            @error("value")
                                                             <span class="text-danger">{{$message}}</span>
                                                             @enderror
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput2"> أختر القسم </label>
-                                                            <select name="category_id" class="select2 form-control">
-                                                                <optgroup label="من فضلك أختر القسم ">
-                                                                    @if($categories && $categories -> count() > 0)
-                                                                        @foreach($categories as $category)
-                                                                            <option
-                                                                                value="{{$category -> id }}"
-                                                                                @if($vendor -> category_id == $category -> id  )  selected @endif
-                                                                            >{{$category -> name}}</option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </optgroup>
-                                                            </select>
-                                                            @error('category_id')
-                                                            <span class="text-danger"> {{$message}}</span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                </div>
 
+                                                        <div class="class col-6">
+                                                            <div class="form-group">
+                                                                <label for="projectinput1">{{__('admin/edit.cost')}}</label>
+                                                                <input type="number" id="value"
+                                                                       class="form-control" value="{{$shippingmethod -> plain_value}}"
+                                                                       placeholder="Enter plain_value " name="plain_value">
 
-                                                <div class="row">
-                                                    <div class="col-md-6 ">
-                                                        <div class="form-group">
-                                                            <label for="projectinput1"> رقم الهاتف </label>
-                                                            <input type="text" id="mobile"
-                                                                   class="form-control"
-                                                                   placeholder="  " name="mobile"
-                                                                   value="{{$vendor -> mobile}}">
+                                                                @error("plain_value")
+                                                                <span class="text-danger"> {{$message}}</span>
+                                                                @enderror
+                                                            </div>
 
-                                                            @error("mobile")
-                                                            <span class="text-danger"> {{$message}}</span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 ">
-                                                        <div class="form-group">
-                                                            <label for="projectinput1"> ألبريد الالكتروني </label>
-                                                            <input type="email" id="email"
-                                                                   class="form-control"
-                                                                   placeholder="  " name="email"
-                                                                   value="{{$vendor ->email}}">
-
-                                                            @error("email")
-                                                            <span class="text-danger"> {{$message}}</span>
-                                                            @enderror
                                                         </div>
                                                     </div>
 
@@ -121,70 +86,35 @@
                                                 </div>
 
 
-                                                <div class="row">
-                                                    <div class="class col-12">
-                                                        <div class="form-group">
-                                                            <label for="projectinput1">كلمة المرور  </label>
-                                                            <input type="password" id="password"
-                                                                   class="form-control"
-                                                                   placeholder="  " name="password">
 
-                                                            @error("password")
-                                                            <span class="text-danger"> {{$message}}</span>
-                                                            @enderror
-                                                        </div>
+{{--                                                <div class="row">--}}
+{{--                                                    <div class="col-md-6">--}}
+{{--                                                        <div class="form-group mt-1">--}}
+{{--                                                            <input type="checkbox" value="1"--}}
+{{--                                                                   name="active"--}}
+{{--                                                                   id="switcheryColor4"--}}
+{{--                                                                   class="switchery" data-color="success"--}}
+{{--                                                                 checked />--}}
+{{--                                                            <label for="switcheryColor4"--}}
+{{--                                                                   class="card-title ml-1">الحالة </label>--}}
 
-                                                    </div>
-                                                </div>
-
-
-                                                <di class="row">
-                                                    <div class="col-md-6 ">
-                                                        <div class="form-group">
-                                                            <label for="projectinput1"> العنوان  </label>
-                                                            <input type="text" id="pac-input"
-                                                                   class="form-control"
-                                                                   placeholder=" {{$vendor -> address}} " name="address"
-                                                                   value="{{$vendor -> address}}"
-                                                            >
-
-                                                            @error("address")
-                                                            <span class="text-danger"> {{$message}}</span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-
-                                                </di>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mt-1">
-                                                            <input type="checkbox" value="1"
-                                                                   name="active"
-                                                                   id="switcheryColor4"
-                                                                   class="switchery" data-color="success"
-                                                                   @if($vendor -> active == 1)checked @endif/>
-                                                            <label for="switcheryColor4"
-                                                                   class="card-title ml-1">الحالة </label>
-
-                                                            @error("active")
-                                                            <span class="text-danger"> </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                </div>
+{{--                                                            @error("active")--}}
+{{--                                                            <span class="text-danger"> </span>--}}
+{{--                                                            @enderror--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
 
                                             </div>
 
 
-                                            <div id="map" style="height: 500px;width: 1000px;"></div>
-
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-warning mr-1"
                                                         onclick="history.back();">
-                                                    <i class="ft-x"></i> تراجع
+                                                    <i class="ft-x"></i> {{__('messages.cancel')}}
                                                 </button>
                                                 <button type="submit" class="btn btn-primary">
-                                                    <i class="la la-check-square-o"></i> حفظ
+                                                    <i class="la la-check-square-o"></i> {{__('messages.save')}}
                                                 </button>
                                             </div>
                                         </form>
