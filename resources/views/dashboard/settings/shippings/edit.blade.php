@@ -71,7 +71,7 @@
                                                             <div class="form-group">
                                                                 <label for="projectinput1">{{__('admin/edit.cost')}}</label>
                                                                 <input type="number" id="value"
-                                                                       class="form-control" value=""
+                                                                       class="form-control" value="{{$shippingmethod -> plain_value}}"
                                                                        placeholder="Enter plain_value " name="plain_value">
 
                                                                 @error("plain_value")
