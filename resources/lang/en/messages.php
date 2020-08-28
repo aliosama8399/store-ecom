@@ -19,5 +19,8 @@ return [
     'item' => 'Item',
     'feed' => 'Feedback',
     'ring' => 'Ring',
+    'main' => 'Main Menu',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
 
 ];
