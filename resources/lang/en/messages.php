@@ -22,5 +22,7 @@ return [
     'main' => 'Main Menu',
     'save' => 'Save',
     'cancel' => 'Cancel',
+    'success' => 'The operation done successfully',
+    'error' => 'There is an error please try later',
 
 ];

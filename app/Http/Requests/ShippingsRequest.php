@@ -36,6 +36,9 @@ class ShippingsRequest extends FormRequest
     {
         return [
 
+            'required'=>__('admin/validation.required'),
+            'id.exists'=>__('admin/validation.exists'),
+            'plain_value.numeric'=>__('admin/validation.numeric'),
 
 
         ];
