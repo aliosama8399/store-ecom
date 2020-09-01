@@ -37,7 +37,7 @@
                             <span class="avatar avatar-online">
                   <img style="height: 35px;" src="{{asset('assets/admin/images/portrait/small/IMG_20181031_221951.jpg')}}" alt="avatar"><i></i></span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href=""><i
+                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="{{route('edit.profile')}}"><i
                                     class="ft-user"></i> {{__('admin/header.editprof')}} </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{route('admin.logout')}}"><i class="ft-power"></i> {{__('admin/header.logout')}}  </a>

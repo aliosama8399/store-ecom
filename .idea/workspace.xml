@@ -20,24 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37bb898a-c21f-483a-9e06-81b93bccc6aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ProfileController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/ProfileRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/admin/images/portrait/small/IMG_20181031_221951.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/ar/admin/header.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/en/admin/header.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/profile/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ecommercev2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ecommercev2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/laravellocalization.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/laravellocalization.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin/edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/admin/edit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/admin/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/ar/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/messages.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin/edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin/edit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/messages.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +236,7 @@
       <workItem from="1598821003278" duration="6000" />
       <workItem from="1598825936195" duration="10000" />
       <workItem from="1598893352905" duration="11053000" />
-      <workItem from="1598988965763" duration="1003000" />
+      <workItem from="1598988965763" duration="2228000" />
     </task>
     <servers />
   </component>
