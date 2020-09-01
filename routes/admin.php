@@ -20,8 +20,6 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ], function () {
 
-
-
     Route::group(['namespace' => 'Dashboard' ,'prefix'=>'admin','middleware' => 'guest:admin'], function () {
         Route::get('login', 'LoginController@index')->name('admin.login');
         Route::post('login', 'LoginController@login')->name('admin.getlogin');
@@ -35,6 +33,12 @@ Route::group(
             Route::get('shipping-methods/{type}', 'SettingsController@editShipping')->name('edit.shipping');
             Route::PUT('shipping-methods/{id}', 'SettingsController@updateShipping')->name('update.shipping');
         });
+
+        Route::group(['prefix' => 'profile'], function () {
+            Route::get('edit', 'ProfileController@editProfile')->name('edit.profile');
+            Route::PUT('update', 'ProfileController@updateProfile')->name('update.profile');
+        });
+
 
 
     });
