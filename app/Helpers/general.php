@@ -1,5 +1,6 @@
 <?php
 
+define('PAGENATE',10);
 
 function getFolder()
 {

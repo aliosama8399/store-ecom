@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 Route::get('/test', function () {
 
-return \App\Models\Setting::find(25);
+   $c= \App\Models\Category::find(1);
+    $c->makeVisible(['translations']);
+    return $c;
 
 });

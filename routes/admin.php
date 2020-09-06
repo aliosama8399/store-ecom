@@ -39,7 +39,15 @@ Route::group(
             Route::PUT('update', 'ProfileController@updateProfile')->name('update.profile');
         });
 
-
+        Route::group(['prefix' => 'main_categories'], function () {
+            Route::get('/', 'MainCategoryController@index')->name('admin.maincategories');
+            Route::get('create', 'MainCategoryController@create')->name('admin.maincategories.create');
+            Route::post('store', 'MainCategoryController@store')->name('admin.maincategories.store');
+            Route::get('edit/{id}', 'MainCategoryController@edit')->name('admin.maincategories.edit');
+            Route::PUT('update/{id}', 'MainCategoryController@update')->name('admin.maincategories.update');
+            Route::get('delete/{id}', 'MainCategoryController@delete')->name('admin.maincategories.delete');
+            Route::get('changestatus/{id}', 'MainCategoryController@changestatus')->name('admin.maincategories.changestatus');
+        });
 
     });
 
