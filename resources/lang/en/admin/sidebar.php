@@ -7,5 +7,7 @@ return [
     'shipping free'=>'Free Shipping',
     'shipping inner'=>'Inner Shipping',
     'shipping outer'=>'Outer Shipping',
+    'all' => 'Show All ',
+
 
 ];
