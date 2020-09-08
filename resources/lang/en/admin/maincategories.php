@@ -4,6 +4,9 @@ return [
 
     'slug' => 'Slug',
     'maincategories' => 'Main Categories',
+    'addmaincategories' => 'Add New Main Category ',
+    'editmaincategories' => 'Edit Main Category',
+    'maincategoriesinfo' => 'Main Categoty Information',
     'all' => 'All Main Categories',
     'status' => 'Status',
     'photo' => 'Photo',
