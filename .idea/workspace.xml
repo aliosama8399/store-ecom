@@ -20,27 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37bb898a-c21f-483a-9e06-81b93bccc6aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/MainCategoryController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/MainCategoryRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/CategoryTranslation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/CategoryFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_203900_create_categories_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_204033_create_category_translations_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/CategoryDatabaseSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/ar/admin/maincategories.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/en/admin/maincategories.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/categories/edit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/categories/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/categories/create.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/general.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/general.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin/sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/admin/sidebar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/admin/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin/sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin/sidebar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/MainCategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/MainCategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin/maincategories.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/admin/maincategories.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin/maincategories.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin/maincategories.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/categories/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/categories/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/sidebar.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,21 +168,21 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/en/admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/dashboard/categories" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\categories" />
+      <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\en\admin" />
+      <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\ar\admin" />
+      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard" />
+      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\profile" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\xampp\htdocs\ecommercev2\resources\views" />
       <recent name="E:\xampp\htdocs\ecommercev2\app\Models" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\en\admin" />
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\ar\admin" />
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\categories" />
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard" />
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\profile" />
     </key>
   </component>
   <component name="RunManager">
@@ -258,7 +244,9 @@
       <workItem from="1598988965763" duration="4876000" />
       <workItem from="1599066532042" duration="12691000" />
       <workItem from="1599086145560" duration="2000" />
-      <workItem from="1599402639919" duration="27000" />
+      <workItem from="1599402639919" duration="1757000" />
+      <workItem from="1599488009466" duration="339000" />
+      <workItem from="1599575317894" duration="6830000" />
     </task>
     <servers />
   </component>

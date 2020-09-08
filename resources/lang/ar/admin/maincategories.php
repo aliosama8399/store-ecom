@@ -4,6 +4,9 @@ return [
 
     'slug' => 'الاسم بالرابط',
     'maincategories' => 'الاقسام الرئيسية',
+    'addmaincategories' => 'أضافة قسم رئيسى جديد ',
+    'editmaincategories' => 'تعديل قسم رئيسى   ',
+    'maincategoriesinfo' => 'بيانات القسم ',
     'all' => 'جميع الاقسام الرئيسية بالموقع',
     'status' => 'الحالة',
     'photo' => 'صورة القسم',
