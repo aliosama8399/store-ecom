@@ -20,13 +20,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37bb898a-c21f-483a-9e06-81b93bccc6aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/categories/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubCategoryController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/SubCategoryRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeds/SubCategoryDatabaseSeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/ar/admin/login.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/en/admin/login.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/subcategories/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/subcategories/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/subcategories/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/MainCategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/MainCategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/admin/header.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin/maincategories.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/admin/maincategories.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin/header.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/admin/maincategories.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin/maincategories.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/categories/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/categories/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/categories/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/categories/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/header.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,17 +181,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/dashboard/categories" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/en/admin" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\categories" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\en\admin" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\ar\admin" />
+      <recent name="E:\xampp\htdocs\ecommercev2\database\seeds" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard" />
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\profile" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Requests" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\xampp\htdocs\ecommercev2\resources\views" />
@@ -247,6 +260,9 @@
       <workItem from="1599402639919" duration="1757000" />
       <workItem from="1599488009466" duration="339000" />
       <workItem from="1599575317894" duration="6830000" />
+      <workItem from="1599664500913" duration="9658000" />
+      <workItem from="1599770388527" duration="3320000" />
+      <workItem from="1600031256188" duration="1690000" />
     </task>
     <servers />
   </component>
@@ -269,10 +285,10 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="883" y="170" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599079758258">
+    <state x="883" y="170" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599684001322">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="883" y="170" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1599079758258" />
+    <state x="883" y="170" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1599684001322" />
     <state x="947" y="174" key="FileChooserDialogImpl" timestamp="1598908462168">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

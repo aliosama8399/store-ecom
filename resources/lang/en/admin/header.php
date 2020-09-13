@@ -2,8 +2,8 @@
 
 return [
     'hello' => 'Hello',
-
-'languages'=>'Languages',
-    'editprof'=>'Edit Profile',
-    'logout'=>'Logout',
+    'modern admin' => 'Admin Modern',
+    'languages' => 'Languages',
+    'editprof' => 'Edit Profile',
+    'logout' => 'Logout',
 ];
