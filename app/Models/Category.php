@@ -21,9 +21,19 @@ class Category extends Model
         return $q->whereNull('parent_id');
     }
 
+    public function scopeChild($q)
+    {
+        return $q->whereNotNull('parent_id');
+    }
+
     public function getActive()
     {
-        return $this->is_active == 0 ? __('admin/maincategories.deactive') :__('admin/maincategories.active');
+        return $this->is_active == 0 ? __('admin/maincategories.deactive') : __('admin/maincategories.active');
+    }
+
+    public function mainparent()
+    {
+        return $this -> belongsTo(self::class,'parent_id');
     }
 
 }

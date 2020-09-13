@@ -10,9 +10,9 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{__('messages.main')}} </a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="{{route('admin.maincategories')}}"> {{__('admin/maincategories.maincategories')}} </a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.subcategories')}}"> {{__('admin/maincategories.subcategories')}} </a>
                                 </li>
-                                <li class="breadcrumb-item active">
+                                <li class="breadcrumb-item active"> {{__('admin/maincategories.edit')}} - {{$category->name}}
                                 </li>
                             </ol>
                         </div>
@@ -26,7 +26,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title" id="basic-layout-form"> {{__('admin/maincategories.addmaincategories')}} </h4>
+                                    <h4 class="card-title" id="basic-layout-form"> {{__('admin/maincategories.editsubcategories')}} </h4>
                                     <a class="heading-elements-toggle"><i
                                             class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
@@ -43,14 +43,24 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.maincategories.store')}} "
+                                              action="{{route('admin.subcategories.update',$category->id)}} "
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
+                                            @method('PUT')
+
+                                            <input name="id" value="{{$category->id}}" type="hidden">
 
 
                                             <div class="form-body">
-                                                <h4 class="form-section"><i class="ft-home"></i> {{__('admin/maincategories.maincategoriesinfo')}} </h4>
+                                                <h4 class="form-section"><i class="ft-home"></i> {{__('admin/maincategories.subcategoriesinfo')}} </h4>
+                                                <div class="form-group">
+                                                    <div class="text-center">
+                                                        <img src="{{$category->photo}}" class="rounded-circle  height-150"
+                                                             alt="{{__('admin/maincategories.photo')}}">
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <label> {{__('admin/maincategories.photo')}} </label>
                                                     <label id="projectinput7" class="file center-block">
@@ -60,7 +70,27 @@
                                                     @error('photo')
                                                     <span class="text-danger">{{$message}}</span>
                                                     @enderror                                        </div>
-
+                                                <div class="form-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="projectinput2"> {{__('admin/maincategories.choosemaincategories')}} </label>
+                                                                <select name="parent_id" class="select2 form-control">
+                                                                    <optgroup label=" ">
+                                                                        @if($categories && $categories -> count() > 0)
+                                                                            @foreach($categories as $mainCategory)
+                                                                                <option
+                                                                                    value="{{$mainCategory -> id }}"  @if($mainCategory->id == $category -> parent_id) selected @endif>{{$mainCategory -> name}}</option>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </optgroup>
+                                                                </select>
+                                                                @error('parent_id')
+                                                                <span class="text-danger"> {{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -68,7 +98,7 @@
                                                                 for="projectinput1"> {{__('admin/edit.name')}}   </label>
                                                             <input type="text" id="name"
                                                                    class="form-control"
-                                                                   value="{{old('name')}}"
+                                                                   value="  {{$category->name}} "
                                                                    name="name">
                                                             @error("name")
                                                             <span class="text-danger">{{$message}}</span>
@@ -81,7 +111,7 @@
                                                             <label for="projectinput1"> {{__('admin/maincategories.slug')}}</label>
                                                             <input type="text" id="slug"
                                                                    class="form-control"
-                                                                   value="{{old('slug')}}"
+                                                                   value="{{$category -> slug}}"
                                                                    name="slug">
 
                                                             @error("slug")
@@ -99,7 +129,7 @@
                                                                    name="is_active"
                                                                    id="switcheryColor4"
                                                                    class="switchery" data-color="success"
-                                                                     checked />
+                                                                   @if($category -> is_active == 1)  checked @endif/>
                                                             <label for="switcheryColor4"
                                                                    class="card-title ml-1">{{__('admin/maincategories.status')}}  </label>
 

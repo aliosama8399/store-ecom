@@ -10,7 +10,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{__('messages.main')}} </a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="{{route('admin.maincategories')}}"> {{__('admin/maincategories.maincategories')}} </a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.subcategories')}}"> {{__('admin/maincategories.subcategories')}} </a>
                                 </li>
                                 <li class="breadcrumb-item active">
                                 </li>
@@ -26,7 +26,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title" id="basic-layout-form"> {{__('admin/maincategories.addmaincategories')}} </h4>
+                                    <h4 class="card-title" id="basic-layout-form"> {{__('admin/maincategories.addsubcategories')}} </h4>
                                     <a class="heading-elements-toggle"><i
                                             class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
@@ -43,14 +43,15 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.maincategories.store')}} "
+                                              action="{{route('admin.subcategories.store')}} "
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
 
 
                                             <div class="form-body">
-                                                <h4 class="form-section"><i class="ft-home"></i> {{__('admin/maincategories.maincategoriesinfo')}} </h4>
+                                                <h4 class="form-section"><i class="ft-home"></i> {{__('admin/maincategories.subcategoriesinfo')}} </h4>
+
                                                 <div class="form-group">
                                                     <label> {{__('admin/maincategories.photo')}} </label>
                                                     <label id="projectinput7" class="file center-block">
@@ -61,6 +62,27 @@
                                                     <span class="text-danger">{{$message}}</span>
                                                     @enderror                                        </div>
 
+                                                <div class="form-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="projectinput2"> {{__('admin/maincategories.choosemaincategories')}} </label>
+                                                                <select name="parent_id" class="select2 form-control">
+                                                                    <optgroup label=" ">
+                                                                        @if($maincategories && $maincategories -> count() > 0)
+                                                                            @foreach($maincategories as $category)
+                                                                                <option
+                                                                                    value="{{$category -> id }}">{{$category -> name}}</option>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </optgroup>
+                                                                </select>
+                                                                @error('parent_id')
+                                                                <span class="text-danger"> {{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">

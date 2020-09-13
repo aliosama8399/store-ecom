@@ -1,6 +1,6 @@
 @extends('layouts.login')
 @section('title')
-    Admin Login
+    {{__('admin/login.login form')}}
 @stop
 @section('content')
 
@@ -16,19 +16,28 @@
                             </div>
                         </div>
                         <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
-                            <span>الدخول للوحة التحكم </span>
+                            <span>{{__('admin/login.login form')}} </span>
                         </h6>
                     </div>
                     @include('dashboard.includes.alerts.errors')
                     @include('dashboard.includes.alerts.success')
                     <div class="card-content">
                         <div class="card-body">
+
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
+                                   href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                    {{ $properties['native'] }}
+                                </a>
+                            @endforeach
+
+
                             <form class="form-horizontal form-simple" action="{{route('admin.getlogin')}}" method="post"
                                   novalidate>
                                 @csrf
                                 <fieldset class="form-group position-relative has-icon-left mb-0">
                                     <input type="text" name="email" class="form-control form-control-lg input-lg"
-                                           value="" id="email" placeholder="أدخل البريد الالكتروني ">
+                                           value="" id="email" placeholder="{{__('admin/edit.email')}} ">
                                     <div class="form-control-position">
                                         <i class="ft-user"></i>
                                     </div>
@@ -40,7 +49,7 @@
                                 <fieldset class="form-group position-relative has-icon-left">
                                     <input type="password" name="password" class="form-control form-control-lg input-lg"
                                            id="user-password"
-                                           placeholder="أدخل كلمة المرور">
+                                           placeholder="{{__('admin/login.password')}}">
                                     <div class="form-control-position">
                                         <i class="la la-key"></i>
                                     </div>
@@ -53,12 +62,12 @@
                                         <fieldset>
                                             <input type="checkbox" name="remember_me" id="remember-me"
                                                    class="chk-remember">
-                                            <label for="remember-me">تذكر دخولي</label>
+                                            <label for="remember-me">{{__('admin/login.remember me')}}</label>
                                         </fieldset>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-info btn-lg btn-block"><i class="ft-unlock"></i>
-                                    دخول
+                                    {{__('admin/login.enter')}}
                                 </button>
                             </form>
                         </div>
