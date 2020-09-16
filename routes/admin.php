@@ -57,6 +57,15 @@ Route::group(
             Route::get('delete/{id}', 'SubCategoryController@delete')->name('admin.subcategories.delete');
             Route::get('changestatus/{id}', 'SubCategoryController@changestatus')->name('admin.subcategories.changestatus');
         });
+        Route::group(['prefix' => 'brands'], function () {
+            Route::get('/', 'BrandController@index')->name('admin.brands');
+            Route::get('create', 'BrandController@create')->name('admin.brands.create');
+            Route::post('store', 'BrandController@store')->name('admin.brands.store');
+            Route::get('edit/{id}', 'BrandController@edit')->name('admin.brands.edit');
+            Route::PUT('update/{id}', 'BrandController@update')->name('admin.brands.update');
+            Route::get('delete/{id}', 'BrandController@delete')->name('admin.brands.delete');
+            Route::get('changestatus/{id}', 'BrandController@changestatus')->name('admin.brands.changestatus');
+        });
 
     });
 

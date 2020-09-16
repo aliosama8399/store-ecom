@@ -10,6 +10,7 @@ return [
     'unique1'=>'The Main Category is exists',
     'confirmed'=>'Password Confirmation is not Match',
     'min'=>'Password minimum is 8 character',
+    'photo'=>'Photo format is not allowed',
 
 
 

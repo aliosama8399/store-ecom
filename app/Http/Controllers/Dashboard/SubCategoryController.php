@@ -52,7 +52,7 @@ class SubCategoryController extends Controller
 
     public function edit($id)
     {
-        $category = Category::orderBy('id', 'DESC')->find($id);
+        $category = Category::find($id);
 
         if (!$category)
             return redirect()->route('admin.subcategories')->with(['error' => 'هذا القسم غير موجود ']);
@@ -102,9 +102,10 @@ class SubCategoryController extends Controller
     public function delete($id)
     {
         try {
-            $subcategory = Category::orderBy('id', 'DESC')->find($id);
+            $subcategory = Category::find($id);
             if (!$subcategory)
                 return redirect()->route('admin.subcategories')->with(['error' => __('admin/maincategories.exists')]);
+            $subcategory->translations()->delete();
 
             $subcategory->delete();
             return redirect()->route('admin.subcategories')->with(['success' => __('messages.success')]);
