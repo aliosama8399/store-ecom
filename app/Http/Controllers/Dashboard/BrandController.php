@@ -37,7 +37,7 @@ class BrandController extends Controller
 
             $filename = "";
             if ($request->has('photo')) {
-                $filename = uploadImage('brands/', $request->photo);
+                $filename = uploadImage('brands', $request->photo);
             }
             $brand = Brand::create($request->except('_token', 'photo'));
             $brand->name = $request->name;
@@ -101,6 +101,7 @@ class BrandController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+            return $e;
             return redirect()->route('admin.brands')->with(['error' => __('messages.error')]);
 
         }

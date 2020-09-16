@@ -7,6 +7,7 @@ use App\Http\Requests\SubCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class SubCategoryController extends Controller
 {
@@ -35,8 +36,13 @@ class SubCategoryController extends Controller
             } else
                 $request->request->add(['is_active' => 1]);
 
-            $subcategory = Category::create($request->except('_token'));
+            $filename = "";
+            if ($request->has('photo')) {
+                $filename = uploadImage('subcategories', $request->photo);
+            }
+            $subcategory = Category::create($request->except('_token','photo'));
             $subcategory->name = $request->name;
+            $subcategory->photo = $filename;
             $subcategory->save();
 
             DB::commit();
@@ -81,8 +87,13 @@ class SubCategoryController extends Controller
             } else
                 $request->request->add(['is_active' => 1]);
 
+            if ($request->has('photo')) {
+                $filename = uploadImage('subcategories', $request->photo);
+                Category::where('id', $id)->update(['photo' => $filename]);
 
-            $subcategory->update($request->all());
+            }
+
+            $subcategory->update($request->except('_token','id' ,'photo'));
             $subcategory->name = $request->name;
             $subcategory->save();
 
@@ -106,7 +117,9 @@ class SubCategoryController extends Controller
             if (!$subcategory)
                 return redirect()->route('admin.subcategories')->with(['error' => __('admin/maincategories.exists')]);
             $subcategory->translations()->delete();
-
+            $image = Str::after($subcategory->photo, 'assets/');
+            $image = base_path('public/assets/' . $image);
+            unlink($image); //delete from folder
             $subcategory->delete();
             return redirect()->route('admin.subcategories')->with(['success' => __('messages.success')]);
 
