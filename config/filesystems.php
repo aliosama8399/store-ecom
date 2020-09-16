@@ -59,6 +59,16 @@ return [
             'root' => public_path('assets/images/brands/')  ,
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
+        ],'maincategories' => [
+            'driver' => 'local',
+            'root' => public_path('assets/images/maincategories/')  ,
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],'subcategories' => [
+            'driver' => 'local',
+            'root' => public_path('assets/images/subcategories/')  ,
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
         ],
 
         's3' => [

@@ -35,5 +35,8 @@ class Category extends Model
     {
         return $this -> belongsTo(self::class,'parent_id');
     }
-
+    public function getPhotoAttribute($val)
+    {
+        return ($val != null) ? asset('assets/images/maincategories/' . $val) : "";
+    }
 }

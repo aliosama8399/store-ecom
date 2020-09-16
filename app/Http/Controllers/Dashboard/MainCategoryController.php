@@ -7,12 +7,13 @@ use App\Http\Requests\MainCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class MainCategoryController extends Controller
 {
     public function index()
     {
-        $maincategories = Category::parent()->orderBy('id','DESC')->paginate(PAGENATE);
+        $maincategories = Category::parent()->orderBy('id', 'DESC')->paginate(PAGENATE);
         return view('dashboard.categories.index', compact('maincategories'));
 
     }
@@ -33,8 +34,15 @@ class MainCategoryController extends Controller
             } else
                 $request->request->add(['is_active' => 1]);
 
-            $maincategory = Category::create($request->except('_token'));
+            $filename = "";
+            if ($request->has('photo')) {
+                $filename = uploadImage('maincategories', $request->photo);
+            }
+
+
+            $maincategory = Category::create($request->except('_token', 'photo'));
             $maincategory->name = $request->name;
+            $maincategory->photo = $filename;
             $maincategory->save();
 
             DB::commit();
@@ -75,9 +83,17 @@ class MainCategoryController extends Controller
             } else
                 $request->request->add(['is_active' => 1]);
 
+            if ($request->has('photo')) {
+                $filename = uploadImage('maincategories', $request->photo);
+                Category::where('id', $id)->update(['photo' => $filename]);
 
-            $maincategory->update($request->all());
+            }
+
+
+
+            $maincategory->update($request->except('_token','id' ,'photo'));
             $maincategory->name = $request->name;
+
             $maincategory->save();
 
 
@@ -87,6 +103,7 @@ class MainCategoryController extends Controller
 
 
         } catch (\Exception $e) {
+            return $e;
             DB::rollBack();
             return redirect()->route('admin.maincategories')->with(['error' => __('messages.error')]);
 
@@ -99,8 +116,10 @@ class MainCategoryController extends Controller
             $maincategory = Category::find($id);
             if (!$maincategory)
                 return redirect()->route('admin.maincategories')->with(['error' => __('admin/maincategories.exists')]);
+            $image = Str::after($maincategory->photo, 'assets/');
+            $image = base_path('public/assets/' . $image);
+            unlink($image); //delete from folder
             $maincategory->translations()->delete();
-
             $maincategory->delete();
             return redirect()->route('admin.maincategories')->with(['success' => __('messages.success')]);
 
