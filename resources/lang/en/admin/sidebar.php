@@ -8,6 +8,10 @@ return [
     'shipping inner'=>'Inner Shipping',
     'shipping outer'=>'Outer Shipping',
     'all' => 'Show All ',
+    'brand' => 'Brand',
+    'allbrand' => 'All Brands',
+    'addbrand' => 'Add New Brand',
+
 
 
 ];

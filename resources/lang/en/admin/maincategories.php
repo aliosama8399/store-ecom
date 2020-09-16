@@ -16,7 +16,7 @@ return [
     'all' => 'All Main Categories',
     'all1' => 'All Sub Categories',
     'status' => 'Status',
-    'photo' => 'Photo',
+    'photo' => 'Photo Of Category',
     'operations' => 'Operations',
     'edit' => 'Edit',
     'delete' => 'Delete',

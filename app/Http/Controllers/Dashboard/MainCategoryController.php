@@ -50,7 +50,7 @@ class MainCategoryController extends Controller
 
     public function edit($id)
     {
-        $maincategory = Category::orderBy('id', 'DESC')->find($id);
+        $maincategory = Category::find($id);
         if (!$maincategory)
             return redirect()->route('admin.maincategories')->with(['error' => __('admin/maincategories.exists')]);
 
@@ -96,9 +96,10 @@ class MainCategoryController extends Controller
     public function delete($id)
     {
         try {
-            $maincategory = Category::orderBy('id', 'DESC')->find($id);
+            $maincategory = Category::find($id);
             if (!$maincategory)
                 return redirect()->route('admin.maincategories')->with(['error' => __('admin/maincategories.exists')]);
+            $maincategory->translations()->delete();
 
             $maincategory->delete();
             return redirect()->route('admin.maincategories')->with(['success' => __('messages.success')]);
