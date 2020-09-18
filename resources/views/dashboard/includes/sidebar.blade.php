@@ -80,7 +80,20 @@
                     </li>
                 </ul>
             </li>
-
+            <li class="nav-item  open ">
+                <a href=""><i class="la la-home"></i>
+                    <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/tags.tag')}}</span>
+                    <span
+                        class="badge badge badge-info badge-pill float-right mr-2">{{\App\Models\Tag::count()}}</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="active"><a class="menu-item" href="{{route('admin.tags')}}"
+                                          data-i18n="nav.dash.ecommerce"> {{__('admin/sidebar.all')}} </a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('admin.tags.create')}}" data-i18n="nav.dash.crypto">{{__('admin/tags.addtag')}} </a>
+                    </li>
+                </ul>
+            </li>
 
             <li class="nav-item">
                 <a href=""><i class="la la-male"></i>
