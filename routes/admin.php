@@ -67,6 +67,16 @@ Route::group(
             Route::get('changestatus/{id}', 'BrandController@changestatus')->name('admin.brands.changestatus');
         });
 
+        Route::group(['prefix' => 'tags'], function () {
+            Route::get('/', 'TagsController@index')->name('admin.tags');
+            Route::get('create', 'TagsController@create')->name('admin.tags.create');
+            Route::post('store', 'TagsController@store')->name('admin.tags.store');
+            Route::get('edit/{id}', 'TagsController@edit')->name('admin.tags.edit');
+            Route::PUT('update/{id}', 'TagsController@update')->name('admin.tags.update');
+            Route::get('delete/{id}', 'TagsController@delete')->name('admin.tags.delete');
+        });
+
+
     });
 
 });
