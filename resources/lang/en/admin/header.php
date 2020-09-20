@@ -2,7 +2,7 @@
 
 return [
     'hello' => 'Hello',
-    'modern admin' => 'Admin Modern',
+    'modern admin' => 'Modern Admin ',
     'languages' => 'Languages',
     'editprof' => 'Edit Profile',
     'logout' => 'Logout',

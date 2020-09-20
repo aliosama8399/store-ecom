@@ -13,14 +13,15 @@ class MainCategoryController extends Controller
 {
     public function index()
     {
-        $maincategories = Category::parent()->orderBy('id', 'DESC')->paginate(PAGENATE);
+        $maincategories = Category::with('mainparent')->orderBy('id', 'DESC')->paginate(PAGENATE);
         return view('dashboard.categories.index', compact('maincategories'));
 
     }
 
     public function create()
     {
-        return view('dashboard.categories.create');
+        $maincategories= Category::select('parent_id','id')->get();
+        return view('dashboard.categories.create',compact('maincategories'));
 
     }
 
@@ -39,6 +40,13 @@ class MainCategoryController extends Controller
                 $filename = uploadImage('maincategories', $request->photo);
             }
 
+//if user choose main category then must delete parent id
+            if ($request->type == 1) {
+             //   $request -> except('parent_id');
+               $request->request->add(['parent_id' => NULL]);
+
+            }
+//if user choose sub category then must add parent id
 
             $maincategory = Category::create($request->except('_token', 'photo'));
             $maincategory->name = $request->name;
@@ -90,8 +98,7 @@ class MainCategoryController extends Controller
             }
 
 
-
-            $maincategory->update($request->except('_token','id' ,'photo'));
+            $maincategory->update($request->except('_token', 'id', 'photo'));
             $maincategory->name = $request->name;
 
             $maincategory->save();

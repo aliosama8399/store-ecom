@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="{{app()->getLocale()==='ar'?'rtl':'ltr'}}">
+<html class="loading" lang="en" data-textdirection="{{ app() -> getLocale() === 'ar' ? 'rtl' : 'ltr'}}">
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -13,12 +12,13 @@
     <title>@yield('title')</title>
     <link rel="apple-touch-icon" href="{{asset('assets/admin/images/ico/apple-icon-120.png')}}">
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/admin/images/ico/favicon.ico')}}">
-
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
+        rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
           rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/plugins/animate/animate.css')}}">
-    <!-- BEGIN VENDOR CSS-->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin//plugins/animate/animate.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/vendors.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/weather-icons/climacons.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/fonts/meteocons/style.css')}}">
@@ -30,8 +30,7 @@
     <link rel="stylesheet" type="text/css"
           href="{{asset('assets/admin/vendors/css/forms/toggle/bootstrap-switch.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/forms/toggle/switchery.min.css')}}">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('assets/admin/'.getFolder().'/core/menu/menu-types/vertical-menu.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/core/menu/menu-types/vertical-menu.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/pages/chat-application.css')}}">
     <!-- END VENDOR CSS-->
     <!-- BEGIN MODERN CSS-->
@@ -50,7 +49,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/extensions/timedropper.min.css')}}">
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css-rtl/style-rtl.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/style.css')}}">
     <!-- END Custom CSS-->
     @notify_css
     @yield('style')
@@ -61,16 +60,23 @@
         }
     </style>
 </head>
-<body class="vertical-layout vertical-menu 2-columns chat-application menu-expanded fixed-navbar"
+<body class="vertical-layout vertical-menu 2-columns menu-expanded fixed-navbar"
       data-open="click" data-menu="vertical-menu" data-col="2-columns">
 <!-- fixed-top-->
+
+<!-- begin header -->
 @include('dashboard.includes.header')
-<!-- ////////////////////////////////////////////////////////////////////////////-->
+<!-- end header -->
+<!-- begin sidebar -->
 @include('dashboard.includes.sidebar')
 
+<!-- end sidebar -->
 @yield('content')
-<!-- ////////////////////////////////////////////////////////////////////////////-->
+
+<!-- begin footer html -->
 @include('dashboard.includes.footer')
+
+<!-- end footer -->
 
 @notify_js
 @notify_render
@@ -126,7 +132,7 @@
         setCurrentTime: false
     });
     $('#meridians2').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
     $('#meridians3').timeDropper({
         meridians: true,
@@ -137,34 +143,34 @@
         setCurrentTime: false
     });
     $('#meridians5').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
     $('#meridians6').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
     $('#meridians7').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
     $('#meridians8').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
     $('#meridians9').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
     $('#meridians10').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
     $('#meridians11').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
     $('#meridians12').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
     $('#meridians13').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
     $('#meridians14').timeDropper({
-        meridians: true, setCurrentTime: false
+        meridians: true,setCurrentTime: false
     });
 </script>
 @yield('script')

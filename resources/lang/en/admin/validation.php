@@ -11,6 +11,7 @@ return [
     'confirmed'=>'Password Confirmation is not Match',
     'min'=>'Password minimum is 8 character',
     'photo'=>'Photo format is not allowed',
+    'choose'=>'The Category type in invalid',
 
 
 
