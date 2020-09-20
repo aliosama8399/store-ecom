@@ -34,6 +34,7 @@ class BrandRequest extends FormRequest
         return [
             'required'=>__('admin/validation.required'),
             'photo.mimes'=>__('admin/validation.photo'),
+            'photo.required_without'=>__('admin/validation.photo'),
 
         ];
     }

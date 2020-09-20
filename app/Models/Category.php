@@ -6,7 +6,7 @@ use Astrotomic\Translatable\Translatable;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class  Category extends Model
 {
     use Translatable;
 

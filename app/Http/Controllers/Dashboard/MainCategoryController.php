@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enumerations\CategoryType;
 use App\Http\Requests\MainCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -20,14 +21,15 @@ class MainCategoryController extends Controller
 
     public function create()
     {
-        $maincategories= Category::select('parent_id','id')->get();
-        return view('dashboard.categories.create',compact('maincategories'));
+        $maincategories = Category::select('parent_id', 'id')->get();
+        return view('dashboard.categories.create', compact('maincategories'));
 
     }
 
 
     public function store(MainCategoryRequest $request)
     {
+
         try {
             DB::beginTransaction();
             if (!$request->has('is_active')) {
@@ -41,9 +43,8 @@ class MainCategoryController extends Controller
             }
 
 //if user choose main category then must delete parent id
-            if ($request->type == 1) {
-             //   $request -> except('parent_id');
-               $request->request->add(['parent_id' => NULL]);
+            if ($request->type == CategoryType::MainCategory) {
+                $request->request->add(['parent_id' => NULL]);
 
             }
 //if user choose sub category then must add parent id
@@ -79,7 +80,6 @@ class MainCategoryController extends Controller
         try {
 
 
-            DB::beginTransaction();
 
 
             $maincategory = Category::find($id);
@@ -96,6 +96,7 @@ class MainCategoryController extends Controller
                 Category::where('id', $id)->update(['photo' => $filename]);
 
             }
+            DB::beginTransaction();
 
 
             $maincategory->update($request->except('_token', 'id', 'photo'));
@@ -123,14 +124,18 @@ class MainCategoryController extends Controller
             $maincategory = Category::find($id);
             if (!$maincategory)
                 return redirect()->route('admin.maincategories')->with(['error' => __('admin/maincategories.exists')]);
-            $image = Str::after($maincategory->photo, 'assets/');
-            $image = base_path('public/assets/' . $image);
-            unlink($image); //delete from folder
+            if ($maincategory->photo != NULL) {
+                $image = Str::after($maincategory->photo, 'assets/');
+                $image = base_path('public/assets/' . $image);
+                unlink($image); //delete from folder
+            }
             $maincategory->translations()->delete();
             $maincategory->delete();
             return redirect()->route('admin.maincategories')->with(['success' => __('messages.success')]);
 
         } catch (\Exception $e) {
+            return $e;
+
             return redirect()->route('admin.maincategories')->with(['error' => __('messages.error')]);
 
         }
