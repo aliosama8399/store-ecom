@@ -45,6 +45,7 @@
                                             <thead>
                                             <tr>
                                                 <th> {{__('admin/edit.name')}}</th>
+                                                <th> {{__('admin/maincategories.maincategory')}}</th>
                                                 <th>{{__('admin/maincategories.slug')}}</th>
                                                 <th>{{__('admin/maincategories.status')}}</th>
                                                 <th>{{__('admin/maincategories.photo')}}</th>
@@ -56,6 +57,7 @@
                                                 @foreach($maincategories as $categorie)
                                                     <tr>
                                                         <td>{{$categorie -> name}}</td>
+                                                        <td>{{$categorie -> mainparent -> name ?? __('admin/maincategories.maincategory1')}}</td>
                                                         <td>{{$categorie -> slug}}</td>
                                                         <td>{{$categorie -> getActive()}}</td>
                                                         <td><img style="height: 100px; width: 100px; "

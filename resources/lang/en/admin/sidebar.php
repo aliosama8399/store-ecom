@@ -8,7 +8,7 @@ return [
     'shipping inner'=>'Inner Shipping',
     'shipping outer'=>'Outer Shipping',
     'all' => 'Show All ',
-    'brand' => 'Brand',
+    'brand' => 'Brands',
     'allbrand' => 'All Brands',
     'addbrand' => 'Add New Brand',
 

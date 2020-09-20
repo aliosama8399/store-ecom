@@ -26,6 +26,7 @@ class MainCategoryRequest extends FormRequest
         return [
             'slug'=>'required|unique:categories,slug,'.$this -> id,
             'name'=>'required',
+            'type'=>'required|in:1,2',
         ];
     }
 
@@ -34,6 +35,7 @@ class MainCategoryRequest extends FormRequest
         return [
             'required'=>__('admin/validation.required'),
             'slug.unique'=>__('admin/validation.unique1'),
+            'type.in'=>__('admin/validation.choose'),
 
         ];
     }
