@@ -143,6 +143,7 @@
                                                                 {{__('admin/maincategories.maincategory1')}}
                                                             </label>
 
+
                                                         </div>
                                                     </div>
 
@@ -160,7 +161,11 @@
                                                             </label>
 
                                                         </div>
+                                                        @error("type")
+                                                        <span class="text-danger">{{$message}}</span>
+                                                        @enderror
                                                     </div>
+
                                                 </div>
 
                                             </div>
