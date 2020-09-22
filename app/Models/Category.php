@@ -33,8 +33,14 @@ class  Category extends Model
 
     public function mainparent()
     {
-        return $this -> belongsTo(self::class,'parent_id');
+        return $this->belongsTo(self::class, 'parent_id');
     }
+
+    public function _childs()
+    {
+        return $this->hasMany(self::class, 'parent_id');
+    }
+
     public function getPhotoAttribute($val)
     {
         return ($val != null) ? asset('assets/images/maincategories/' . $val) : "";

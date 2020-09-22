@@ -94,13 +94,21 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="projectinput2"> {{__('admin/maincategories.choosemaincategories')}} </label>
-                                                                <select name="parent_id" class="select2 form-control">
+                                                                <select name="parent_id" style="width:auto;" class=" form-control">
                                                                     <optgroup label=" ">
                                                                         @if($maincategories && $maincategories -> count() > 0)
-                                                                            @foreach($maincategories as $category)
-                                                                                <option
-                                                                                    value="{{$category -> id }}">{{$category -> name}}</option>
-                                                                            @endforeach
+{{--                                                                            @foreach($maincategories as $category)--}}
+{{--                                                                                <option--}}
+{{--                                                                                    value="{{$category -> id }}">{{$category -> name}}</option>--}}
+{{--                                                                            @endforeach--}}
+                                                                            @php
+                                                                            if (App::getLocale() == "ar")
+                                                                                subCatRecursion($maincategories, 0,'←');
+
+
+                                                                            else
+                                                                                subCatRecursion($maincategories, 0,'→');
+                                                                                @endphp
                                                                         @endif
                                                                     </optgroup>
                                                                 </select>

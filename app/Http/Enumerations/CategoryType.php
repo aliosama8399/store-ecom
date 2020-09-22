@@ -8,7 +8,7 @@ use Spatie\Enum\Enum;
 
 final class CategoryType extends Enum
 {
-    const MainCategory = 1;
-    const SubCategory = 2;
+    const MainCategory = "1";
+    const SubCategory = "2";
 
 }

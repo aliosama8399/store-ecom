@@ -78,12 +78,12 @@
                                                     </tr>
 
                                                 @endforeach
+
                                             @endisset
-
-
                                             </tbody>
                                         </table>
                                         <div class="justify-content-center d-flex">
+                                            {{$maincategories->links()}}
 
                                         </div>
                                     </div>

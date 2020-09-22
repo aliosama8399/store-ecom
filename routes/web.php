@@ -18,8 +18,7 @@ Route::get('/', function () {
 });
 Route::get('/test', function () {
 
-   $c= \App\Models\Category::find(1);
-    $c->makeVisible(['translations']);
+   $c= \App\Http\Enumerations\CategoryType::SubCategory;
     return $c;
 
 });
