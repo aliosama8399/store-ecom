@@ -21,7 +21,8 @@ class MainCategoryController extends Controller
 
     public function create()
     {
-        $maincategories = Category::select('parent_id', 'id')->get();
+       // $maincategories = Category::select('parent_id', 'id')->get();
+        $maincategories = Category::with('mainparent')->get();
         return view('dashboard.categories.create', compact('maincategories'));
 
     }
@@ -92,6 +93,9 @@ class MainCategoryController extends Controller
                 $request->request->add(['is_active' => 1]);
 
             if ($request->has('photo')) {
+                $image = Str::after($maincategory->photo, 'assets/');
+                $image = base_path('public/assets/' . $image);
+                unlink($image);
                 $filename = uploadImage('maincategories', $request->photo);
                 Category::where('id', $id)->update(['photo' => $filename]);
 

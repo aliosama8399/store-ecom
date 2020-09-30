@@ -79,6 +79,10 @@ class BrandController extends Controller
             DB::beginTransaction();
 
             if ($request->has('photo')) {
+                $image = Str::after($brand->photo, 'assets/');
+                $image = base_path('public/assets/' . $image);
+                unlink($image); //delete from folder
+
                 $filename = uploadImage('brands', $request->photo);
                 Brand::where('id',$id)->update(['photo'=>$filename]);
             }

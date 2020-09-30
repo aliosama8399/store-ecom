@@ -48,15 +48,6 @@ Route::group(
             Route::get('delete/{id}', 'MainCategoryController@delete')->name('admin.maincategories.delete');
             Route::get('changestatus/{id}', 'MainCategoryController@changestatus')->name('admin.maincategories.changestatus');
         });
-        Route::group(['prefix' => 'sub_categories'], function () {
-            Route::get('/', 'SubCategoryController@index')->name('admin.subcategories');
-            Route::get('create', 'SubCategoryController@create')->name('admin.subcategories.create');
-            Route::post('store', 'SubCategoryController@store')->name('admin.subcategories.store');
-            Route::get('edit/{id}', 'SubCategoryController@edit')->name('admin.subcategories.edit');
-            Route::PUT('update/{id}', 'SubCategoryController@update')->name('admin.subcategories.update');
-            Route::get('delete/{id}', 'SubCategoryController@delete')->name('admin.subcategories.delete');
-            Route::get('changestatus/{id}', 'SubCategoryController@changestatus')->name('admin.subcategories.changestatus');
-        });
         Route::group(['prefix' => 'brands'], function () {
             Route::get('/', 'BrandController@index')->name('admin.brands');
             Route::get('create', 'BrandController@create')->name('admin.brands.create');
@@ -75,7 +66,14 @@ Route::group(
             Route::PUT('update/{id}', 'TagsController@update')->name('admin.tags.update');
             Route::get('delete/{id}', 'TagsController@delete')->name('admin.tags.delete');
         });
-
+        Route::group(['prefix' => 'products'], function () {
+            Route::get('/', 'ProductController@index')->name('admin.products');
+            Route::get('general-information', 'ProductController@create')->name('admin.products.general.create');
+            Route::post('store-general-information', 'ProductController@store')->name('admin.products.general.store');
+            Route::get('edit/{id}', 'ProductController@edit')->name('admin.products.edit');
+            Route::PUT('update/{id}', 'ProductController@update')->name('admin.products.update');
+            Route::get('delete/{id}', 'ProductController@delete')->name('admin.products.delete');
+        });
 
     });
 
