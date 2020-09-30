@@ -64,6 +64,13 @@ class Product extends Model
      */
     protected $translatedAttributes = ['name', 'description', 'short_description'];
 
+
+    public function getActive()
+    {
+        return $this->is_active == 0 ? __('admin/maincategories.deactive') : __('admin/maincategories.active');
+    }
+
+
     public function brand()
     {
         return $this->belongsTo(Brand::class)->withDefault();

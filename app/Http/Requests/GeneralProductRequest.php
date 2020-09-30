@@ -27,8 +27,8 @@ class GeneralProductRequest extends FormRequest
             'name' => 'required|max:100',
             'slug' => 'required|unique:products,slug',
             'description' => 'required|max:1000',
-            'short-description' => 'nullable|max:500',
-            'categories' => 'array|min:1',
+            'short_description' => 'nullable|max:500',
+            'categories' => 'required|array|min:1',
             'categories.*' => 'numeric|exists:categories,id',
             'tags' => 'nullable|array|min:1',
             'tags.*' => 'numeric|exists:tags,id',
@@ -39,6 +39,17 @@ class GeneralProductRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'required'=>__('admin/validation.required'),
+            'name.max'=>__('admin/validation.nmax'),
+            'description.max'=>__('admin/validation.dmax'),
+            'short_description.max'=>__('admin/validation.smax'),
+            'slug.unique'=>__('admin/validation.unique2'),
+            'exists'=>__('admin/validation.exists'),
+            'min'=>__('admin/validation.min1'),
+
+
+
+        ];
     }
 }

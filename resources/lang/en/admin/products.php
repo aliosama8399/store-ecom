@@ -8,6 +8,7 @@ return [
     'description' => 'Product Description',
     'shdescription' => 'Product Short Description',
 
+    'products all' => 'All Products in website',
 
 
 

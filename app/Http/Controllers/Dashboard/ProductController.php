@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,16 +14,25 @@ use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
 
+    public function index()
+    {
+        $products=Product::select('id','slug','price','created_at')->paginate(PAGENATE);
+
+        return view('dashboard.products.general.index', compact('products'));
+
+    }
+
 
     public function create()
     {
-        $data=[];
-        $data['brands']=Brand::active()->select('id')->get();
-        $data['tags']=Tag::select('id')->get();
-        $data['catecories']=Category::active()->select('id')->get();
-        return view('dashboard.products.general.create',$data);
+        $data = [];
+        $data['brands'] = Brand::active()->select('id')->get();
+        $data['tags'] = Tag::select('id')->get();
+        $data['categories'] = Category::active()->select('id')->get();
+        return view('dashboard.products.general.create', $data);
 
     }
+
     public function store(GeneralProductRequest $request)
     {
 
@@ -33,29 +43,22 @@ class ProductController extends Controller
             } else
                 $request->request->add(['is_active' => 1]);
 
-            $filename = "";
-            if ($request->has('photo')) {
-                $filename = uploadImage('maincategories', $request->photo);
-            }
 
-//if user choose main category then must delete parent id
-            if ($request->type == CategoryType::MainCategory) {
-                $request->request->add(['parent_id' => NULL]);
-
-            }
-//if user choose sub category then must add parent id
-
-            $maincategory = Category::create($request->except('_token', 'photo'));
-            $maincategory->name = $request->name;
-            $maincategory->photo = $filename;
-            $maincategory->save();
+            $product = Product::create($request->only('slug', 'brand_id', 'is_active'));
+            $product->name = $request->name;
+            $product->description = strip_tags($request->description);
+            $product->short_description = strip_tags($request->short_description);
+            $product->save();
+            $product->categories()->attach($request->categories);
 
             DB::commit();
-            return redirect()->route('admin.maincategories')->with(['success' => __('messages.success')]);
+            return redirect()->route('admin.products')->with(['success' => __('messages.success')]);
 
         } catch (\Exception $e) {
+
             DB::rollBack();
-            return redirect()->route('admin.maincategories')->with(['error' => __('messages.error')]);
+
+            return redirect()->route('admin.products')->with(['error' => __('messages.error')]);
 
         }
     }
