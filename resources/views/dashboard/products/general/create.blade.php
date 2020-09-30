@@ -107,13 +107,13 @@
                                                         <div class="form-group">
                                                             <label for="projectinput1"> {{__('admin/products.shdescription')}}
                                                             </label>
-                                                            <textarea  name="short-description" id="short-description" cols="20" rows="15"
+                                                            <textarea  name="short_description" id="short-description" cols="20" rows="15"
                                                                        class="ckeditor"
                                                                        class="form-control"
                                                                        placeholder=""
-                                                            >{{old('short-description')}}</textarea>
+                                                            >{{old('short_description')}}</textarea>
 
-                                                            @error("short-description")
+                                                            @error("short_description")
                                                             <span class="text-danger">{{$message}}</span>
                                                             @enderror
                                                         </div>
@@ -129,15 +129,15 @@
                                                             </label>
                                                             <select name="categories[]" class="select2 form-control" multiple>
                                                                 <optgroup label=" asd">
-                                                                    @if($catecories && $catecories -> count() > 0)
-                                                                        @foreach($catecories as $category)
+                                                                    @if($categories && $categories -> count() > 0)
+                                                                        @foreach($categories as $category)
                                                                             <option
                                                                                 value="{{$category -> id }}">{{$category -> name}}</option>
                                                                         @endforeach
                                                                     @endif
                                                                 </optgroup>
                                                             </select>
-                                                            @error('categories.[].*')
+                                                            @error('categories')
                                                             <span class="text-danger"> {{$message}}</span>
                                                             @enderror
                                                         </div>
@@ -146,7 +146,7 @@
                                                         <div class="form-group">
                                                             <label for="projectinput1"> {{__('admin/tags.tag')}}
                                                             </label>
-                                                            <select name="tags" class="select2 form-control" multiple>
+                                                            <select name="tags[]" class="select2 form-control" multiple>
                                                                 <optgroup label="  ">
                                                                     @if($tags && $tags -> count() > 0)
                                                                         @foreach($tags as $tag)

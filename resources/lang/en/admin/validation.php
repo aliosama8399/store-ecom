@@ -13,6 +13,15 @@ return [
     'photo'=>'Photo format is not allowed',
     'choose'=>'The Category type in invalid',
 
+    'unique2'=>'This Product Exists  ',///////////
+
+    'nmax'=>'Name must not exceed 1000 ',////
+
+    'nmax'=>'Description must not exceed 1000',/////
+
+    'smax'=>'Short description must not exceed 1000 ',///////
+
+    'min1'=>'You must select at least 1',////////////
 
 
 ];

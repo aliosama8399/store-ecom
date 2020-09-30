@@ -5,11 +5,11 @@
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title">{{__('admin/maincategories.maincategories')}}</h3>
+                    <h3 class="content-header-title">{{__('admin/products.products')}}</h3>
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="">{{__('messages.main')}}</a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{__('messages.main')}}</a>
                             </ol>
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">{{__('admin/maincategories.all')}} </h4>
+                                    <h4 class="card-title">{{__('admin/products.products all')}} </h4>
                                     <a class="heading-elements-toggle"><i
                                             class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
@@ -45,32 +45,29 @@
                                             <thead>
                                             <tr>
                                                 <th> {{__('admin/edit.name')}}</th>
-                                                <th> {{__('admin/maincategories.maincategory')}}</th>
                                                 <th>{{__('admin/maincategories.slug')}}</th>
                                                 <th>{{__('admin/maincategories.status')}}</th>
-                                                <th>{{__('admin/maincategories.photo')}}</th>
+                                                <th>{{__('messages.price')}}</th>
                                                 <th>{{__('admin/maincategories.operations')}}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @isset($maincategories)
-                                                @foreach($maincategories as $categorie)
+                                            @isset($products)
+                                                @foreach($products as $product)
                                                     <tr>
-                                                        <td>{{$categorie -> name}}</td>
-                                                        <td>{{$categorie -> mainparent -> name ?? __('admin/maincategories.maincategory1')}}</td>
-                                                        <td>{{$categorie -> slug}}</td>
-                                                        <td>{{$categorie -> getActive()}}</td>
-                                                        <td><img style="height: 100px; width: 100px; "
-                                                                 src="{{$categorie -> photo}}"></td>
+                                                        <td>{{$product -> name}}</td>
+                                                        <td>{{$product -> slug}}</td>
+                                                        <td>{{$product -> price}}</td>
+                                                        <td>{{$product -> getActive()}}</td>
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
-                                                                <a href="{{route('admin.maincategories.edit',$categorie -> id)}}"
-                                                                   class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/maincategories.edit')}}</a>
-                                                                <a href="{{route('admin.maincategories.delete',$categorie -> id)}}"
-                                                                   class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/maincategories.delete')}}</a>
-                                                                <a href="{{route('admin.maincategories.changestatus',$categorie -> id)}}"
-                                                                   class="btn btn-outline-cyan btn-min-width box-shadow-3 mr-1 mb-1">@if($categorie->is_active==0) {{__('admin/maincategories.changestatus')}} @else {{__('admin/maincategories.changestatus1')}}@endif</a>
+{{--                                                                <a href="{{route('admin.maincategories.edit',$categorie -> id)}}"--}}
+{{--                                                                   class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/maincategories.edit')}}</a>--}}
+{{--                                                                <a href="{{route('admin.maincategories.delete',$categorie -> id)}}"--}}
+{{--                                                                   class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/maincategories.delete')}}</a>--}}
+{{--                                                                <a href="{{route('admin.maincategories.changestatus',$categorie -> id)}}"--}}
+{{--                                                                   class="btn btn-outline-cyan btn-min-width box-shadow-3 mr-1 mb-1">@if($categorie->is_active==0) {{__('admin/maincategories.changestatus')}} @else {{__('admin/maincategories.changestatus1')}}@endif</a>--}}
 
 
                                                             </div>
@@ -83,7 +80,7 @@
                                             </tbody>
                                         </table>
                                         <div class="justify-content-center d-flex">
-                                            {{$maincategories->links()}}
+                                            {!! $products->links() !!}
 
                                         </div>
                                     </div>
