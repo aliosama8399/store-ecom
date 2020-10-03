@@ -57,13 +57,14 @@
                                                     <tr>
                                                         <td>{{$product -> name}}</td>
                                                         <td>{{$product -> slug}}</td>
-                                                        <td>{{$product -> price}}</td>
                                                         <td>{{$product -> getActive()}}</td>
+                                                        <td>{{$product -> price}}</td>
+
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
-{{--                                                                <a href="{{route('admin.maincategories.edit',$categorie -> id)}}"--}}
-{{--                                                                   class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/maincategories.edit')}}</a>--}}
+                                                                <a href="{{route('admin.products.price',$product -> id)}}"
+                                                                   class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">price</a>
 {{--                                                                <a href="{{route('admin.maincategories.delete',$categorie -> id)}}"--}}
 {{--                                                                   class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/maincategories.delete')}}</a>--}}
 {{--                                                                <a href="{{route('admin.maincategories.changestatus',$categorie -> id)}}"--}}

@@ -10,7 +10,12 @@ return [
 
     'products all' => 'All Products in website',
 
-
+    'products price' => 'Products Price Information', /////////
+    'price' => 'Product Price', /////////
+    'special price' => 'Special Price', /////////
+    'price type' => 'Special Price Type', /////////
+    'start date' => 'Start Date', /////////
+    'end date' => 'End Date', /////////
 
 
 
