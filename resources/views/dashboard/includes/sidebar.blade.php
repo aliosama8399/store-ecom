@@ -1,4 +1,4 @@
-<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow " data-scroll-to-active="true">
+<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow " data-scroll-to-active="false">
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
@@ -6,14 +6,14 @@
                         class="menu-title" data-i18n="nav.add_on_drag_drop.main">{{__('messages.main')}} </span></a>
             </li>
 
-            <li class="nav-item  open ">
+            <li class="nav-item   ">
                 <a href=""><i class="la la-home"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">لغات الموقع </span>
                     <span
                         class="badge badge badge-info badge-pill float-right mr-2"></span>
                 </a>
                 <ul class="menu-content">
-                    <li class="active"><a class="menu-item" href=""
+                    <li class=""><a class="menu-item" href=""
                                           data-i18n="nav.dash.ecommerce"> عرض الكل </a>
                     </li>
                     <li><a class="menu-item" href="" data-i18n="nav.dash.crypto">أضافة
@@ -23,13 +23,13 @@
             </li>
 
 
-            <li class="nav-item"><a href=""><i class="la la-group"></i>
+            <li class="nav-item {{'admin.maincategories'== request()->path() ? 'open' : ''}}"><a href=""><i class="la la-group"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/maincategories.maincategories')}} </span>
                     <span
                         class="badge badge badge-danger badge-pill float-right mr-2">{{\App\Models\Category::count()}}</span>
                 </a>
                 <ul class="menu-content">
-                    <li class="active"><a class="menu-item" href="{{route('admin.maincategories')}}"
+                    <li class="{{'admin.maincategories'== request()->path() ? 'active' : ''}}"><a class="menu-item" href="{{route('admin.maincategories')}}"
                                           data-i18n="nav.dash.ecommerce"> {{__('admin/sidebar.all')}} </a>
                     </li>
                     <li><a class="menu-item" href="{{route('admin.maincategories.create')}}" data-i18n="nav.dash.crypto"> {{__('admin/maincategories.addmaincategories')}} </a>
@@ -44,7 +44,7 @@
                         class="badge badge badge-success badge-pill float-right mr-2">{{\App\Models\Product::count()}}</span>
                 </a>
                 <ul class="menu-content">
-                    <li class="active"><a class="menu-item" href="{{route('admin.products')}}"
+                    <li class="{{'admin.products'== request()->path() ? 'active' : ''}}"><a class="menu-item" href="{{route('admin.products')}}"
                                           data-i18n="nav.dash.ecommerce"> {{__('admin/sidebar.all')}} </a>
                     </li>
                     <li><a class="menu-item" href="{{route('admin.products.general.create')}}" data-i18n="nav.dash.crypto">{{__('admin/products.products create')}}  </a>
@@ -59,21 +59,21 @@
                         class="badge badge badge-warning  badge-pill float-right mr-2">{{\App\Models\Brand::count()}}</span>
                 </a>
                 <ul class="menu-content">
-                    <li class="active"><a class="menu-item" href="{{route('admin.brands')}}"
+                    <li class="{{'admin.brands'== request()->path() ? 'active' : ''}}"><a class="menu-item" href="{{route('admin.brands')}}"
                                           data-i18n="nav.dash.ecommerce"> {{__('admin/sidebar.all')}} </a>
                     </li>
                     <li><a class="menu-item" href="{{route('admin.brands.create')}}" data-i18n="nav.dash.crypto">{{__('admin/brand.addbrand')}}</a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item  open ">
+            <li class="nav-item   ">
                 <a href=""><i class="la la-home"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/tags.tag')}}</span>
                     <span
                         class="badge badge badge-info badge-pill float-right mr-2">{{\App\Models\Tag::count()}}</span>
                 </a>
                 <ul class="menu-content">
-                    <li class="active"><a class="menu-item" href="{{route('admin.tags')}}"
+                    <li class="{{'admin.tags'== request()->path() ? 'active' : ''}}"><a class="menu-item" href="{{route('admin.tags')}}"
                                           data-i18n="nav.dash.ecommerce"> {{__('admin/sidebar.all')}} </a>
                     </li>
                     <li><a class="menu-item" href="{{route('admin.tags.create')}}" data-i18n="nav.dash.crypto">{{__('admin/tags.addtag')}} </a>
@@ -81,18 +81,18 @@
                 </ul>
             </li>
 
-            <li class="nav-item">
-                <a href=""><i class="la la-male"></i>
-                    <span class="menu-title" data-i18n="nav.dash.main">تذاكر المراسلات   </span>
-                    <span
-                        class="badge badge badge-danger  badge-pill float-right mr-2">0</span>
-                </a>
-                <ul class="menu-content">
-                    <li class="active"><a class="menu-item" href=""
-                                          data-i18n="nav.dash.ecommerce"> تذاكر الطلاب </a>
-                    </li>
-                </ul>
-            </li>
+{{--            <li class="nav-item">--}}
+{{--                <a href=""><i class="la la-male"></i>--}}
+{{--                    <span class="menu-title" data-i18n="nav.dash.main">تذاكر المراسلات   </span>--}}
+{{--                    <span--}}
+{{--                        class="badge badge badge-danger  badge-pill float-right mr-2">0</span>--}}
+{{--                </a>--}}
+{{--                <ul class="menu-content">--}}
+{{--                    <li class="active"><a class="menu-item" href=""--}}
+{{--                                          data-i18n="nav.dash.ecommerce"> تذاكر الطلاب </a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
 
 
             <li class=" nav-item"><a href="#"><i class="la la-television"></i><span class="menu-title"
