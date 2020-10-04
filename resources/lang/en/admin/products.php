@@ -17,7 +17,11 @@ return [
     'start date' => 'Start Date', /////////
     'end date' => 'End Date', /////////
 
-
+    'stock' => 'Stock Management',//////
+    'sku' => 'SKU',//////
+    'manage' => 'Manage Stock',//////
+    'available' => 'Product Status',//////
+    'quantity' => 'Quantity',//////
 
 
 

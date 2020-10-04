@@ -23,7 +23,7 @@
             </li>
 
 
-            <li class="nav-item {{'admin.maincategories'== request()->path() ? 'open' : ''}}"><a href=""><i class="la la-group"></i>
+            <li class="nav-item "><a href=""><i class="la la-group"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/maincategories.maincategories')}} </span>
                     <span
                         class="badge badge badge-danger badge-pill float-right mr-2">{{\App\Models\Category::count()}}</span>

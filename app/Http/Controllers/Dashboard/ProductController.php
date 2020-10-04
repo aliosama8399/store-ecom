@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralProductRequest;
 use App\Http\Requests\ProductPriceRequest;
+use App\Http\Requests\StockRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -66,9 +67,9 @@ class ProductController extends Controller
 
     public function getPrice($product_id)
     {
-        $product= Product::find($product_id);
+        $product = Product::find($product_id);
 //        return view('dashboard.products.price.create')->with('id', $product_id);
-        return view('dashboard.products.price.create',compact('product'));
+        return view('dashboard.products.price.create', compact('product'));
     }
 
     public function storePrice(ProductPriceRequest $request)
@@ -76,7 +77,7 @@ class ProductController extends Controller
         try {
             DB::beginTransaction();
 
-            Product::whereId($request->product_id)->update($request->except(['_token','product_id']));
+            Product::whereId($request->product_id)->update($request->except(['_token', 'product_id']));
             DB::commit();
             return redirect()->route('admin.products')->with(['success' => __('messages.success')]);
 
@@ -90,4 +91,33 @@ class ProductController extends Controller
 
 
     }
+
+    public function getStock($product_id)
+    {
+        $product = Product::find($product_id);
+//        return view('dashboard.products.price.create')->with('id', $product_id);
+        return view('dashboard.products.stock.create', compact('product'));
+
+    }
+
+    public function storeStock(StockRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            Product::whereId($request->product_id)->update($request->except(['_token', 'product_id']));
+            DB::commit();
+            return redirect()->route('admin.products')->with(['success' => __('messages.success')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return redirect()->route('admin.products')->with(['error' => __('messages.error')]);
+
+        }
+
+    }
+
+
 }
