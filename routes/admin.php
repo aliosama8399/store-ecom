@@ -74,6 +74,12 @@ Route::group(
             Route::get('price/{id}', 'ProductController@getPrice')->name('admin.products.price');
             Route::post('price', 'ProductController@storePrice')->name('admin.products.price.store');
 
+            Route::get('stock/{id}', 'ProductController@getStock')->name('admin.products.stock');
+            Route::post('stock', 'ProductController@storeStock')->name('admin.products.stock.store');
+
+            Route::get('images/{id}', 'ProductController@getImages')->name('admin.products.images');
+            Route::post('images', 'ProductController@storeImages')->name('admin.products.images.store');
+            Route::post('imagesdb', 'ProductController@storeImagesDB')->name('admin.products.images.store.db');
 
             Route::get('edit/{id}', 'ProductController@edit')->name('admin.products.edit');
             Route::PUT('update/{id}', 'ProductController@update')->name('admin.products.update');

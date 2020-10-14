@@ -20,18 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37bb898a-c21f-483a-9e06-81b93bccc6aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Enumerations/PriceType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/ProductPriceRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/products/price/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/products/price/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/ProductImagesRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Image.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/products/Sc8WJRn8mZANtNdj2DNSu61v1o5qxy9Xl3Go8rUU.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/products/fj1PAnYrjKzgyRqj9mGC8ljN0GqipQDuYmSPAwB2.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/products/images/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/products/images/edit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin/products.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/admin/products.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/admin/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin/products.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin/products.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/dashboard/products/general/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/products/general/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -176,22 +175,22 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Enumerations" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/dashboard/products" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Models" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\products\general" />
       <recent name="E:\xampp\htdocs\ecommercev2\public\assets\images\maincategories" />
       <recent name="E:\xampp\htdocs\ecommercev2\public\assets\images\brands" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\views" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Models" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Enumerations" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\products" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Enumerations" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\en\admin" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\lang\ar\admin" />
@@ -278,6 +277,11 @@
       <workItem from="1601391487969" duration="13291000" />
       <workItem from="1601479067529" duration="9787000" />
       <workItem from="1601743820501" duration="12233000" />
+      <workItem from="1601827803113" duration="11842000" />
+      <workItem from="1601920365839" duration="1000" />
+      <workItem from="1601923465527" duration="8000" />
+      <workItem from="1601933835252" duration="300000" />
+      <workItem from="1602709533783" duration="7560000" />
     </task>
     <servers />
   </component>
@@ -364,6 +368,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="810" y="190" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1601483021566" />
+    <state x="815" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1601834951763">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="815" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1601834951763" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
