@@ -65,8 +65,8 @@
                                                                  aria-label="Basic example">
                                                                 <a href="{{route('admin.products.price',$product -> id)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">price</a>
-{{--                                                                <a href="{{route('admin.maincategories.delete',$categorie -> id)}}"--}}
-{{--                                                                   class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/maincategories.delete')}}</a>--}}
+                                                                <a href="{{route('admin.products.images',$product -> id)}}"
+                                                                   class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">صور</a>
                                                                 <a href="{{route('admin.products.stock',$product -> id)}}"
                                                                    class="btn btn-outline-cyan btn-min-width box-shadow-3 mr-1 mb-1"> المستودع </a>
 

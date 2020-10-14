@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralProductRequest;
+use App\Http\Requests\ProductImagesRequest;
 use App\Http\Requests\ProductPriceRequest;
 use App\Http\Requests\StockRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -119,5 +121,45 @@ class ProductController extends Controller
 
     }
 
+    public function getImages($product_id)
+    {
+        return view('dashboard.products.images.create')->withId($product_id);
 
+    }
+
+    public function storeImages(Request $request)
+    {
+        $file = $request->file('dzfile');
+        $filename = uploadImage('products', $file);
+
+        return response()->json([
+            'name' => $filename,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
+    }
+
+    public function storeImagesDB(ProductImagesRequest $request)
+    {
+
+        try {
+           if ($request->has('document') && count($request->document) > 0) {
+                foreach ($request->document as $image) {
+                    Image::create([
+                        'product_id' => $request->product_id,
+                        'photo' => $image,
+                    ]);
+                }
+            }
+
+            return redirect()->route('admin.products')->with(['success' => __('messages.success')]);
+
+
+        }catch (\Exception $e){
+            return redirect()->route('admin.products')->with(['error' => __('messages.error')]);
+
+        }
+
+
+
+    }
 }
