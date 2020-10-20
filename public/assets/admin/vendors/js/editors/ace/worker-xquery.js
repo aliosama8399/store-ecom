@@ -11,7 +11,7 @@ if (!window.console) {
         postMessage({type: "log", data: msgs});
     };
     window.console.error =
-    window.console.warn = 
+    window.console.warn =
     window.console.log =
     window.console.trace = window.console;
 }
@@ -23,7 +23,7 @@ window.onerror = function(message, file, line, col, err) {
         message: message,
         data: err.data,
         file: file,
-        line: line, 
+        line: line,
         col: col,
         stack: err.stack
     }});
@@ -39,13 +39,13 @@ window.normalizeModule = function(parentId, moduleName) {
     if (moduleName.charAt(0) == ".") {
         var base = parentId.split("/").slice(0, -1).join("/");
         moduleName = (base ? base + "/" : "") + moduleName;
-        
+
         while (moduleName.indexOf(".") !== -1 && previous != moduleName) {
             var previous = moduleName;
             moduleName = moduleName.replace(/^\.\//, "").replace(/\/\.\//, "/").replace(/[^\/]+\/\.\.\//, "");
         }
     }
-    
+
     return moduleName;
 };
 
@@ -67,13 +67,13 @@ window.require = function require(parentId, id) {
         }
         return module.exports;
     }
-   
+
     if (!window.require.tlns)
         return console.log("unable to load " + id);
-    
+
     var path = resolveModuleId(id, window.require.tlns);
     if (path.slice(-3) != ".js") path += ".js";
-    
+
     window.require.id = id;
     window.require.modules[id] = {}; // prevent infinite loop on broken modules
     importScripts(path);
@@ -112,7 +112,7 @@ window.define = function(id, deps, factory) {
         deps = [];
         id = window.require.id;
     }
-    
+
     if (typeof factory != "function") {
         window.require.modules[id] = {
             exports: factory,
@@ -163,13 +163,13 @@ window.initSender = function initSender() {
 
     var EventEmitter = window.require("ace/lib/event_emitter").EventEmitter;
     var oop = window.require("ace/lib/oop");
-    
+
     var Sender = function() {};
-    
+
     (function() {
-        
+
         oop.implement(this, EventEmitter);
-                
+
         this.callback = function(data, callbackId) {
             postMessage({
                 type: "call",
@@ -177,7 +177,7 @@ window.initSender = function initSender() {
                 data: data
             });
         };
-    
+
         this.emit = function(name, data) {
             postMessage({
                 type: "event",
@@ -185,9 +185,9 @@ window.initSender = function initSender() {
                 data: data
             });
         };
-        
+
     }).call(Sender.prototype);
-    
+
     return new Sender();
 };
 
@@ -517,7 +517,7 @@ function validateDelta(docLines, delta) {
 }
 
 exports.applyDelta = function(docLines, delta, doNotValidate) {
-    
+
     var row = delta.start.row;
     var startColumn = delta.start.column;
     var line = docLines[row] || "";
@@ -582,7 +582,7 @@ EventEmitter._dispatchEvent = function(eventName, e) {
         if (e.propagationStopped)
             break;
     }
-    
+
     if (defaultHandler && !e.defaultPrevented)
         return defaultHandler(e, this);
 };
@@ -610,7 +610,7 @@ EventEmitter.setDefaultHandler = function(eventName, callback) {
     var handlers = this._defaultHandlers
     if (!handlers)
         handlers = this._defaultHandlers = {_disabled_: {}};
-    
+
     if (handlers[eventName]) {
         var old = handlers[eventName];
         var disabled = handlers._disabled_[eventName];
@@ -618,7 +618,7 @@ EventEmitter.setDefaultHandler = function(eventName, callback) {
             handlers._disabled_[eventName] = disabled = [];
         disabled.push(old);
         var i = disabled.indexOf(callback);
-        if (i != -1) 
+        if (i != -1)
             disabled.splice(i, 1);
     }
     handlers[eventName] = callback;
@@ -628,7 +628,7 @@ EventEmitter.removeDefaultHandler = function(eventName, callback) {
     if (!handlers)
         return;
     var disabled = handlers._disabled_[eventName];
-    
+
     if (handlers[eventName] == callback) {
         var old = handlers[eventName];
         if (disabled)
@@ -684,7 +684,7 @@ var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var Anchor = exports.Anchor = function(doc, row, column) {
     this.$onChange = this.onChange.bind(this);
     this.attach(doc);
-    
+
     if (typeof column == "undefined")
         this.setPosition(row.row, row.column);
     else
@@ -707,16 +707,16 @@ var Anchor = exports.Anchor = function(doc, row, column) {
 
         if (delta.start.row > this.row)
             return;
-            
+
         var point = $getTransformedPoint(delta, {row: this.row, column: this.column}, this.$insertRight);
         this.setPosition(point.row, point.column, true);
     };
-    
+
     function $pointsInOrder(point1, point2, equalPointsInOrder) {
         var bColIsAfter = equalPointsInOrder ? point1.column <= point2.column : point1.column < point2.column;
         return (point1.row < point2.row) || (point1.row == point2.row && bColIsAfter);
     }
-            
+
     function $getTransformedPoint(delta, point, moveIfEqual) {
         var deltaIsInsert = delta.action == "insert";
         var deltaRowShift = (deltaIsInsert ? 1 : -1) * (delta.end.row    - delta.start.row);
@@ -735,7 +735,7 @@ var Anchor = exports.Anchor = function(doc, row, column) {
                 column: point.column + (point.row == deltaEnd.row ? deltaColShift : 0)
             };
         }
-        
+
         return {
             row: deltaStart.row,
             column: deltaStart.column
@@ -919,23 +919,23 @@ var Document = function(textOrLines) {
     this.insert = function(position, text) {
         if (this.getLength() <= 1)
             this.$detectNewLine(text);
-        
+
         return this.insertMergedLines(position, this.$split(text));
     };
     this.insertInLine = function(position, text) {
         var start = this.clippedPos(position.row, position.column);
         var end = this.pos(position.row, position.column + text.length);
-        
+
         this.applyDelta({
             start: start,
             end: end,
             action: "insert",
             lines: [text]
         }, true);
-        
+
         return this.clonePos(end);
     };
-    
+
     this.clippedPos = function(row, column) {
         var length = this.getLength();
         if (row === undefined) {
@@ -952,15 +952,15 @@ var Document = function(textOrLines) {
         column = Math.min(Math.max(column, 0), line.length);
         return {row: row, column: column};
     };
-    
+
     this.clonePos = function(pos) {
         return {row: pos.row, column: pos.column};
     };
-    
+
     this.pos = function(row, column) {
         return {row: row, column: column};
     };
-    
+
     this.$clipPosition = function(position) {
         var length = this.getLength();
         if (position.row >= length) {
@@ -984,21 +984,21 @@ var Document = function(textOrLines) {
             column = this.$lines[row].length;
         }
         this.insertMergedLines({row: row, column: column}, lines);
-    };    
+    };
     this.insertMergedLines = function(position, lines) {
         var start = this.clippedPos(position.row, position.column);
         var end = {
             row: start.row + lines.length - 1,
             column: (lines.length == 1 ? start.column : 0) + lines[lines.length - 1].length
         };
-        
+
         this.applyDelta({
             start: start,
             end: end,
             action: "insert",
             lines: lines
         });
-        
+
         return this.clonePos(end);
     };
     this.remove = function(range) {
@@ -1015,14 +1015,14 @@ var Document = function(textOrLines) {
     this.removeInLine = function(row, startColumn, endColumn) {
         var start = this.clippedPos(row, startColumn);
         var end = this.clippedPos(row, endColumn);
-        
+
         this.applyDelta({
             start: start,
             end: end,
             action: "remove",
             lines: this.getLinesForRange({start: start, end: end})
         }, true);
-        
+
         return this.clonePos(start);
     };
     this.removeFullLines = function(firstRow, lastRow) {
@@ -1033,10 +1033,10 @@ var Document = function(textOrLines) {
         var startRow = ( deleteFirstNewLine ? firstRow - 1                  : firstRow                    );
         var startCol = ( deleteFirstNewLine ? this.getLine(startRow).length : 0                           );
         var endRow   = ( deleteLastNewLine  ? lastRow + 1                   : lastRow                     );
-        var endCol   = ( deleteLastNewLine  ? 0                             : this.getLine(endRow).length ); 
+        var endCol   = ( deleteLastNewLine  ? 0                             : this.getLine(endRow).length );
         var range = new Range(startRow, startCol, endRow, endCol);
         var deletedLines = this.$lines.slice(firstRow, lastRow + 1);
-        
+
         this.applyDelta({
             start: range.start,
             end: range.end,
@@ -1071,7 +1071,7 @@ var Document = function(textOrLines) {
         else {
             end = range.start;
         }
-        
+
         return end;
     };
     this.applyDeltas = function(deltas) {
@@ -1090,17 +1090,17 @@ var Document = function(textOrLines) {
             : !Range.comparePoints(delta.start, delta.end)) {
             return;
         }
-        
+
         if (isInsert && delta.lines.length > 20000)
             this.$splitAndapplyLargeDelta(delta, 20000);
         applyDelta(this.$lines, delta, doNotValidate);
         this._signal("change", delta);
     };
-    
+
     this.$splitAndapplyLargeDelta = function(delta, MAX) {
         var lines = delta.lines;
         var l = lines.length;
-        var row = delta.start.row; 
+        var row = delta.start.row;
         var column = delta.start.column;
         var from = 0, to = 0;
         do {
@@ -1203,7 +1203,7 @@ exports.copyArray = function(array){
     for (var i=0, l=array.length; i<l; i++) {
         if (array[i] && typeof array[i] == "object")
             copy[i] = this.copyObject( array[i] );
-        else 
+        else
             copy[i] = array[i];
     }
     return copy;
@@ -1223,7 +1223,7 @@ exports.deepCopy = function deepCopy(obj) {
     var cons = obj.constructor;
     if (cons === RegExp)
         return obj;
-    
+
     copy = cons();
     for (var key in obj) {
         copy[key] = deepCopy(obj[key]);
@@ -1301,7 +1301,7 @@ exports.deferredCall = function(fcn) {
         timer = null;
         return deferred;
     };
-    
+
     deferred.isPending = function() {
         return timer;
     };
@@ -1352,13 +1352,13 @@ define("ace/worker/mirror",["require","exports","module","ace/range","ace/docume
 var Range = require("../range").Range;
 var Document = require("../document").Document;
 var lang = require("../lib/lang");
-    
+
 var Mirror = exports.Mirror = function(sender) {
     this.sender = sender;
     var doc = this.doc = new Document("");
-    
+
     var deferredUpdate = this.deferredUpdate = lang.delayedCall(this.onUpdate.bind(this));
-    
+
     var _self = this;
     sender.on("change", function(e) {
         var data = e.data;
@@ -1381,29 +1381,29 @@ var Mirror = exports.Mirror = function(sender) {
 };
 
 (function() {
-    
+
     this.$timeout = 500;
-    
+
     this.setTimeout = function(timeout) {
         this.$timeout = timeout;
     };
-    
+
     this.setValue = function(value) {
         this.doc.setValue(value);
         this.deferredUpdate.schedule(this.$timeout);
     };
-    
+
     this.getValue = function(callbackId) {
         this.sender.callback(this.doc.getValue(), callbackId);
     };
-    
+
     this.onUpdate = function() {
     };
-    
+
     this.isPending = function() {
         return this.deferredUpdate.isPending();
     };
-    
+
 }).call(Mirror.prototype);
 
 });
@@ -1417,11 +1417,11 @@ var init = function(that, code, message, pos, type){
     if(!code) {
         throw new Error(type + ' code is missing.');
     }
-    
+
     if(!message) {
         throw new Error(type + ' message is missing.');
     }
-    
+
     if(!pos) {
         throw new Error(type + ' position is missing.');
     }
@@ -1429,7 +1429,7 @@ var init = function(that, code, message, pos, type){
     that.getCode = function(){
         return code;
     };
-    
+
     that.getMessage = function(){
         return message;
     };
@@ -1503,7 +1503,7 @@ exports.ModuleImport = function(translator, rootSctx, node) {
 exports.SchemaImport = function(translator, rootSctx, node) {
     var prefix = '';
     var schemaURI;
-    
+
     return {
         SchemaPrefix: function(schemaPrefix) {
             var SchemaPrefixHandler = function () {
@@ -1658,18 +1658,18 @@ exports.getSchemaBuiltinTypes = function(){
 4:[function(require,module,exports){
 exports.StaticContext = function (parent, pos) {
     'use strict';
-    
+
     var TreeOps = require('../tree_ops').TreeOps;
-    
+
     var Errors = require('./errors');
     var StaticError = Errors.StaticError;
     var StaticWarning = Errors.StaticWarning;
-    
+
     var getSchemaBuiltinTypes = require('./schema_built-in_types').getSchemaBuiltinTypes;
-    
+
     var emptyPos = { sl:0, sc: 0, el: 0, ec: 0 };
     var namespaces = {};
-    
+
     var getVarKey = function(qname) {
         return qname.uri + '#' + qname.name;
     };
@@ -1904,7 +1904,7 @@ exports.StaticContext = function (parent, pos) {
         getNamespaces: function(){
             return this.root.namespaces;
         },
-        
+
         getNamespace: function (uri) {
             var that = this;
             while (that) {
@@ -1936,7 +1936,7 @@ exports.StaticContext = function (parent, pos) {
             }
 
         },
-        
+
         resolveQName: function(value, pos){
             var qname = {
                 uri: '',
@@ -1962,11 +1962,11 @@ exports.StaticContext = function (parent, pos) {
             }
             return qname;
         },
-        
+
         variables: {},
         varRefs: {},
         functionCalls: {},
-    
+
         addVariable: function(qname, type, pos){
             if(
                 type === 'VarDecl' && this.moduleNamespace !== '' &&
@@ -1986,7 +1986,7 @@ exports.StaticContext = function (parent, pos) {
             };
             return this;
         },
-        
+
         getVariables: function(){
             var variables = {};
             var that = this;
@@ -2001,7 +2001,7 @@ exports.StaticContext = function (parent, pos) {
             }
             return variables;
         },
-        
+
         getVariable: function(qname) {
             var key = getVarKey(qname);
             var that = this;
@@ -2012,7 +2012,7 @@ exports.StaticContext = function (parent, pos) {
                 that = that.parent;
             }
         },
-        
+
         addVarRef: function(qname, pos){
             var varDecl = this.getVariable(qname);
             if(!varDecl && (qname.uri === '' || this.root.moduleResolver)) {
@@ -2021,7 +2021,7 @@ exports.StaticContext = function (parent, pos) {
             var key = getVarKey(qname);
             this.varRefs[key] = true;
         },
-        
+
         addFunctionCall: function(qname, arity, pos){
             var fn = this.getFunction(qname, arity);
             if(!fn && (qname.uri === 'http://www.w3.org/2005/xquery-local-functions' || this.root.moduleResolver)){
@@ -2034,13 +2034,13 @@ exports.StaticContext = function (parent, pos) {
             var key = getFnKey(qname, arity);
             this.functionCalls[key] = true;
         },
-        
+
         functions: getSchemaBuiltinTypes()['http://www.w3.org/2001/XMLSchema'].functions,
 
         getFunctions: function(){
             return this.root.functions;
         },
-        
+
         getFunction: function(qname, arity){
             var key = getFnKey(qname, arity);
             var fn;
@@ -2058,7 +2058,7 @@ exports.StaticContext = function (parent, pos) {
                 return this.root.functions[key];
             }
         },
-        
+
         addFunction: function(qname, pos, params) {
             if(this !== this.root){
                 throw new Error('addFunction() not invoked from the root static context.');
@@ -2080,7 +2080,7 @@ exports.StaticContext = function (parent, pos) {
             };
             return this;
         }
-        
+
     };
     s.root = parent ? parent.root : s;
     return s;
@@ -2095,11 +2095,11 @@ exports.Translator = function(rootStcx, ast){
     var Errors = require('./errors');
     var StaticError = Errors.StaticError;
     var StaticWarning = Errors.StaticWarning;
-    
+
     var TreeOps = require('../tree_ops').TreeOps;
     var StaticContext = require('./static_context').StaticContext;
     var Handlers = require('./handlers');
-    
+
     var get = function(node, path){
         var result = [];
         if(path.length === 0){
@@ -2114,7 +2114,7 @@ exports.Translator = function(rootStcx, ast){
         });
         return result;
     };
-    
+
     var markers = [];
     this.apply = function(fn) {
         try {
@@ -2138,7 +2138,7 @@ exports.Translator = function(rootStcx, ast){
             message: '[' + e.getCode() + '] ' + e.getMessage()
         });
     };
-    
+
     var addWarning = function(code, message, pos) {
         markers.push({
             pos: pos,
@@ -2147,7 +2147,7 @@ exports.Translator = function(rootStcx, ast){
             message: '[' + code + '] ' + message
         });
     };
-    
+
     this.getMarkers = function(){
         return markers;
     };
@@ -2160,7 +2160,7 @@ exports.Translator = function(rootStcx, ast){
         sctx = new StaticContext(sctx, pos);
         sctx.parent.children.push(sctx);
     };
-    
+
     var popSctx = function(pos){
         if (pos !== undefined) {
             sctx.pos.el = pos.el;
@@ -2177,10 +2177,10 @@ exports.Translator = function(rootStcx, ast){
                 addWarning('W03', 'Unused variable "$' + sctx.variables[key].qname.name + '"', sctx.variables[key].pos);
             }
         });
-        
+
         sctx = sctx.parent;
     };
-    
+
     this.visitOnly = function(node, names) {
         node.children.forEach(function(child){
             if (names.indexOf(child.name) !== -1){
@@ -2188,7 +2188,7 @@ exports.Translator = function(rootStcx, ast){
             }
         });
     };
-    
+
     this.getFirstChild = function(node, name) {
         var result;
         node.children.forEach(function(child){
@@ -2198,12 +2198,12 @@ exports.Translator = function(rootStcx, ast){
         });
         return result;
     };
-    
+
     this.ModuleDecl = function(node){
         this.visitChildren(node, Handlers.ModuleDecl(translator, rootStcx, node));
         return true;
     };
-    
+
     this.Prolog = function(node){
         this.visitOnly(node, ['DefaultNamespaceDecl', 'Setter', 'NamespaceDecl', 'Import']);
         ast.index.forEach(function(node){
@@ -2241,39 +2241,39 @@ exports.Translator = function(rootStcx, ast){
         this.visitOnly(node, ['ContextItemDecl', 'AnnotatedDecl', 'OptionDecl']);
         return true;
     };
-    
+
     this.ModuleImport = function (node) {
         this.visitChildren(node, Handlers.ModuleImport(translator, rootStcx, node));
         return true;
     };
-    
+
     this.SchemaImport = function (node) {
         this.visitChildren(node, Handlers.SchemaImport(translator, rootStcx, node));
         return true;
     };
-    
+
     this.DefaultNamespaceDecl = function(node){
         this.visitChildren(node, Handlers.DefaultNamespaceDecl(translator, rootStcx, node));
         return true;
     };
-    
+
     this.NamespaceDecl = function (node) {
         this.visitChildren(node, Handlers.NamespaceDecl(translator, rootStcx, node));
         return true;
     };
-    
+
     var annotations = {};
     this.AnnotatedDecl = function(node) {
         annotations = {};
         this.visitChildren(node, Handlers.NamespaceDecl(translator, rootStcx, node));
         return true;
     };
-    
+
     this.CompatibilityAnnotation = function(){
         annotations['http://www.w3.org/2012/xquery#updating'] = [];
         return true;
     };
-    
+
     this.Annotation = function(node){
         this.visitChildren(node, {
             EQName: function(eqname){
@@ -2286,7 +2286,7 @@ exports.Translator = function(rootStcx, ast){
         });
         return true;
     };
-    
+
     this.VarDecl = function(node){
         try {
             var varname = translator.getFirstChild(node, 'VarName');
@@ -2301,7 +2301,7 @@ exports.Translator = function(rootStcx, ast){
         this.visitOnly(node, ['ExprSingle', 'VarValue', 'VarDefaultValue']);
         return true;
     };
-    
+
     this.FunctionDecl = function(node) {
         var isUpdating = annotations['http://www.w3.org/2012/xquery#updating'] !== undefined;
         var typeDecl = get(node, ['ReturnType'])[0];
@@ -2323,12 +2323,12 @@ exports.Translator = function(rootStcx, ast){
         }
         return true;
     };
-    
+
     this.VarRef = function(node) {
         this.visitChildren(node, Handlers.VarRefHandler(translator, sctx, node));
         return true;
     };
-    
+
     this.Param = function(node){
         var typeDecl = get(node, ['TypeDeclaration'])[0];
         if(!typeDecl){
@@ -2337,7 +2337,7 @@ exports.Translator = function(rootStcx, ast){
         this.visitChildren(node, Handlers.VarHandler(translator, sctx, node));
         return true;
     };
-    
+
     this.InlineFunctionExpr	= function(node) {
         pushSctx(node.pos);
         this.visitChildren(node);
@@ -2370,7 +2370,7 @@ exports.Translator = function(rootStcx, ast){
         handleStatements(node);
         return true;
     };
-    
+
     this.VarDeclStatement = function(node){
         pushSctx(node.pos);
         statementCount[statementCount.length - 1]++;
@@ -2388,7 +2388,7 @@ exports.Translator = function(rootStcx, ast){
         popSctx();
         return true;
     };
-    
+
     this.ForBinding = function (node) {
         this.visitOnly(node, ['ExprSingle', 'VarValue', 'VarDefaultValue']);
         pushSctx(node.pos);
@@ -2396,7 +2396,7 @@ exports.Translator = function(rootStcx, ast){
         this.visitChildren(node, Handlers.VarHandler(translator, sctx, node));
         return true;
     };
-    
+
     this.LetBinding = function(node){
         this.visitOnly(node, ['ExprSingle', 'VarValue', 'VarDefaultValue']);
         pushSctx(node.pos);
@@ -2421,10 +2421,10 @@ exports.Translator = function(rootStcx, ast){
             this.visitChildren(groupingVariable, Handlers.VarHandler(translator, sctx, groupingVariable));
             return true;
         } else {
-            
+
         }
     };
-    
+
     this.TumblingWindowClause = function (node) {
         this.visitOnly(node, ['ExprSingle']);
         pushSctx(node.pos);
@@ -2481,7 +2481,7 @@ exports.Translator = function(rootStcx, ast){
         this.visitChildren(node, Handlers.VarHandler(translator, sctx, node));
         return true;
     };
-    
+
     this.CaseClause = function(node) {
         pushSctx(node.pos);
         this.visitChildren(node, Handlers.VarHandler(translator, sctx, node));
@@ -2489,14 +2489,14 @@ exports.Translator = function(rootStcx, ast){
         popSctx();
         return true;
     };
-    
+
     this.TransformExpr = function (node) {
         pushSctx(node.pos);
         this.visitChildren(node);
         popSctx();
         return true;
     };
-    
+
     this.TransformSpec = function(node) {
         this.visitOnly(node, ['ExprSingle', 'VarValue', 'VarDefaultValue']);
         this.visitChildren(node, Handlers.VarHandler(translator, sctx, node));
@@ -2514,7 +2514,7 @@ exports.Translator = function(rootStcx, ast){
         popSctx();
         return true;
     };
-    
+
     this.QuantifiedVarDecl = function(node) {
         this.visitOnly(node, ['ExprSingle']);
         pushSctx(node.pos);
@@ -2522,7 +2522,7 @@ exports.Translator = function(rootStcx, ast){
         this.visitChildren(node, Handlers.VarHandler(translator, sctx, node));
         return true;
     };
-    
+
     this.FunctionCall = function(node){
         this.visitOnly(node, ['ArgumentList']);
         var name = translator.getFirstChild(node, 'EQName');
@@ -2540,14 +2540,14 @@ exports.Translator = function(rootStcx, ast){
         });
         return true;
     };
-    
+
     this.TryClause = function(node){
         pushSctx(node.pos);
         this.visitChildren(node);
         popSctx();
         return true;
     };
-    
+
     this.CatchClause = function(node){
         pushSctx(node.pos);
         var prefix = 'err';
@@ -2657,7 +2657,7 @@ function prefixBinarySearch(items, prefix) {
     var startIndex = 0;
     var stopIndex = items.length - 1;
     var middle = Math.floor((stopIndex + startIndex) / 2);
-    
+
     while (stopIndex > startIndex && middle >= 0 && items[middle].indexOf(prefix) !== 0) {
         if (prefix < items[middle]) {
             stopIndex = middle - 1;
@@ -2811,7 +2811,7 @@ var completeVariable = function(identifier, pos, sctx){
             types[name] = decls[key].type;
         }
     });
-    
+
     var matches = findCompletions(identifier, names);
     var match = function(name) {
         return {
@@ -2873,7 +2873,7 @@ exports.StyleChecker = function (ast, source) {
 
     var tab = '    ';
     var markers = [];
-    
+
     this.getMarkers = function(){
         return markers;
     };
@@ -2897,7 +2897,7 @@ exports.StyleChecker = function (ast, source) {
                     message: '[SW01] Detected CRLF'
                 });
             }
-            
+
             var match = line.match(/\t+/);
             if(match !== null){
                 markers.push({
@@ -2935,7 +2935,7 @@ exports.StyleChecker = function (ast, source) {
         });
         return true;
     };
-    
+
     this.visit = function (node, index) {
         var name = node.name;
         var skip = false;
@@ -3047,11 +3047,11 @@ exports.JSONParseTreeHandler = function (code) {
             ptr.value = ptr.children[0].value;
             ptr.children.pop();
         }
-    
+
         if(toBeIndex.indexOf(ptr.name) !== -1) {
             ast.index.push(ptr);
         }
-    
+
         if (ptr.getParent !== null) {
             ptr = ptr.getParent;
         } else {
@@ -5143,7 +5143,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 40991                 // '$' 'as'
      || lk == 41503                 // '$' 'ascending'
      || lk == 42015                 // '$' 'at'
-     || lk == 42527                 // '$' 'attribute'
+     || lk == 42527                 // '$' 'attributes'
      || lk == 43039                 // '$' 'base-uri'
      || lk == 43551                 // '$' 'before'
      || lk == 44063                 // '$' 'boundary-space'
@@ -5242,7 +5242,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 115743                // '$' 'revalidation'
      || lk == 116767                // '$' 'satisfies'
      || lk == 117279                // '$' 'schema'
-     || lk == 117791                // '$' 'schema-attribute'
+     || lk == 117791                // '$' 'schema-attributes'
      || lk == 118303                // '$' 'schema-element'
      || lk == 118815                // '$' 'score'
      || lk == 119327                // '$' 'select'
@@ -5366,7 +5366,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 40991                 // '$' 'as'
      || lk == 41503                 // '$' 'ascending'
      || lk == 42015                 // '$' 'at'
-     || lk == 42527                 // '$' 'attribute'
+     || lk == 42527                 // '$' 'attributes'
      || lk == 43039                 // '$' 'base-uri'
      || lk == 43551                 // '$' 'before'
      || lk == 44063                 // '$' 'boundary-space'
@@ -5465,7 +5465,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 115743                // '$' 'revalidation'
      || lk == 116767                // '$' 'satisfies'
      || lk == 117279                // '$' 'schema'
-     || lk == 117791                // '$' 'schema-attribute'
+     || lk == 117791                // '$' 'schema-attributes'
      || lk == 118303                // '$' 'schema-element'
      || lk == 118815                // '$' 'score'
      || lk == 119327                // '$' 'select'
@@ -7747,7 +7747,7 @@ exports.JSONParseTreeHandler = function (code) {
     eventHandler.startNonterminal("StepExpr", e0);
     switch (l1)
     {
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
       lookahead2W(288);             // EQName^Token | S^WS | EOF | '!' | '!=' | '#' | '(' | '(:' | ')' | '*' | '+' |
       break;
     case 122:                       // 'element'
@@ -7878,7 +7878,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 226:                       // 'revalidation'
     case 228:                       // 'satisfies'
     case 229:                       // 'schema'
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
     case 231:                       // 'schema-element'
     case 232:                       // 'score'
     case 233:                       // 'select'
@@ -7969,42 +7969,42 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 35975                 // 'false' ']'
      || lk == 36037                 // 'null' ']'
      || lk == 36095                 // 'true' ']'
-     || lk == 36435                 // 'attribute' 'after'
+     || lk == 36435                 // 'attributes' 'after'
      || lk == 36474                 // 'element' 'after'
      || lk == 36487                 // 'false' 'after'
      || lk == 36539                 // 'namespace' 'after'
      || lk == 36549                 // 'null' 'after'
      || lk == 36572                 // 'processing-instruction' 'after'
      || lk == 36607                 // 'true' 'after'
-     || lk == 38995                 // 'attribute' 'and'
+     || lk == 38995                 // 'attributes' 'and'
      || lk == 39034                 // 'element' 'and'
      || lk == 39047                 // 'false' 'and'
      || lk == 39099                 // 'namespace' 'and'
      || lk == 39109                 // 'null' 'and'
      || lk == 39132                 // 'processing-instruction' 'and'
      || lk == 39167                 // 'true' 'and'
-     || lk == 41043                 // 'attribute' 'as'
+     || lk == 41043                 // 'attributes' 'as'
      || lk == 41082                 // 'element' 'as'
      || lk == 41095                 // 'false' 'as'
      || lk == 41147                 // 'namespace' 'as'
      || lk == 41157                 // 'null' 'as'
      || lk == 41180                 // 'processing-instruction' 'as'
      || lk == 41215                 // 'true' 'as'
-     || lk == 41555                 // 'attribute' 'ascending'
+     || lk == 41555                 // 'attributes' 'ascending'
      || lk == 41594                 // 'element' 'ascending'
      || lk == 41607                 // 'false' 'ascending'
      || lk == 41659                 // 'namespace' 'ascending'
      || lk == 41669                 // 'null' 'ascending'
      || lk == 41692                 // 'processing-instruction' 'ascending'
      || lk == 41727                 // 'true' 'ascending'
-     || lk == 42067                 // 'attribute' 'at'
+     || lk == 42067                 // 'attributes' 'at'
      || lk == 42106                 // 'element' 'at'
      || lk == 42119                 // 'false' 'at'
      || lk == 42171                 // 'namespace' 'at'
      || lk == 42181                 // 'null' 'at'
      || lk == 42204                 // 'processing-instruction' 'at'
      || lk == 42239                 // 'true' 'at'
-     || lk == 43603                 // 'attribute' 'before'
+     || lk == 43603                 // 'attributes' 'before'
      || lk == 43642                 // 'element' 'before'
      || lk == 43655                 // 'false' 'before'
      || lk == 43707                 // 'namespace' 'before'
@@ -8014,28 +8014,28 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 45191                 // 'false' 'by'
      || lk == 45253                 // 'null' 'by'
      || lk == 45311                 // 'true' 'by'
-     || lk == 45651                 // 'attribute' 'case'
+     || lk == 45651                 // 'attributes' 'case'
      || lk == 45690                 // 'element' 'case'
      || lk == 45703                 // 'false' 'case'
      || lk == 45755                 // 'namespace' 'case'
      || lk == 45765                 // 'null' 'case'
      || lk == 45788                 // 'processing-instruction' 'case'
      || lk == 45823                 // 'true' 'case'
-     || lk == 46163                 // 'attribute' 'cast'
+     || lk == 46163                 // 'attributes' 'cast'
      || lk == 46202                 // 'element' 'cast'
      || lk == 46215                 // 'false' 'cast'
      || lk == 46267                 // 'namespace' 'cast'
      || lk == 46277                 // 'null' 'cast'
      || lk == 46300                 // 'processing-instruction' 'cast'
      || lk == 46335                 // 'true' 'cast'
-     || lk == 46675                 // 'attribute' 'castable'
+     || lk == 46675                 // 'attributes' 'castable'
      || lk == 46714                 // 'element' 'castable'
      || lk == 46727                 // 'false' 'castable'
      || lk == 46779                 // 'namespace' 'castable'
      || lk == 46789                 // 'null' 'castable'
      || lk == 46812                 // 'processing-instruction' 'castable'
      || lk == 46847                 // 'true' 'castable'
-     || lk == 48723                 // 'attribute' 'collation'
+     || lk == 48723                 // 'attributes' 'collation'
      || lk == 48762                 // 'element' 'collation'
      || lk == 48775                 // 'false' 'collation'
      || lk == 48827                 // 'namespace' 'collation'
@@ -8045,189 +8045,189 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 51335                 // 'false' 'contains'
      || lk == 51397                 // 'null' 'contains'
      || lk == 51455                 // 'true' 'contains'
-     || lk == 54355                 // 'attribute' 'count'
+     || lk == 54355                 // 'attributes' 'count'
      || lk == 54394                 // 'element' 'count'
      || lk == 54407                 // 'false' 'count'
      || lk == 54459                 // 'namespace' 'count'
      || lk == 54469                 // 'null' 'count'
      || lk == 54492                 // 'processing-instruction' 'count'
      || lk == 54527                 // 'true' 'count'
-     || lk == 56403                 // 'attribute' 'default'
+     || lk == 56403                 // 'attributes' 'default'
      || lk == 56442                 // 'element' 'default'
      || lk == 56455                 // 'false' 'default'
      || lk == 56507                 // 'namespace' 'default'
      || lk == 56517                 // 'null' 'default'
      || lk == 56540                 // 'processing-instruction' 'default'
      || lk == 56575                 // 'true' 'default'
-     || lk == 58451                 // 'attribute' 'descending'
+     || lk == 58451                 // 'attributes' 'descending'
      || lk == 58490                 // 'element' 'descending'
      || lk == 58503                 // 'false' 'descending'
      || lk == 58555                 // 'namespace' 'descending'
      || lk == 58565                 // 'null' 'descending'
      || lk == 58588                 // 'processing-instruction' 'descending'
      || lk == 58623                 // 'true' 'descending'
-     || lk == 61011                 // 'attribute' 'div'
+     || lk == 61011                 // 'attributes' 'div'
      || lk == 61050                 // 'element' 'div'
      || lk == 61063                 // 'false' 'div'
      || lk == 61115                 // 'namespace' 'div'
      || lk == 61125                 // 'null' 'div'
      || lk == 61148                 // 'processing-instruction' 'div'
      || lk == 61183                 // 'true' 'div'
-     || lk == 63059                 // 'attribute' 'else'
+     || lk == 63059                 // 'attributes' 'else'
      || lk == 63098                 // 'element' 'else'
      || lk == 63111                 // 'false' 'else'
      || lk == 63163                 // 'namespace' 'else'
      || lk == 63173                 // 'null' 'else'
      || lk == 63196                 // 'processing-instruction' 'else'
      || lk == 63231                 // 'true' 'else'
-     || lk == 63571                 // 'attribute' 'empty'
+     || lk == 63571                 // 'attributes' 'empty'
      || lk == 63610                 // 'element' 'empty'
      || lk == 63623                 // 'false' 'empty'
      || lk == 63675                 // 'namespace' 'empty'
      || lk == 63685                 // 'null' 'empty'
      || lk == 63708                 // 'processing-instruction' 'empty'
      || lk == 63743                 // 'true' 'empty'
-     || lk == 65107                 // 'attribute' 'end'
+     || lk == 65107                 // 'attributes' 'end'
      || lk == 65146                 // 'element' 'end'
      || lk == 65159                 // 'false' 'end'
      || lk == 65211                 // 'namespace' 'end'
      || lk == 65221                 // 'null' 'end'
      || lk == 65244                 // 'processing-instruction' 'end'
      || lk == 65279                 // 'true' 'end'
-     || lk == 66131                 // 'attribute' 'eq'
+     || lk == 66131                 // 'attributes' 'eq'
      || lk == 66170                 // 'element' 'eq'
      || lk == 66183                 // 'false' 'eq'
      || lk == 66235                 // 'namespace' 'eq'
      || lk == 66245                 // 'null' 'eq'
      || lk == 66268                 // 'processing-instruction' 'eq'
      || lk == 66303                 // 'true' 'eq'
-     || lk == 67667                 // 'attribute' 'except'
+     || lk == 67667                 // 'attributes' 'except'
      || lk == 67706                 // 'element' 'except'
      || lk == 67719                 // 'false' 'except'
      || lk == 67771                 // 'namespace' 'except'
      || lk == 67781                 // 'null' 'except'
      || lk == 67804                 // 'processing-instruction' 'except'
      || lk == 67839                 // 'true' 'except'
-     || lk == 71251                 // 'attribute' 'for'
+     || lk == 71251                 // 'attributes' 'for'
      || lk == 71290                 // 'element' 'for'
      || lk == 71303                 // 'false' 'for'
      || lk == 71355                 // 'namespace' 'for'
      || lk == 71365                 // 'null' 'for'
      || lk == 71388                 // 'processing-instruction' 'for'
      || lk == 71423                 // 'true' 'for'
-     || lk == 75859                 // 'attribute' 'ge'
+     || lk == 75859                 // 'attributes' 'ge'
      || lk == 75898                 // 'element' 'ge'
      || lk == 75911                 // 'false' 'ge'
      || lk == 75963                 // 'namespace' 'ge'
      || lk == 75973                 // 'null' 'ge'
      || lk == 75996                 // 'processing-instruction' 'ge'
      || lk == 76031                 // 'true' 'ge'
-     || lk == 76883                 // 'attribute' 'group'
+     || lk == 76883                 // 'attributes' 'group'
      || lk == 76922                 // 'element' 'group'
      || lk == 76935                 // 'false' 'group'
      || lk == 76987                 // 'namespace' 'group'
      || lk == 76997                 // 'null' 'group'
      || lk == 77020                 // 'processing-instruction' 'group'
      || lk == 77055                 // 'true' 'group'
-     || lk == 77907                 // 'attribute' 'gt'
+     || lk == 77907                 // 'attributes' 'gt'
      || lk == 77946                 // 'element' 'gt'
      || lk == 77959                 // 'false' 'gt'
      || lk == 78011                 // 'namespace' 'gt'
      || lk == 78021                 // 'null' 'gt'
      || lk == 78044                 // 'processing-instruction' 'gt'
      || lk == 78079                 // 'true' 'gt'
-     || lk == 78419                 // 'attribute' 'idiv'
+     || lk == 78419                 // 'attributes' 'idiv'
      || lk == 78458                 // 'element' 'idiv'
      || lk == 78471                 // 'false' 'idiv'
      || lk == 78523                 // 'namespace' 'idiv'
      || lk == 78533                 // 'null' 'idiv'
      || lk == 78556                 // 'processing-instruction' 'idiv'
      || lk == 78591                 // 'true' 'idiv'
-     || lk == 83027                 // 'attribute' 'instance'
+     || lk == 83027                 // 'attributes' 'instance'
      || lk == 83066                 // 'element' 'instance'
      || lk == 83079                 // 'false' 'instance'
      || lk == 83131                 // 'namespace' 'instance'
      || lk == 83141                 // 'null' 'instance'
      || lk == 83164                 // 'processing-instruction' 'instance'
      || lk == 83199                 // 'true' 'instance'
-     || lk == 84051                 // 'attribute' 'intersect'
+     || lk == 84051                 // 'attributes' 'intersect'
      || lk == 84090                 // 'element' 'intersect'
      || lk == 84103                 // 'false' 'intersect'
      || lk == 84155                 // 'namespace' 'intersect'
      || lk == 84165                 // 'null' 'intersect'
      || lk == 84188                 // 'processing-instruction' 'intersect'
      || lk == 84223                 // 'true' 'intersect'
-     || lk == 84563                 // 'attribute' 'into'
+     || lk == 84563                 // 'attributes' 'into'
      || lk == 84602                 // 'element' 'into'
      || lk == 84615                 // 'false' 'into'
      || lk == 84667                 // 'namespace' 'into'
      || lk == 84677                 // 'null' 'into'
      || lk == 84700                 // 'processing-instruction' 'into'
      || lk == 84735                 // 'true' 'into'
-     || lk == 85075                 // 'attribute' 'is'
+     || lk == 85075                 // 'attributes' 'is'
      || lk == 85114                 // 'element' 'is'
      || lk == 85127                 // 'false' 'is'
      || lk == 85179                 // 'namespace' 'is'
      || lk == 85189                 // 'null' 'is'
      || lk == 85212                 // 'processing-instruction' 'is'
      || lk == 85247                 // 'true' 'is'
-     || lk == 89683                 // 'attribute' 'le'
+     || lk == 89683                 // 'attributes' 'le'
      || lk == 89722                 // 'element' 'le'
      || lk == 89735                 // 'false' 'le'
      || lk == 89787                 // 'namespace' 'le'
      || lk == 89797                 // 'null' 'le'
      || lk == 89820                 // 'processing-instruction' 'le'
      || lk == 89855                 // 'true' 'le'
-     || lk == 90707                 // 'attribute' 'let'
+     || lk == 90707                 // 'attributes' 'let'
      || lk == 90746                 // 'element' 'let'
      || lk == 90759                 // 'false' 'let'
      || lk == 90811                 // 'namespace' 'let'
      || lk == 90821                 // 'null' 'let'
      || lk == 90844                 // 'processing-instruction' 'let'
      || lk == 90879                 // 'true' 'let'
-     || lk == 92755                 // 'attribute' 'lt'
+     || lk == 92755                 // 'attributes' 'lt'
      || lk == 92794                 // 'element' 'lt'
      || lk == 92807                 // 'false' 'lt'
      || lk == 92859                 // 'namespace' 'lt'
      || lk == 92869                 // 'null' 'lt'
      || lk == 92892                 // 'processing-instruction' 'lt'
      || lk == 92927                 // 'true' 'lt'
-     || lk == 93779                 // 'attribute' 'mod'
+     || lk == 93779                 // 'attributes' 'mod'
      || lk == 93818                 // 'element' 'mod'
      || lk == 93831                 // 'false' 'mod'
      || lk == 93883                 // 'namespace' 'mod'
      || lk == 93893                 // 'null' 'mod'
      || lk == 93916                 // 'processing-instruction' 'mod'
      || lk == 93951                 // 'true' 'mod'
-     || lk == 94291                 // 'attribute' 'modify'
+     || lk == 94291                 // 'attributes' 'modify'
      || lk == 94330                 // 'element' 'modify'
      || lk == 94343                 // 'false' 'modify'
      || lk == 94395                 // 'namespace' 'modify'
      || lk == 94405                 // 'null' 'modify'
      || lk == 94428                 // 'processing-instruction' 'modify'
      || lk == 94463                 // 'true' 'modify'
-     || lk == 96851                 // 'attribute' 'ne'
+     || lk == 96851                 // 'attributes' 'ne'
      || lk == 96890                 // 'element' 'ne'
      || lk == 96903                 // 'false' 'ne'
      || lk == 96955                 // 'namespace' 'ne'
      || lk == 96965                 // 'null' 'ne'
      || lk == 96988                 // 'processing-instruction' 'ne'
      || lk == 97023                 // 'true' 'ne'
-     || lk == 103507                // 'attribute' 'only'
+     || lk == 103507                // 'attributes' 'only'
      || lk == 103546                // 'element' 'only'
      || lk == 103559                // 'false' 'only'
      || lk == 103611                // 'namespace' 'only'
      || lk == 103621                // 'null' 'only'
      || lk == 103644                // 'processing-instruction' 'only'
      || lk == 103679                // 'true' 'only'
-     || lk == 104531                // 'attribute' 'or'
+     || lk == 104531                // 'attributes' 'or'
      || lk == 104570                // 'element' 'or'
      || lk == 104583                // 'false' 'or'
      || lk == 104635                // 'namespace' 'or'
      || lk == 104645                // 'null' 'or'
      || lk == 104668                // 'processing-instruction' 'or'
      || lk == 104703                // 'true' 'or'
-     || lk == 105043                // 'attribute' 'order'
+     || lk == 105043                // 'attributes' 'order'
      || lk == 105082                // 'element' 'order'
      || lk == 105095                // 'false' 'order'
      || lk == 105147                // 'namespace' 'order'
@@ -8237,14 +8237,14 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 107143                // 'false' 'paragraphs'
      || lk == 107205                // 'null' 'paragraphs'
      || lk == 107263                // 'true' 'paragraphs'
-     || lk == 114771                // 'attribute' 'return'
+     || lk == 114771                // 'attributes' 'return'
      || lk == 114810                // 'element' 'return'
      || lk == 114823                // 'false' 'return'
      || lk == 114875                // 'namespace' 'return'
      || lk == 114885                // 'null' 'return'
      || lk == 114908                // 'processing-instruction' 'return'
      || lk == 114943                // 'true' 'return'
-     || lk == 116819                // 'attribute' 'satisfies'
+     || lk == 116819                // 'attributes' 'satisfies'
      || lk == 116858                // 'element' 'satisfies'
      || lk == 116871                // 'false' 'satisfies'
      || lk == 116923                // 'namespace' 'satisfies'
@@ -8254,14 +8254,14 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 121479                // 'false' 'sentences'
      || lk == 121541                // 'null' 'sentences'
      || lk == 121599                // 'true' 'sentences'
-     || lk == 123475                // 'attribute' 'stable'
+     || lk == 123475                // 'attributes' 'stable'
      || lk == 123514                // 'element' 'stable'
      || lk == 123527                // 'false' 'stable'
      || lk == 123579                // 'namespace' 'stable'
      || lk == 123589                // 'null' 'stable'
      || lk == 123612                // 'processing-instruction' 'stable'
      || lk == 123647                // 'true' 'stable'
-     || lk == 123987                // 'attribute' 'start'
+     || lk == 123987                // 'attributes' 'start'
      || lk == 124026                // 'element' 'start'
      || lk == 124039                // 'false' 'start'
      || lk == 124091                // 'namespace' 'start'
@@ -8271,35 +8271,35 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 129159                // 'false' 'times'
      || lk == 129221                // 'null' 'times'
      || lk == 129279                // 'true' 'times'
-     || lk == 129619                // 'attribute' 'to'
+     || lk == 129619                // 'attributes' 'to'
      || lk == 129658                // 'element' 'to'
      || lk == 129671                // 'false' 'to'
      || lk == 129723                // 'namespace' 'to'
      || lk == 129733                // 'null' 'to'
      || lk == 129756                // 'processing-instruction' 'to'
      || lk == 129791                // 'true' 'to'
-     || lk == 130131                // 'attribute' 'treat'
+     || lk == 130131                // 'attributes' 'treat'
      || lk == 130170                // 'element' 'treat'
      || lk == 130183                // 'false' 'treat'
      || lk == 130235                // 'namespace' 'treat'
      || lk == 130245                // 'null' 'treat'
      || lk == 130268                // 'processing-instruction' 'treat'
      || lk == 130303                // 'true' 'treat'
-     || lk == 133203                // 'attribute' 'union'
+     || lk == 133203                // 'attributes' 'union'
      || lk == 133242                // 'element' 'union'
      || lk == 133255                // 'false' 'union'
      || lk == 133307                // 'namespace' 'union'
      || lk == 133317                // 'null' 'union'
      || lk == 133340                // 'processing-instruction' 'union'
      || lk == 133375                // 'true' 'union'
-     || lk == 139347                // 'attribute' 'where'
+     || lk == 139347                // 'attributes' 'where'
      || lk == 139386                // 'element' 'where'
      || lk == 139399                // 'false' 'where'
      || lk == 139451                // 'namespace' 'where'
      || lk == 139461                // 'null' 'where'
      || lk == 139484                // 'processing-instruction' 'where'
      || lk == 139519                // 'true' 'where'
-     || lk == 141395                // 'attribute' 'with'
+     || lk == 141395                // 'attributes' 'with'
      || lk == 141434                // 'element' 'with'
      || lk == 141447                // 'false' 'with'
      || lk == 141499                // 'namespace' 'with'
@@ -8360,7 +8360,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 69:                        // '['
     case 281:                       // '{'
     case 283:                       // '{|'
-    case 3155:                      // 'attribute' EQName^Token
+    case 3155:                      // 'attributes' EQName^Token
     case 3194:                      // 'element' EQName^Token
     case 9915:                      // 'namespace' NCName^Token
     case 9948:                      // 'processing-instruction' NCName^Token
@@ -8375,7 +8375,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 14928:                     // 'as' '#'
     case 14929:                     // 'ascending' '#'
     case 14930:                     // 'at' '#'
-    case 14931:                     // 'attribute' '#'
+    case 14931:                     // 'attributes' '#'
     case 14932:                     // 'base-uri' '#'
     case 14933:                     // 'before' '#'
     case 14934:                     // 'boundary-space' '#'
@@ -8474,7 +8474,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 15074:                     // 'revalidation' '#'
     case 15076:                     // 'satisfies' '#'
     case 15077:                     // 'schema' '#'
-    case 15078:                     // 'schema-attribute' '#'
+    case 15078:                     // 'schema-attributes' '#'
     case 15079:                     // 'schema-element' '#'
     case 15080:                     // 'score' '#'
     case 15081:                     // 'select' '#'
@@ -8629,373 +8629,373 @@ exports.JSONParseTreeHandler = function (code) {
     case 23175:                     // 'false' '.'
     case 23237:                     // 'null' '.'
     case 23295:                     // 'true' '.'
-    case 37459:                     // 'attribute' 'allowing'
+    case 37459:                     // 'attributes' 'allowing'
     case 37498:                     // 'element' 'allowing'
     case 37563:                     // 'namespace' 'allowing'
     case 37596:                     // 'processing-instruction' 'allowing'
-    case 37971:                     // 'attribute' 'ancestor'
+    case 37971:                     // 'attributes' 'ancestor'
     case 38010:                     // 'element' 'ancestor'
     case 38075:                     // 'namespace' 'ancestor'
     case 38108:                     // 'processing-instruction' 'ancestor'
-    case 38483:                     // 'attribute' 'ancestor-or-self'
+    case 38483:                     // 'attributes' 'ancestor-or-self'
     case 38522:                     // 'element' 'ancestor-or-self'
     case 38587:                     // 'namespace' 'ancestor-or-self'
     case 38620:                     // 'processing-instruction' 'ancestor-or-self'
-    case 40019:                     // 'attribute' 'append'
+    case 40019:                     // 'attributes' 'append'
     case 40058:                     // 'element' 'append'
     case 40123:                     // 'namespace' 'append'
     case 40156:                     // 'processing-instruction' 'append'
-    case 40531:                     // 'attribute' 'array'
+    case 40531:                     // 'attributes' 'array'
     case 40570:                     // 'element' 'array'
-    case 42579:                     // 'attribute' 'attribute'
-    case 42618:                     // 'element' 'attribute'
-    case 42683:                     // 'namespace' 'attribute'
-    case 42716:                     // 'processing-instruction' 'attribute'
-    case 43091:                     // 'attribute' 'base-uri'
+    case 42579:                     // 'attributes' 'attributes'
+    case 42618:                     // 'element' 'attributes'
+    case 42683:                     // 'namespace' 'attributes'
+    case 42716:                     // 'processing-instruction' 'attributes'
+    case 43091:                     // 'attributes' 'base-uri'
     case 43130:                     // 'element' 'base-uri'
     case 43195:                     // 'namespace' 'base-uri'
     case 43228:                     // 'processing-instruction' 'base-uri'
-    case 44115:                     // 'attribute' 'boundary-space'
+    case 44115:                     // 'attributes' 'boundary-space'
     case 44154:                     // 'element' 'boundary-space'
     case 44219:                     // 'namespace' 'boundary-space'
     case 44252:                     // 'processing-instruction' 'boundary-space'
-    case 44627:                     // 'attribute' 'break'
+    case 44627:                     // 'attributes' 'break'
     case 44666:                     // 'element' 'break'
     case 44731:                     // 'namespace' 'break'
     case 44764:                     // 'processing-instruction' 'break'
-    case 47187:                     // 'attribute' 'catch'
+    case 47187:                     // 'attributes' 'catch'
     case 47226:                     // 'element' 'catch'
     case 47291:                     // 'namespace' 'catch'
     case 47324:                     // 'processing-instruction' 'catch'
-    case 48211:                     // 'attribute' 'child'
+    case 48211:                     // 'attributes' 'child'
     case 48250:                     // 'element' 'child'
     case 48315:                     // 'namespace' 'child'
     case 48348:                     // 'processing-instruction' 'child'
-    case 49747:                     // 'attribute' 'comment'
+    case 49747:                     // 'attributes' 'comment'
     case 49786:                     // 'element' 'comment'
     case 49851:                     // 'namespace' 'comment'
     case 49884:                     // 'processing-instruction' 'comment'
-    case 50259:                     // 'attribute' 'constraint'
+    case 50259:                     // 'attributes' 'constraint'
     case 50298:                     // 'element' 'constraint'
     case 50363:                     // 'namespace' 'constraint'
     case 50396:                     // 'processing-instruction' 'constraint'
-    case 50771:                     // 'attribute' 'construction'
+    case 50771:                     // 'attributes' 'construction'
     case 50810:                     // 'element' 'construction'
     case 50875:                     // 'namespace' 'construction'
     case 50908:                     // 'processing-instruction' 'construction'
-    case 52307:                     // 'attribute' 'context'
+    case 52307:                     // 'attributes' 'context'
     case 52346:                     // 'element' 'context'
     case 52411:                     // 'namespace' 'context'
     case 52444:                     // 'processing-instruction' 'context'
-    case 52819:                     // 'attribute' 'continue'
+    case 52819:                     // 'attributes' 'continue'
     case 52858:                     // 'element' 'continue'
     case 52923:                     // 'namespace' 'continue'
     case 52956:                     // 'processing-instruction' 'continue'
-    case 53331:                     // 'attribute' 'copy'
+    case 53331:                     // 'attributes' 'copy'
     case 53370:                     // 'element' 'copy'
     case 53435:                     // 'namespace' 'copy'
     case 53468:                     // 'processing-instruction' 'copy'
-    case 53843:                     // 'attribute' 'copy-namespaces'
+    case 53843:                     // 'attributes' 'copy-namespaces'
     case 53882:                     // 'element' 'copy-namespaces'
     case 53947:                     // 'namespace' 'copy-namespaces'
     case 53980:                     // 'processing-instruction' 'copy-namespaces'
-    case 54867:                     // 'attribute' 'decimal-format'
+    case 54867:                     // 'attributes' 'decimal-format'
     case 54906:                     // 'element' 'decimal-format'
     case 54971:                     // 'namespace' 'decimal-format'
     case 55004:                     // 'processing-instruction' 'decimal-format'
-    case 55891:                     // 'attribute' 'declare'
+    case 55891:                     // 'attributes' 'declare'
     case 55930:                     // 'element' 'declare'
     case 55995:                     // 'namespace' 'declare'
     case 56028:                     // 'processing-instruction' 'declare'
-    case 56915:                     // 'attribute' 'delete'
+    case 56915:                     // 'attributes' 'delete'
     case 56954:                     // 'element' 'delete'
     case 57019:                     // 'namespace' 'delete'
     case 57052:                     // 'processing-instruction' 'delete'
-    case 57427:                     // 'attribute' 'descendant'
+    case 57427:                     // 'attributes' 'descendant'
     case 57466:                     // 'element' 'descendant'
     case 57531:                     // 'namespace' 'descendant'
     case 57564:                     // 'processing-instruction' 'descendant'
-    case 57939:                     // 'attribute' 'descendant-or-self'
+    case 57939:                     // 'attributes' 'descendant-or-self'
     case 57978:                     // 'element' 'descendant-or-self'
     case 58043:                     // 'namespace' 'descendant-or-self'
     case 58076:                     // 'processing-instruction' 'descendant-or-self'
-    case 61523:                     // 'attribute' 'document'
+    case 61523:                     // 'attributes' 'document'
     case 61562:                     // 'element' 'document'
     case 61627:                     // 'namespace' 'document'
     case 61660:                     // 'processing-instruction' 'document'
-    case 62035:                     // 'attribute' 'document-node'
+    case 62035:                     // 'attributes' 'document-node'
     case 62074:                     // 'element' 'document-node'
     case 62139:                     // 'namespace' 'document-node'
     case 62172:                     // 'processing-instruction' 'document-node'
-    case 62547:                     // 'attribute' 'element'
+    case 62547:                     // 'attributes' 'element'
     case 62586:                     // 'element' 'element'
     case 62651:                     // 'namespace' 'element'
     case 62684:                     // 'processing-instruction' 'element'
-    case 64083:                     // 'attribute' 'empty-sequence'
+    case 64083:                     // 'attributes' 'empty-sequence'
     case 64122:                     // 'element' 'empty-sequence'
     case 64187:                     // 'namespace' 'empty-sequence'
     case 64220:                     // 'processing-instruction' 'empty-sequence'
-    case 64595:                     // 'attribute' 'encoding'
+    case 64595:                     // 'attributes' 'encoding'
     case 64634:                     // 'element' 'encoding'
     case 64699:                     // 'namespace' 'encoding'
     case 64732:                     // 'processing-instruction' 'encoding'
-    case 66643:                     // 'attribute' 'every'
+    case 66643:                     // 'attributes' 'every'
     case 66682:                     // 'element' 'every'
     case 66747:                     // 'namespace' 'every'
     case 66780:                     // 'processing-instruction' 'every'
-    case 68179:                     // 'attribute' 'exit'
+    case 68179:                     // 'attributes' 'exit'
     case 68218:                     // 'element' 'exit'
     case 68283:                     // 'namespace' 'exit'
     case 68316:                     // 'processing-instruction' 'exit'
-    case 68691:                     // 'attribute' 'external'
+    case 68691:                     // 'attributes' 'external'
     case 68730:                     // 'element' 'external'
     case 68795:                     // 'namespace' 'external'
     case 68828:                     // 'processing-instruction' 'external'
-    case 69203:                     // 'attribute' 'false'
+    case 69203:                     // 'attributes' 'false'
     case 69242:                     // 'element' 'false'
     case 69307:                     // 'namespace' 'false'
     case 69340:                     // 'processing-instruction' 'false'
-    case 69715:                     // 'attribute' 'first'
+    case 69715:                     // 'attributes' 'first'
     case 69754:                     // 'element' 'first'
     case 69819:                     // 'namespace' 'first'
     case 69852:                     // 'processing-instruction' 'first'
-    case 70227:                     // 'attribute' 'following'
+    case 70227:                     // 'attributes' 'following'
     case 70266:                     // 'element' 'following'
     case 70331:                     // 'namespace' 'following'
     case 70364:                     // 'processing-instruction' 'following'
-    case 70739:                     // 'attribute' 'following-sibling'
+    case 70739:                     // 'attributes' 'following-sibling'
     case 70778:                     // 'element' 'following-sibling'
     case 70843:                     // 'namespace' 'following-sibling'
     case 70876:                     // 'processing-instruction' 'following-sibling'
-    case 72787:                     // 'attribute' 'from'
+    case 72787:                     // 'attributes' 'from'
     case 72826:                     // 'element' 'from'
     case 72891:                     // 'namespace' 'from'
     case 72924:                     // 'processing-instruction' 'from'
-    case 73299:                     // 'attribute' 'ft-option'
+    case 73299:                     // 'attributes' 'ft-option'
     case 73338:                     // 'element' 'ft-option'
     case 73403:                     // 'namespace' 'ft-option'
     case 73436:                     // 'processing-instruction' 'ft-option'
-    case 75347:                     // 'attribute' 'function'
+    case 75347:                     // 'attributes' 'function'
     case 75386:                     // 'element' 'function'
     case 75451:                     // 'namespace' 'function'
     case 75484:                     // 'processing-instruction' 'function'
-    case 78931:                     // 'attribute' 'if'
+    case 78931:                     // 'attributes' 'if'
     case 78970:                     // 'element' 'if'
     case 79035:                     // 'namespace' 'if'
     case 79068:                     // 'processing-instruction' 'if'
-    case 79443:                     // 'attribute' 'import'
+    case 79443:                     // 'attributes' 'import'
     case 79482:                     // 'element' 'import'
     case 79547:                     // 'namespace' 'import'
     case 79580:                     // 'processing-instruction' 'import'
-    case 79955:                     // 'attribute' 'in'
+    case 79955:                     // 'attributes' 'in'
     case 79994:                     // 'element' 'in'
     case 80059:                     // 'namespace' 'in'
     case 80092:                     // 'processing-instruction' 'in'
-    case 80467:                     // 'attribute' 'index'
+    case 80467:                     // 'attributes' 'index'
     case 80506:                     // 'element' 'index'
     case 80571:                     // 'namespace' 'index'
     case 80604:                     // 'processing-instruction' 'index'
-    case 82515:                     // 'attribute' 'insert'
+    case 82515:                     // 'attributes' 'insert'
     case 82554:                     // 'element' 'insert'
     case 82619:                     // 'namespace' 'insert'
     case 82652:                     // 'processing-instruction' 'insert'
-    case 83539:                     // 'attribute' 'integrity'
+    case 83539:                     // 'attributes' 'integrity'
     case 83578:                     // 'element' 'integrity'
     case 83643:                     // 'namespace' 'integrity'
     case 83676:                     // 'processing-instruction' 'integrity'
-    case 85587:                     // 'attribute' 'item'
+    case 85587:                     // 'attributes' 'item'
     case 85626:                     // 'element' 'item'
     case 85691:                     // 'namespace' 'item'
     case 85724:                     // 'processing-instruction' 'item'
-    case 86099:                     // 'attribute' 'json'
+    case 86099:                     // 'attributes' 'json'
     case 86138:                     // 'element' 'json'
     case 86203:                     // 'namespace' 'json'
     case 86236:                     // 'processing-instruction' 'json'
-    case 86611:                     // 'attribute' 'json-item'
+    case 86611:                     // 'attributes' 'json-item'
     case 86650:                     // 'element' 'json-item'
-    case 87123:                     // 'attribute' 'jsoniq'
+    case 87123:                     // 'attributes' 'jsoniq'
     case 87162:                     // 'element' 'jsoniq'
     case 87227:                     // 'namespace' 'jsoniq'
     case 87260:                     // 'processing-instruction' 'jsoniq'
-    case 88659:                     // 'attribute' 'last'
+    case 88659:                     // 'attributes' 'last'
     case 88698:                     // 'element' 'last'
     case 88763:                     // 'namespace' 'last'
     case 88796:                     // 'processing-instruction' 'last'
-    case 89171:                     // 'attribute' 'lax'
+    case 89171:                     // 'attributes' 'lax'
     case 89210:                     // 'element' 'lax'
     case 89275:                     // 'namespace' 'lax'
     case 89308:                     // 'processing-instruction' 'lax'
-    case 91731:                     // 'attribute' 'loop'
+    case 91731:                     // 'attributes' 'loop'
     case 91770:                     // 'element' 'loop'
     case 91835:                     // 'namespace' 'loop'
     case 91868:                     // 'processing-instruction' 'loop'
-    case 94803:                     // 'attribute' 'module'
+    case 94803:                     // 'attributes' 'module'
     case 94842:                     // 'element' 'module'
     case 94907:                     // 'namespace' 'module'
     case 94940:                     // 'processing-instruction' 'module'
-    case 95827:                     // 'attribute' 'namespace'
+    case 95827:                     // 'attributes' 'namespace'
     case 95866:                     // 'element' 'namespace'
     case 95931:                     // 'namespace' 'namespace'
     case 95964:                     // 'processing-instruction' 'namespace'
-    case 96339:                     // 'attribute' 'namespace-node'
+    case 96339:                     // 'attributes' 'namespace-node'
     case 96378:                     // 'element' 'namespace-node'
     case 96443:                     // 'namespace' 'namespace-node'
     case 96476:                     // 'processing-instruction' 'namespace-node'
-    case 99411:                     // 'attribute' 'node'
+    case 99411:                     // 'attributes' 'node'
     case 99450:                     // 'element' 'node'
     case 99515:                     // 'namespace' 'node'
     case 99548:                     // 'processing-instruction' 'node'
-    case 99923:                     // 'attribute' 'nodes'
+    case 99923:                     // 'attributes' 'nodes'
     case 99962:                     // 'element' 'nodes'
     case 100027:                    // 'namespace' 'nodes'
     case 100060:                    // 'processing-instruction' 'nodes'
-    case 100947:                    // 'attribute' 'null'
+    case 100947:                    // 'attributes' 'null'
     case 100986:                    // 'element' 'null'
     case 101051:                    // 'namespace' 'null'
     case 101084:                    // 'processing-instruction' 'null'
-    case 101459:                    // 'attribute' 'object'
+    case 101459:                    // 'attributes' 'object'
     case 101498:                    // 'element' 'object'
     case 101563:                    // 'namespace' 'object'
     case 101596:                    // 'processing-instruction' 'object'
-    case 104019:                    // 'attribute' 'option'
+    case 104019:                    // 'attributes' 'option'
     case 104058:                    // 'element' 'option'
     case 104123:                    // 'namespace' 'option'
     case 104156:                    // 'processing-instruction' 'option'
-    case 105555:                    // 'attribute' 'ordered'
+    case 105555:                    // 'attributes' 'ordered'
     case 105594:                    // 'element' 'ordered'
     case 105659:                    // 'namespace' 'ordered'
     case 105692:                    // 'processing-instruction' 'ordered'
-    case 106067:                    // 'attribute' 'ordering'
+    case 106067:                    // 'attributes' 'ordering'
     case 106106:                    // 'element' 'ordering'
     case 106171:                    // 'namespace' 'ordering'
     case 106204:                    // 'processing-instruction' 'ordering'
-    case 107603:                    // 'attribute' 'parent'
+    case 107603:                    // 'attributes' 'parent'
     case 107642:                    // 'element' 'parent'
     case 107707:                    // 'namespace' 'parent'
     case 107740:                    // 'processing-instruction' 'parent'
-    case 110675:                    // 'attribute' 'preceding'
+    case 110675:                    // 'attributes' 'preceding'
     case 110714:                    // 'element' 'preceding'
     case 110779:                    // 'namespace' 'preceding'
     case 110812:                    // 'processing-instruction' 'preceding'
-    case 111187:                    // 'attribute' 'preceding-sibling'
+    case 111187:                    // 'attributes' 'preceding-sibling'
     case 111226:                    // 'element' 'preceding-sibling'
     case 111291:                    // 'namespace' 'preceding-sibling'
     case 111324:                    // 'processing-instruction' 'preceding-sibling'
-    case 112723:                    // 'attribute' 'processing-instruction'
+    case 112723:                    // 'attributes' 'processing-instruction'
     case 112762:                    // 'element' 'processing-instruction'
     case 112827:                    // 'namespace' 'processing-instruction'
     case 112860:                    // 'processing-instruction' 'processing-instruction'
-    case 113747:                    // 'attribute' 'rename'
+    case 113747:                    // 'attributes' 'rename'
     case 113786:                    // 'element' 'rename'
     case 113851:                    // 'namespace' 'rename'
     case 113884:                    // 'processing-instruction' 'rename'
-    case 114259:                    // 'attribute' 'replace'
+    case 114259:                    // 'attributes' 'replace'
     case 114298:                    // 'element' 'replace'
     case 114363:                    // 'namespace' 'replace'
     case 114396:                    // 'processing-instruction' 'replace'
-    case 115283:                    // 'attribute' 'returning'
+    case 115283:                    // 'attributes' 'returning'
     case 115322:                    // 'element' 'returning'
     case 115387:                    // 'namespace' 'returning'
     case 115420:                    // 'processing-instruction' 'returning'
-    case 115795:                    // 'attribute' 'revalidation'
+    case 115795:                    // 'attributes' 'revalidation'
     case 115834:                    // 'element' 'revalidation'
     case 115899:                    // 'namespace' 'revalidation'
     case 115932:                    // 'processing-instruction' 'revalidation'
-    case 117331:                    // 'attribute' 'schema'
+    case 117331:                    // 'attributes' 'schema'
     case 117370:                    // 'element' 'schema'
     case 117435:                    // 'namespace' 'schema'
     case 117468:                    // 'processing-instruction' 'schema'
-    case 117843:                    // 'attribute' 'schema-attribute'
-    case 117882:                    // 'element' 'schema-attribute'
-    case 117947:                    // 'namespace' 'schema-attribute'
-    case 117980:                    // 'processing-instruction' 'schema-attribute'
-    case 118355:                    // 'attribute' 'schema-element'
+    case 117843:                    // 'attributes' 'schema-attributes'
+    case 117882:                    // 'element' 'schema-attributes'
+    case 117947:                    // 'namespace' 'schema-attributes'
+    case 117980:                    // 'processing-instruction' 'schema-attributes'
+    case 118355:                    // 'attributes' 'schema-element'
     case 118394:                    // 'element' 'schema-element'
     case 118459:                    // 'namespace' 'schema-element'
     case 118492:                    // 'processing-instruction' 'schema-element'
-    case 118867:                    // 'attribute' 'score'
+    case 118867:                    // 'attributes' 'score'
     case 118906:                    // 'element' 'score'
     case 118971:                    // 'namespace' 'score'
     case 119004:                    // 'processing-instruction' 'score'
-    case 119379:                    // 'attribute' 'select'
+    case 119379:                    // 'attributes' 'select'
     case 119418:                    // 'element' 'select'
     case 119483:                    // 'namespace' 'select'
     case 119516:                    // 'processing-instruction' 'select'
-    case 119891:                    // 'attribute' 'self'
+    case 119891:                    // 'attributes' 'self'
     case 119930:                    // 'element' 'self'
     case 119995:                    // 'namespace' 'self'
     case 120028:                    // 'processing-instruction' 'self'
-    case 122451:                    // 'attribute' 'sliding'
+    case 122451:                    // 'attributes' 'sliding'
     case 122490:                    // 'element' 'sliding'
     case 122555:                    // 'namespace' 'sliding'
     case 122588:                    // 'processing-instruction' 'sliding'
-    case 122963:                    // 'attribute' 'some'
+    case 122963:                    // 'attributes' 'some'
     case 123002:                    // 'element' 'some'
     case 123067:                    // 'namespace' 'some'
     case 123100:                    // 'processing-instruction' 'some'
-    case 125523:                    // 'attribute' 'strict'
+    case 125523:                    // 'attributes' 'strict'
     case 125562:                    // 'element' 'strict'
     case 125627:                    // 'namespace' 'strict'
     case 125660:                    // 'processing-instruction' 'strict'
-    case 126547:                    // 'attribute' 'structured-item'
+    case 126547:                    // 'attributes' 'structured-item'
     case 126586:                    // 'element' 'structured-item'
-    case 127059:                    // 'attribute' 'switch'
+    case 127059:                    // 'attributes' 'switch'
     case 127098:                    // 'element' 'switch'
     case 127163:                    // 'namespace' 'switch'
     case 127196:                    // 'processing-instruction' 'switch'
-    case 127571:                    // 'attribute' 'text'
+    case 127571:                    // 'attributes' 'text'
     case 127610:                    // 'element' 'text'
     case 127675:                    // 'namespace' 'text'
     case 127708:                    // 'processing-instruction' 'text'
-    case 130643:                    // 'attribute' 'true'
+    case 130643:                    // 'attributes' 'true'
     case 130682:                    // 'element' 'true'
     case 130747:                    // 'namespace' 'true'
     case 130780:                    // 'processing-instruction' 'true'
-    case 131155:                    // 'attribute' 'try'
+    case 131155:                    // 'attributes' 'try'
     case 131194:                    // 'element' 'try'
     case 131259:                    // 'namespace' 'try'
     case 131292:                    // 'processing-instruction' 'try'
-    case 131667:                    // 'attribute' 'tumbling'
+    case 131667:                    // 'attributes' 'tumbling'
     case 131706:                    // 'element' 'tumbling'
     case 131771:                    // 'namespace' 'tumbling'
     case 131804:                    // 'processing-instruction' 'tumbling'
-    case 132179:                    // 'attribute' 'type'
+    case 132179:                    // 'attributes' 'type'
     case 132218:                    // 'element' 'type'
     case 132283:                    // 'namespace' 'type'
     case 132316:                    // 'processing-instruction' 'type'
-    case 132691:                    // 'attribute' 'typeswitch'
+    case 132691:                    // 'attributes' 'typeswitch'
     case 132730:                    // 'element' 'typeswitch'
     case 132795:                    // 'namespace' 'typeswitch'
     case 132828:                    // 'processing-instruction' 'typeswitch'
-    case 134227:                    // 'attribute' 'unordered'
+    case 134227:                    // 'attributes' 'unordered'
     case 134266:                    // 'element' 'unordered'
     case 134331:                    // 'namespace' 'unordered'
     case 134364:                    // 'processing-instruction' 'unordered'
-    case 134739:                    // 'attribute' 'updating'
+    case 134739:                    // 'attributes' 'updating'
     case 134778:                    // 'element' 'updating'
     case 134843:                    // 'namespace' 'updating'
     case 134876:                    // 'processing-instruction' 'updating'
-    case 136275:                    // 'attribute' 'validate'
+    case 136275:                    // 'attributes' 'validate'
     case 136314:                    // 'element' 'validate'
     case 136379:                    // 'namespace' 'validate'
     case 136412:                    // 'processing-instruction' 'validate'
-    case 136787:                    // 'attribute' 'value'
+    case 136787:                    // 'attributes' 'value'
     case 136826:                    // 'element' 'value'
     case 136891:                    // 'namespace' 'value'
     case 136924:                    // 'processing-instruction' 'value'
-    case 137299:                    // 'attribute' 'variable'
+    case 137299:                    // 'attributes' 'variable'
     case 137338:                    // 'element' 'variable'
     case 137403:                    // 'namespace' 'variable'
     case 137436:                    // 'processing-instruction' 'variable'
-    case 137811:                    // 'attribute' 'version'
+    case 137811:                    // 'attributes' 'version'
     case 137850:                    // 'element' 'version'
     case 137915:                    // 'namespace' 'version'
     case 137948:                    // 'processing-instruction' 'version'
-    case 139859:                    // 'attribute' 'while'
+    case 139859:                    // 'attributes' 'while'
     case 139898:                    // 'element' 'while'
     case 139963:                    // 'namespace' 'while'
     case 139996:                    // 'processing-instruction' 'while'
-    case 143955:                    // 'attribute' '{'
+    case 143955:                    // 'attributes' '{'
     case 143969:                    // 'comment' '{'
     case 143992:                    // 'document' '{'
     case 143994:                    // 'element' '{'
@@ -9016,7 +9016,7 @@ exports.JSONParseTreeHandler = function (code) {
   {
     switch (l1)
     {
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
       lookahead2W(288);             // EQName^Token | S^WS | EOF | '!' | '!=' | '#' | '(' | '(:' | ')' | '*' | '+' |
       break;
     case 122:                       // 'element'
@@ -9147,7 +9147,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 226:                       // 'revalidation'
     case 228:                       // 'satisfies'
     case 229:                       // 'schema'
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
     case 231:                       // 'schema-element'
     case 232:                       // 'score'
     case 233:                       // 'select'
@@ -9238,42 +9238,42 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 35975                 // 'false' ']'
      || lk == 36037                 // 'null' ']'
      || lk == 36095                 // 'true' ']'
-     || lk == 36435                 // 'attribute' 'after'
+     || lk == 36435                 // 'attributes' 'after'
      || lk == 36474                 // 'element' 'after'
      || lk == 36487                 // 'false' 'after'
      || lk == 36539                 // 'namespace' 'after'
      || lk == 36549                 // 'null' 'after'
      || lk == 36572                 // 'processing-instruction' 'after'
      || lk == 36607                 // 'true' 'after'
-     || lk == 38995                 // 'attribute' 'and'
+     || lk == 38995                 // 'attributes' 'and'
      || lk == 39034                 // 'element' 'and'
      || lk == 39047                 // 'false' 'and'
      || lk == 39099                 // 'namespace' 'and'
      || lk == 39109                 // 'null' 'and'
      || lk == 39132                 // 'processing-instruction' 'and'
      || lk == 39167                 // 'true' 'and'
-     || lk == 41043                 // 'attribute' 'as'
+     || lk == 41043                 // 'attributes' 'as'
      || lk == 41082                 // 'element' 'as'
      || lk == 41095                 // 'false' 'as'
      || lk == 41147                 // 'namespace' 'as'
      || lk == 41157                 // 'null' 'as'
      || lk == 41180                 // 'processing-instruction' 'as'
      || lk == 41215                 // 'true' 'as'
-     || lk == 41555                 // 'attribute' 'ascending'
+     || lk == 41555                 // 'attributes' 'ascending'
      || lk == 41594                 // 'element' 'ascending'
      || lk == 41607                 // 'false' 'ascending'
      || lk == 41659                 // 'namespace' 'ascending'
      || lk == 41669                 // 'null' 'ascending'
      || lk == 41692                 // 'processing-instruction' 'ascending'
      || lk == 41727                 // 'true' 'ascending'
-     || lk == 42067                 // 'attribute' 'at'
+     || lk == 42067                 // 'attributes' 'at'
      || lk == 42106                 // 'element' 'at'
      || lk == 42119                 // 'false' 'at'
      || lk == 42171                 // 'namespace' 'at'
      || lk == 42181                 // 'null' 'at'
      || lk == 42204                 // 'processing-instruction' 'at'
      || lk == 42239                 // 'true' 'at'
-     || lk == 43603                 // 'attribute' 'before'
+     || lk == 43603                 // 'attributes' 'before'
      || lk == 43642                 // 'element' 'before'
      || lk == 43655                 // 'false' 'before'
      || lk == 43707                 // 'namespace' 'before'
@@ -9283,28 +9283,28 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 45191                 // 'false' 'by'
      || lk == 45253                 // 'null' 'by'
      || lk == 45311                 // 'true' 'by'
-     || lk == 45651                 // 'attribute' 'case'
+     || lk == 45651                 // 'attributes' 'case'
      || lk == 45690                 // 'element' 'case'
      || lk == 45703                 // 'false' 'case'
      || lk == 45755                 // 'namespace' 'case'
      || lk == 45765                 // 'null' 'case'
      || lk == 45788                 // 'processing-instruction' 'case'
      || lk == 45823                 // 'true' 'case'
-     || lk == 46163                 // 'attribute' 'cast'
+     || lk == 46163                 // 'attributes' 'cast'
      || lk == 46202                 // 'element' 'cast'
      || lk == 46215                 // 'false' 'cast'
      || lk == 46267                 // 'namespace' 'cast'
      || lk == 46277                 // 'null' 'cast'
      || lk == 46300                 // 'processing-instruction' 'cast'
      || lk == 46335                 // 'true' 'cast'
-     || lk == 46675                 // 'attribute' 'castable'
+     || lk == 46675                 // 'attributes' 'castable'
      || lk == 46714                 // 'element' 'castable'
      || lk == 46727                 // 'false' 'castable'
      || lk == 46779                 // 'namespace' 'castable'
      || lk == 46789                 // 'null' 'castable'
      || lk == 46812                 // 'processing-instruction' 'castable'
      || lk == 46847                 // 'true' 'castable'
-     || lk == 48723                 // 'attribute' 'collation'
+     || lk == 48723                 // 'attributes' 'collation'
      || lk == 48762                 // 'element' 'collation'
      || lk == 48775                 // 'false' 'collation'
      || lk == 48827                 // 'namespace' 'collation'
@@ -9314,189 +9314,189 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 51335                 // 'false' 'contains'
      || lk == 51397                 // 'null' 'contains'
      || lk == 51455                 // 'true' 'contains'
-     || lk == 54355                 // 'attribute' 'count'
+     || lk == 54355                 // 'attributes' 'count'
      || lk == 54394                 // 'element' 'count'
      || lk == 54407                 // 'false' 'count'
      || lk == 54459                 // 'namespace' 'count'
      || lk == 54469                 // 'null' 'count'
      || lk == 54492                 // 'processing-instruction' 'count'
      || lk == 54527                 // 'true' 'count'
-     || lk == 56403                 // 'attribute' 'default'
+     || lk == 56403                 // 'attributes' 'default'
      || lk == 56442                 // 'element' 'default'
      || lk == 56455                 // 'false' 'default'
      || lk == 56507                 // 'namespace' 'default'
      || lk == 56517                 // 'null' 'default'
      || lk == 56540                 // 'processing-instruction' 'default'
      || lk == 56575                 // 'true' 'default'
-     || lk == 58451                 // 'attribute' 'descending'
+     || lk == 58451                 // 'attributes' 'descending'
      || lk == 58490                 // 'element' 'descending'
      || lk == 58503                 // 'false' 'descending'
      || lk == 58555                 // 'namespace' 'descending'
      || lk == 58565                 // 'null' 'descending'
      || lk == 58588                 // 'processing-instruction' 'descending'
      || lk == 58623                 // 'true' 'descending'
-     || lk == 61011                 // 'attribute' 'div'
+     || lk == 61011                 // 'attributes' 'div'
      || lk == 61050                 // 'element' 'div'
      || lk == 61063                 // 'false' 'div'
      || lk == 61115                 // 'namespace' 'div'
      || lk == 61125                 // 'null' 'div'
      || lk == 61148                 // 'processing-instruction' 'div'
      || lk == 61183                 // 'true' 'div'
-     || lk == 63059                 // 'attribute' 'else'
+     || lk == 63059                 // 'attributes' 'else'
      || lk == 63098                 // 'element' 'else'
      || lk == 63111                 // 'false' 'else'
      || lk == 63163                 // 'namespace' 'else'
      || lk == 63173                 // 'null' 'else'
      || lk == 63196                 // 'processing-instruction' 'else'
      || lk == 63231                 // 'true' 'else'
-     || lk == 63571                 // 'attribute' 'empty'
+     || lk == 63571                 // 'attributes' 'empty'
      || lk == 63610                 // 'element' 'empty'
      || lk == 63623                 // 'false' 'empty'
      || lk == 63675                 // 'namespace' 'empty'
      || lk == 63685                 // 'null' 'empty'
      || lk == 63708                 // 'processing-instruction' 'empty'
      || lk == 63743                 // 'true' 'empty'
-     || lk == 65107                 // 'attribute' 'end'
+     || lk == 65107                 // 'attributes' 'end'
      || lk == 65146                 // 'element' 'end'
      || lk == 65159                 // 'false' 'end'
      || lk == 65211                 // 'namespace' 'end'
      || lk == 65221                 // 'null' 'end'
      || lk == 65244                 // 'processing-instruction' 'end'
      || lk == 65279                 // 'true' 'end'
-     || lk == 66131                 // 'attribute' 'eq'
+     || lk == 66131                 // 'attributes' 'eq'
      || lk == 66170                 // 'element' 'eq'
      || lk == 66183                 // 'false' 'eq'
      || lk == 66235                 // 'namespace' 'eq'
      || lk == 66245                 // 'null' 'eq'
      || lk == 66268                 // 'processing-instruction' 'eq'
      || lk == 66303                 // 'true' 'eq'
-     || lk == 67667                 // 'attribute' 'except'
+     || lk == 67667                 // 'attributes' 'except'
      || lk == 67706                 // 'element' 'except'
      || lk == 67719                 // 'false' 'except'
      || lk == 67771                 // 'namespace' 'except'
      || lk == 67781                 // 'null' 'except'
      || lk == 67804                 // 'processing-instruction' 'except'
      || lk == 67839                 // 'true' 'except'
-     || lk == 71251                 // 'attribute' 'for'
+     || lk == 71251                 // 'attributes' 'for'
      || lk == 71290                 // 'element' 'for'
      || lk == 71303                 // 'false' 'for'
      || lk == 71355                 // 'namespace' 'for'
      || lk == 71365                 // 'null' 'for'
      || lk == 71388                 // 'processing-instruction' 'for'
      || lk == 71423                 // 'true' 'for'
-     || lk == 75859                 // 'attribute' 'ge'
+     || lk == 75859                 // 'attributes' 'ge'
      || lk == 75898                 // 'element' 'ge'
      || lk == 75911                 // 'false' 'ge'
      || lk == 75963                 // 'namespace' 'ge'
      || lk == 75973                 // 'null' 'ge'
      || lk == 75996                 // 'processing-instruction' 'ge'
      || lk == 76031                 // 'true' 'ge'
-     || lk == 76883                 // 'attribute' 'group'
+     || lk == 76883                 // 'attributes' 'group'
      || lk == 76922                 // 'element' 'group'
      || lk == 76935                 // 'false' 'group'
      || lk == 76987                 // 'namespace' 'group'
      || lk == 76997                 // 'null' 'group'
      || lk == 77020                 // 'processing-instruction' 'group'
      || lk == 77055                 // 'true' 'group'
-     || lk == 77907                 // 'attribute' 'gt'
+     || lk == 77907                 // 'attributes' 'gt'
      || lk == 77946                 // 'element' 'gt'
      || lk == 77959                 // 'false' 'gt'
      || lk == 78011                 // 'namespace' 'gt'
      || lk == 78021                 // 'null' 'gt'
      || lk == 78044                 // 'processing-instruction' 'gt'
      || lk == 78079                 // 'true' 'gt'
-     || lk == 78419                 // 'attribute' 'idiv'
+     || lk == 78419                 // 'attributes' 'idiv'
      || lk == 78458                 // 'element' 'idiv'
      || lk == 78471                 // 'false' 'idiv'
      || lk == 78523                 // 'namespace' 'idiv'
      || lk == 78533                 // 'null' 'idiv'
      || lk == 78556                 // 'processing-instruction' 'idiv'
      || lk == 78591                 // 'true' 'idiv'
-     || lk == 83027                 // 'attribute' 'instance'
+     || lk == 83027                 // 'attributes' 'instance'
      || lk == 83066                 // 'element' 'instance'
      || lk == 83079                 // 'false' 'instance'
      || lk == 83131                 // 'namespace' 'instance'
      || lk == 83141                 // 'null' 'instance'
      || lk == 83164                 // 'processing-instruction' 'instance'
      || lk == 83199                 // 'true' 'instance'
-     || lk == 84051                 // 'attribute' 'intersect'
+     || lk == 84051                 // 'attributes' 'intersect'
      || lk == 84090                 // 'element' 'intersect'
      || lk == 84103                 // 'false' 'intersect'
      || lk == 84155                 // 'namespace' 'intersect'
      || lk == 84165                 // 'null' 'intersect'
      || lk == 84188                 // 'processing-instruction' 'intersect'
      || lk == 84223                 // 'true' 'intersect'
-     || lk == 84563                 // 'attribute' 'into'
+     || lk == 84563                 // 'attributes' 'into'
      || lk == 84602                 // 'element' 'into'
      || lk == 84615                 // 'false' 'into'
      || lk == 84667                 // 'namespace' 'into'
      || lk == 84677                 // 'null' 'into'
      || lk == 84700                 // 'processing-instruction' 'into'
      || lk == 84735                 // 'true' 'into'
-     || lk == 85075                 // 'attribute' 'is'
+     || lk == 85075                 // 'attributes' 'is'
      || lk == 85114                 // 'element' 'is'
      || lk == 85127                 // 'false' 'is'
      || lk == 85179                 // 'namespace' 'is'
      || lk == 85189                 // 'null' 'is'
      || lk == 85212                 // 'processing-instruction' 'is'
      || lk == 85247                 // 'true' 'is'
-     || lk == 89683                 // 'attribute' 'le'
+     || lk == 89683                 // 'attributes' 'le'
      || lk == 89722                 // 'element' 'le'
      || lk == 89735                 // 'false' 'le'
      || lk == 89787                 // 'namespace' 'le'
      || lk == 89797                 // 'null' 'le'
      || lk == 89820                 // 'processing-instruction' 'le'
      || lk == 89855                 // 'true' 'le'
-     || lk == 90707                 // 'attribute' 'let'
+     || lk == 90707                 // 'attributes' 'let'
      || lk == 90746                 // 'element' 'let'
      || lk == 90759                 // 'false' 'let'
      || lk == 90811                 // 'namespace' 'let'
      || lk == 90821                 // 'null' 'let'
      || lk == 90844                 // 'processing-instruction' 'let'
      || lk == 90879                 // 'true' 'let'
-     || lk == 92755                 // 'attribute' 'lt'
+     || lk == 92755                 // 'attributes' 'lt'
      || lk == 92794                 // 'element' 'lt'
      || lk == 92807                 // 'false' 'lt'
      || lk == 92859                 // 'namespace' 'lt'
      || lk == 92869                 // 'null' 'lt'
      || lk == 92892                 // 'processing-instruction' 'lt'
      || lk == 92927                 // 'true' 'lt'
-     || lk == 93779                 // 'attribute' 'mod'
+     || lk == 93779                 // 'attributes' 'mod'
      || lk == 93818                 // 'element' 'mod'
      || lk == 93831                 // 'false' 'mod'
      || lk == 93883                 // 'namespace' 'mod'
      || lk == 93893                 // 'null' 'mod'
      || lk == 93916                 // 'processing-instruction' 'mod'
      || lk == 93951                 // 'true' 'mod'
-     || lk == 94291                 // 'attribute' 'modify'
+     || lk == 94291                 // 'attributes' 'modify'
      || lk == 94330                 // 'element' 'modify'
      || lk == 94343                 // 'false' 'modify'
      || lk == 94395                 // 'namespace' 'modify'
      || lk == 94405                 // 'null' 'modify'
      || lk == 94428                 // 'processing-instruction' 'modify'
      || lk == 94463                 // 'true' 'modify'
-     || lk == 96851                 // 'attribute' 'ne'
+     || lk == 96851                 // 'attributes' 'ne'
      || lk == 96890                 // 'element' 'ne'
      || lk == 96903                 // 'false' 'ne'
      || lk == 96955                 // 'namespace' 'ne'
      || lk == 96965                 // 'null' 'ne'
      || lk == 96988                 // 'processing-instruction' 'ne'
      || lk == 97023                 // 'true' 'ne'
-     || lk == 103507                // 'attribute' 'only'
+     || lk == 103507                // 'attributes' 'only'
      || lk == 103546                // 'element' 'only'
      || lk == 103559                // 'false' 'only'
      || lk == 103611                // 'namespace' 'only'
      || lk == 103621                // 'null' 'only'
      || lk == 103644                // 'processing-instruction' 'only'
      || lk == 103679                // 'true' 'only'
-     || lk == 104531                // 'attribute' 'or'
+     || lk == 104531                // 'attributes' 'or'
      || lk == 104570                // 'element' 'or'
      || lk == 104583                // 'false' 'or'
      || lk == 104635                // 'namespace' 'or'
      || lk == 104645                // 'null' 'or'
      || lk == 104668                // 'processing-instruction' 'or'
      || lk == 104703                // 'true' 'or'
-     || lk == 105043                // 'attribute' 'order'
+     || lk == 105043                // 'attributes' 'order'
      || lk == 105082                // 'element' 'order'
      || lk == 105095                // 'false' 'order'
      || lk == 105147                // 'namespace' 'order'
@@ -9506,14 +9506,14 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 107143                // 'false' 'paragraphs'
      || lk == 107205                // 'null' 'paragraphs'
      || lk == 107263                // 'true' 'paragraphs'
-     || lk == 114771                // 'attribute' 'return'
+     || lk == 114771                // 'attributes' 'return'
      || lk == 114810                // 'element' 'return'
      || lk == 114823                // 'false' 'return'
      || lk == 114875                // 'namespace' 'return'
      || lk == 114885                // 'null' 'return'
      || lk == 114908                // 'processing-instruction' 'return'
      || lk == 114943                // 'true' 'return'
-     || lk == 116819                // 'attribute' 'satisfies'
+     || lk == 116819                // 'attributes' 'satisfies'
      || lk == 116858                // 'element' 'satisfies'
      || lk == 116871                // 'false' 'satisfies'
      || lk == 116923                // 'namespace' 'satisfies'
@@ -9523,14 +9523,14 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 121479                // 'false' 'sentences'
      || lk == 121541                // 'null' 'sentences'
      || lk == 121599                // 'true' 'sentences'
-     || lk == 123475                // 'attribute' 'stable'
+     || lk == 123475                // 'attributes' 'stable'
      || lk == 123514                // 'element' 'stable'
      || lk == 123527                // 'false' 'stable'
      || lk == 123579                // 'namespace' 'stable'
      || lk == 123589                // 'null' 'stable'
      || lk == 123612                // 'processing-instruction' 'stable'
      || lk == 123647                // 'true' 'stable'
-     || lk == 123987                // 'attribute' 'start'
+     || lk == 123987                // 'attributes' 'start'
      || lk == 124026                // 'element' 'start'
      || lk == 124039                // 'false' 'start'
      || lk == 124091                // 'namespace' 'start'
@@ -9540,35 +9540,35 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 129159                // 'false' 'times'
      || lk == 129221                // 'null' 'times'
      || lk == 129279                // 'true' 'times'
-     || lk == 129619                // 'attribute' 'to'
+     || lk == 129619                // 'attributes' 'to'
      || lk == 129658                // 'element' 'to'
      || lk == 129671                // 'false' 'to'
      || lk == 129723                // 'namespace' 'to'
      || lk == 129733                // 'null' 'to'
      || lk == 129756                // 'processing-instruction' 'to'
      || lk == 129791                // 'true' 'to'
-     || lk == 130131                // 'attribute' 'treat'
+     || lk == 130131                // 'attributes' 'treat'
      || lk == 130170                // 'element' 'treat'
      || lk == 130183                // 'false' 'treat'
      || lk == 130235                // 'namespace' 'treat'
      || lk == 130245                // 'null' 'treat'
      || lk == 130268                // 'processing-instruction' 'treat'
      || lk == 130303                // 'true' 'treat'
-     || lk == 133203                // 'attribute' 'union'
+     || lk == 133203                // 'attributes' 'union'
      || lk == 133242                // 'element' 'union'
      || lk == 133255                // 'false' 'union'
      || lk == 133307                // 'namespace' 'union'
      || lk == 133317                // 'null' 'union'
      || lk == 133340                // 'processing-instruction' 'union'
      || lk == 133375                // 'true' 'union'
-     || lk == 139347                // 'attribute' 'where'
+     || lk == 139347                // 'attributes' 'where'
      || lk == 139386                // 'element' 'where'
      || lk == 139399                // 'false' 'where'
      || lk == 139451                // 'namespace' 'where'
      || lk == 139461                // 'null' 'where'
      || lk == 139484                // 'processing-instruction' 'where'
      || lk == 139519                // 'true' 'where'
-     || lk == 141395                // 'attribute' 'with'
+     || lk == 141395                // 'attributes' 'with'
      || lk == 141434                // 'element' 'with'
      || lk == 141447                // 'false' 'with'
      || lk == 141499                // 'namespace' 'with'
@@ -9630,7 +9630,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 69:                        // '['
     case 281:                       // '{'
     case 283:                       // '{|'
-    case 3155:                      // 'attribute' EQName^Token
+    case 3155:                      // 'attributes' EQName^Token
     case 3194:                      // 'element' EQName^Token
     case 9915:                      // 'namespace' NCName^Token
     case 9948:                      // 'processing-instruction' NCName^Token
@@ -9645,7 +9645,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 14928:                     // 'as' '#'
     case 14929:                     // 'ascending' '#'
     case 14930:                     // 'at' '#'
-    case 14931:                     // 'attribute' '#'
+    case 14931:                     // 'attributes' '#'
     case 14932:                     // 'base-uri' '#'
     case 14933:                     // 'before' '#'
     case 14934:                     // 'boundary-space' '#'
@@ -9744,7 +9744,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 15074:                     // 'revalidation' '#'
     case 15076:                     // 'satisfies' '#'
     case 15077:                     // 'schema' '#'
-    case 15078:                     // 'schema-attribute' '#'
+    case 15078:                     // 'schema-attributes' '#'
     case 15079:                     // 'schema-element' '#'
     case 15080:                     // 'score' '#'
     case 15081:                     // 'select' '#'
@@ -9899,373 +9899,373 @@ exports.JSONParseTreeHandler = function (code) {
     case 23175:                     // 'false' '.'
     case 23237:                     // 'null' '.'
     case 23295:                     // 'true' '.'
-    case 37459:                     // 'attribute' 'allowing'
+    case 37459:                     // 'attributes' 'allowing'
     case 37498:                     // 'element' 'allowing'
     case 37563:                     // 'namespace' 'allowing'
     case 37596:                     // 'processing-instruction' 'allowing'
-    case 37971:                     // 'attribute' 'ancestor'
+    case 37971:                     // 'attributes' 'ancestor'
     case 38010:                     // 'element' 'ancestor'
     case 38075:                     // 'namespace' 'ancestor'
     case 38108:                     // 'processing-instruction' 'ancestor'
-    case 38483:                     // 'attribute' 'ancestor-or-self'
+    case 38483:                     // 'attributes' 'ancestor-or-self'
     case 38522:                     // 'element' 'ancestor-or-self'
     case 38587:                     // 'namespace' 'ancestor-or-self'
     case 38620:                     // 'processing-instruction' 'ancestor-or-self'
-    case 40019:                     // 'attribute' 'append'
+    case 40019:                     // 'attributes' 'append'
     case 40058:                     // 'element' 'append'
     case 40123:                     // 'namespace' 'append'
     case 40156:                     // 'processing-instruction' 'append'
-    case 40531:                     // 'attribute' 'array'
+    case 40531:                     // 'attributes' 'array'
     case 40570:                     // 'element' 'array'
-    case 42579:                     // 'attribute' 'attribute'
-    case 42618:                     // 'element' 'attribute'
-    case 42683:                     // 'namespace' 'attribute'
-    case 42716:                     // 'processing-instruction' 'attribute'
-    case 43091:                     // 'attribute' 'base-uri'
+    case 42579:                     // 'attributes' 'attributes'
+    case 42618:                     // 'element' 'attributes'
+    case 42683:                     // 'namespace' 'attributes'
+    case 42716:                     // 'processing-instruction' 'attributes'
+    case 43091:                     // 'attributes' 'base-uri'
     case 43130:                     // 'element' 'base-uri'
     case 43195:                     // 'namespace' 'base-uri'
     case 43228:                     // 'processing-instruction' 'base-uri'
-    case 44115:                     // 'attribute' 'boundary-space'
+    case 44115:                     // 'attributes' 'boundary-space'
     case 44154:                     // 'element' 'boundary-space'
     case 44219:                     // 'namespace' 'boundary-space'
     case 44252:                     // 'processing-instruction' 'boundary-space'
-    case 44627:                     // 'attribute' 'break'
+    case 44627:                     // 'attributes' 'break'
     case 44666:                     // 'element' 'break'
     case 44731:                     // 'namespace' 'break'
     case 44764:                     // 'processing-instruction' 'break'
-    case 47187:                     // 'attribute' 'catch'
+    case 47187:                     // 'attributes' 'catch'
     case 47226:                     // 'element' 'catch'
     case 47291:                     // 'namespace' 'catch'
     case 47324:                     // 'processing-instruction' 'catch'
-    case 48211:                     // 'attribute' 'child'
+    case 48211:                     // 'attributes' 'child'
     case 48250:                     // 'element' 'child'
     case 48315:                     // 'namespace' 'child'
     case 48348:                     // 'processing-instruction' 'child'
-    case 49747:                     // 'attribute' 'comment'
+    case 49747:                     // 'attributes' 'comment'
     case 49786:                     // 'element' 'comment'
     case 49851:                     // 'namespace' 'comment'
     case 49884:                     // 'processing-instruction' 'comment'
-    case 50259:                     // 'attribute' 'constraint'
+    case 50259:                     // 'attributes' 'constraint'
     case 50298:                     // 'element' 'constraint'
     case 50363:                     // 'namespace' 'constraint'
     case 50396:                     // 'processing-instruction' 'constraint'
-    case 50771:                     // 'attribute' 'construction'
+    case 50771:                     // 'attributes' 'construction'
     case 50810:                     // 'element' 'construction'
     case 50875:                     // 'namespace' 'construction'
     case 50908:                     // 'processing-instruction' 'construction'
-    case 52307:                     // 'attribute' 'context'
+    case 52307:                     // 'attributes' 'context'
     case 52346:                     // 'element' 'context'
     case 52411:                     // 'namespace' 'context'
     case 52444:                     // 'processing-instruction' 'context'
-    case 52819:                     // 'attribute' 'continue'
+    case 52819:                     // 'attributes' 'continue'
     case 52858:                     // 'element' 'continue'
     case 52923:                     // 'namespace' 'continue'
     case 52956:                     // 'processing-instruction' 'continue'
-    case 53331:                     // 'attribute' 'copy'
+    case 53331:                     // 'attributes' 'copy'
     case 53370:                     // 'element' 'copy'
     case 53435:                     // 'namespace' 'copy'
     case 53468:                     // 'processing-instruction' 'copy'
-    case 53843:                     // 'attribute' 'copy-namespaces'
+    case 53843:                     // 'attributes' 'copy-namespaces'
     case 53882:                     // 'element' 'copy-namespaces'
     case 53947:                     // 'namespace' 'copy-namespaces'
     case 53980:                     // 'processing-instruction' 'copy-namespaces'
-    case 54867:                     // 'attribute' 'decimal-format'
+    case 54867:                     // 'attributes' 'decimal-format'
     case 54906:                     // 'element' 'decimal-format'
     case 54971:                     // 'namespace' 'decimal-format'
     case 55004:                     // 'processing-instruction' 'decimal-format'
-    case 55891:                     // 'attribute' 'declare'
+    case 55891:                     // 'attributes' 'declare'
     case 55930:                     // 'element' 'declare'
     case 55995:                     // 'namespace' 'declare'
     case 56028:                     // 'processing-instruction' 'declare'
-    case 56915:                     // 'attribute' 'delete'
+    case 56915:                     // 'attributes' 'delete'
     case 56954:                     // 'element' 'delete'
     case 57019:                     // 'namespace' 'delete'
     case 57052:                     // 'processing-instruction' 'delete'
-    case 57427:                     // 'attribute' 'descendant'
+    case 57427:                     // 'attributes' 'descendant'
     case 57466:                     // 'element' 'descendant'
     case 57531:                     // 'namespace' 'descendant'
     case 57564:                     // 'processing-instruction' 'descendant'
-    case 57939:                     // 'attribute' 'descendant-or-self'
+    case 57939:                     // 'attributes' 'descendant-or-self'
     case 57978:                     // 'element' 'descendant-or-self'
     case 58043:                     // 'namespace' 'descendant-or-self'
     case 58076:                     // 'processing-instruction' 'descendant-or-self'
-    case 61523:                     // 'attribute' 'document'
+    case 61523:                     // 'attributes' 'document'
     case 61562:                     // 'element' 'document'
     case 61627:                     // 'namespace' 'document'
     case 61660:                     // 'processing-instruction' 'document'
-    case 62035:                     // 'attribute' 'document-node'
+    case 62035:                     // 'attributes' 'document-node'
     case 62074:                     // 'element' 'document-node'
     case 62139:                     // 'namespace' 'document-node'
     case 62172:                     // 'processing-instruction' 'document-node'
-    case 62547:                     // 'attribute' 'element'
+    case 62547:                     // 'attributes' 'element'
     case 62586:                     // 'element' 'element'
     case 62651:                     // 'namespace' 'element'
     case 62684:                     // 'processing-instruction' 'element'
-    case 64083:                     // 'attribute' 'empty-sequence'
+    case 64083:                     // 'attributes' 'empty-sequence'
     case 64122:                     // 'element' 'empty-sequence'
     case 64187:                     // 'namespace' 'empty-sequence'
     case 64220:                     // 'processing-instruction' 'empty-sequence'
-    case 64595:                     // 'attribute' 'encoding'
+    case 64595:                     // 'attributes' 'encoding'
     case 64634:                     // 'element' 'encoding'
     case 64699:                     // 'namespace' 'encoding'
     case 64732:                     // 'processing-instruction' 'encoding'
-    case 66643:                     // 'attribute' 'every'
+    case 66643:                     // 'attributes' 'every'
     case 66682:                     // 'element' 'every'
     case 66747:                     // 'namespace' 'every'
     case 66780:                     // 'processing-instruction' 'every'
-    case 68179:                     // 'attribute' 'exit'
+    case 68179:                     // 'attributes' 'exit'
     case 68218:                     // 'element' 'exit'
     case 68283:                     // 'namespace' 'exit'
     case 68316:                     // 'processing-instruction' 'exit'
-    case 68691:                     // 'attribute' 'external'
+    case 68691:                     // 'attributes' 'external'
     case 68730:                     // 'element' 'external'
     case 68795:                     // 'namespace' 'external'
     case 68828:                     // 'processing-instruction' 'external'
-    case 69203:                     // 'attribute' 'false'
+    case 69203:                     // 'attributes' 'false'
     case 69242:                     // 'element' 'false'
     case 69307:                     // 'namespace' 'false'
     case 69340:                     // 'processing-instruction' 'false'
-    case 69715:                     // 'attribute' 'first'
+    case 69715:                     // 'attributes' 'first'
     case 69754:                     // 'element' 'first'
     case 69819:                     // 'namespace' 'first'
     case 69852:                     // 'processing-instruction' 'first'
-    case 70227:                     // 'attribute' 'following'
+    case 70227:                     // 'attributes' 'following'
     case 70266:                     // 'element' 'following'
     case 70331:                     // 'namespace' 'following'
     case 70364:                     // 'processing-instruction' 'following'
-    case 70739:                     // 'attribute' 'following-sibling'
+    case 70739:                     // 'attributes' 'following-sibling'
     case 70778:                     // 'element' 'following-sibling'
     case 70843:                     // 'namespace' 'following-sibling'
     case 70876:                     // 'processing-instruction' 'following-sibling'
-    case 72787:                     // 'attribute' 'from'
+    case 72787:                     // 'attributes' 'from'
     case 72826:                     // 'element' 'from'
     case 72891:                     // 'namespace' 'from'
     case 72924:                     // 'processing-instruction' 'from'
-    case 73299:                     // 'attribute' 'ft-option'
+    case 73299:                     // 'attributes' 'ft-option'
     case 73338:                     // 'element' 'ft-option'
     case 73403:                     // 'namespace' 'ft-option'
     case 73436:                     // 'processing-instruction' 'ft-option'
-    case 75347:                     // 'attribute' 'function'
+    case 75347:                     // 'attributes' 'function'
     case 75386:                     // 'element' 'function'
     case 75451:                     // 'namespace' 'function'
     case 75484:                     // 'processing-instruction' 'function'
-    case 78931:                     // 'attribute' 'if'
+    case 78931:                     // 'attributes' 'if'
     case 78970:                     // 'element' 'if'
     case 79035:                     // 'namespace' 'if'
     case 79068:                     // 'processing-instruction' 'if'
-    case 79443:                     // 'attribute' 'import'
+    case 79443:                     // 'attributes' 'import'
     case 79482:                     // 'element' 'import'
     case 79547:                     // 'namespace' 'import'
     case 79580:                     // 'processing-instruction' 'import'
-    case 79955:                     // 'attribute' 'in'
+    case 79955:                     // 'attributes' 'in'
     case 79994:                     // 'element' 'in'
     case 80059:                     // 'namespace' 'in'
     case 80092:                     // 'processing-instruction' 'in'
-    case 80467:                     // 'attribute' 'index'
+    case 80467:                     // 'attributes' 'index'
     case 80506:                     // 'element' 'index'
     case 80571:                     // 'namespace' 'index'
     case 80604:                     // 'processing-instruction' 'index'
-    case 82515:                     // 'attribute' 'insert'
+    case 82515:                     // 'attributes' 'insert'
     case 82554:                     // 'element' 'insert'
     case 82619:                     // 'namespace' 'insert'
     case 82652:                     // 'processing-instruction' 'insert'
-    case 83539:                     // 'attribute' 'integrity'
+    case 83539:                     // 'attributes' 'integrity'
     case 83578:                     // 'element' 'integrity'
     case 83643:                     // 'namespace' 'integrity'
     case 83676:                     // 'processing-instruction' 'integrity'
-    case 85587:                     // 'attribute' 'item'
+    case 85587:                     // 'attributes' 'item'
     case 85626:                     // 'element' 'item'
     case 85691:                     // 'namespace' 'item'
     case 85724:                     // 'processing-instruction' 'item'
-    case 86099:                     // 'attribute' 'json'
+    case 86099:                     // 'attributes' 'json'
     case 86138:                     // 'element' 'json'
     case 86203:                     // 'namespace' 'json'
     case 86236:                     // 'processing-instruction' 'json'
-    case 86611:                     // 'attribute' 'json-item'
+    case 86611:                     // 'attributes' 'json-item'
     case 86650:                     // 'element' 'json-item'
-    case 87123:                     // 'attribute' 'jsoniq'
+    case 87123:                     // 'attributes' 'jsoniq'
     case 87162:                     // 'element' 'jsoniq'
     case 87227:                     // 'namespace' 'jsoniq'
     case 87260:                     // 'processing-instruction' 'jsoniq'
-    case 88659:                     // 'attribute' 'last'
+    case 88659:                     // 'attributes' 'last'
     case 88698:                     // 'element' 'last'
     case 88763:                     // 'namespace' 'last'
     case 88796:                     // 'processing-instruction' 'last'
-    case 89171:                     // 'attribute' 'lax'
+    case 89171:                     // 'attributes' 'lax'
     case 89210:                     // 'element' 'lax'
     case 89275:                     // 'namespace' 'lax'
     case 89308:                     // 'processing-instruction' 'lax'
-    case 91731:                     // 'attribute' 'loop'
+    case 91731:                     // 'attributes' 'loop'
     case 91770:                     // 'element' 'loop'
     case 91835:                     // 'namespace' 'loop'
     case 91868:                     // 'processing-instruction' 'loop'
-    case 94803:                     // 'attribute' 'module'
+    case 94803:                     // 'attributes' 'module'
     case 94842:                     // 'element' 'module'
     case 94907:                     // 'namespace' 'module'
     case 94940:                     // 'processing-instruction' 'module'
-    case 95827:                     // 'attribute' 'namespace'
+    case 95827:                     // 'attributes' 'namespace'
     case 95866:                     // 'element' 'namespace'
     case 95931:                     // 'namespace' 'namespace'
     case 95964:                     // 'processing-instruction' 'namespace'
-    case 96339:                     // 'attribute' 'namespace-node'
+    case 96339:                     // 'attributes' 'namespace-node'
     case 96378:                     // 'element' 'namespace-node'
     case 96443:                     // 'namespace' 'namespace-node'
     case 96476:                     // 'processing-instruction' 'namespace-node'
-    case 99411:                     // 'attribute' 'node'
+    case 99411:                     // 'attributes' 'node'
     case 99450:                     // 'element' 'node'
     case 99515:                     // 'namespace' 'node'
     case 99548:                     // 'processing-instruction' 'node'
-    case 99923:                     // 'attribute' 'nodes'
+    case 99923:                     // 'attributes' 'nodes'
     case 99962:                     // 'element' 'nodes'
     case 100027:                    // 'namespace' 'nodes'
     case 100060:                    // 'processing-instruction' 'nodes'
-    case 100947:                    // 'attribute' 'null'
+    case 100947:                    // 'attributes' 'null'
     case 100986:                    // 'element' 'null'
     case 101051:                    // 'namespace' 'null'
     case 101084:                    // 'processing-instruction' 'null'
-    case 101459:                    // 'attribute' 'object'
+    case 101459:                    // 'attributes' 'object'
     case 101498:                    // 'element' 'object'
     case 101563:                    // 'namespace' 'object'
     case 101596:                    // 'processing-instruction' 'object'
-    case 104019:                    // 'attribute' 'option'
+    case 104019:                    // 'attributes' 'option'
     case 104058:                    // 'element' 'option'
     case 104123:                    // 'namespace' 'option'
     case 104156:                    // 'processing-instruction' 'option'
-    case 105555:                    // 'attribute' 'ordered'
+    case 105555:                    // 'attributes' 'ordered'
     case 105594:                    // 'element' 'ordered'
     case 105659:                    // 'namespace' 'ordered'
     case 105692:                    // 'processing-instruction' 'ordered'
-    case 106067:                    // 'attribute' 'ordering'
+    case 106067:                    // 'attributes' 'ordering'
     case 106106:                    // 'element' 'ordering'
     case 106171:                    // 'namespace' 'ordering'
     case 106204:                    // 'processing-instruction' 'ordering'
-    case 107603:                    // 'attribute' 'parent'
+    case 107603:                    // 'attributes' 'parent'
     case 107642:                    // 'element' 'parent'
     case 107707:                    // 'namespace' 'parent'
     case 107740:                    // 'processing-instruction' 'parent'
-    case 110675:                    // 'attribute' 'preceding'
+    case 110675:                    // 'attributes' 'preceding'
     case 110714:                    // 'element' 'preceding'
     case 110779:                    // 'namespace' 'preceding'
     case 110812:                    // 'processing-instruction' 'preceding'
-    case 111187:                    // 'attribute' 'preceding-sibling'
+    case 111187:                    // 'attributes' 'preceding-sibling'
     case 111226:                    // 'element' 'preceding-sibling'
     case 111291:                    // 'namespace' 'preceding-sibling'
     case 111324:                    // 'processing-instruction' 'preceding-sibling'
-    case 112723:                    // 'attribute' 'processing-instruction'
+    case 112723:                    // 'attributes' 'processing-instruction'
     case 112762:                    // 'element' 'processing-instruction'
     case 112827:                    // 'namespace' 'processing-instruction'
     case 112860:                    // 'processing-instruction' 'processing-instruction'
-    case 113747:                    // 'attribute' 'rename'
+    case 113747:                    // 'attributes' 'rename'
     case 113786:                    // 'element' 'rename'
     case 113851:                    // 'namespace' 'rename'
     case 113884:                    // 'processing-instruction' 'rename'
-    case 114259:                    // 'attribute' 'replace'
+    case 114259:                    // 'attributes' 'replace'
     case 114298:                    // 'element' 'replace'
     case 114363:                    // 'namespace' 'replace'
     case 114396:                    // 'processing-instruction' 'replace'
-    case 115283:                    // 'attribute' 'returning'
+    case 115283:                    // 'attributes' 'returning'
     case 115322:                    // 'element' 'returning'
     case 115387:                    // 'namespace' 'returning'
     case 115420:                    // 'processing-instruction' 'returning'
-    case 115795:                    // 'attribute' 'revalidation'
+    case 115795:                    // 'attributes' 'revalidation'
     case 115834:                    // 'element' 'revalidation'
     case 115899:                    // 'namespace' 'revalidation'
     case 115932:                    // 'processing-instruction' 'revalidation'
-    case 117331:                    // 'attribute' 'schema'
+    case 117331:                    // 'attributes' 'schema'
     case 117370:                    // 'element' 'schema'
     case 117435:                    // 'namespace' 'schema'
     case 117468:                    // 'processing-instruction' 'schema'
-    case 117843:                    // 'attribute' 'schema-attribute'
-    case 117882:                    // 'element' 'schema-attribute'
-    case 117947:                    // 'namespace' 'schema-attribute'
-    case 117980:                    // 'processing-instruction' 'schema-attribute'
-    case 118355:                    // 'attribute' 'schema-element'
+    case 117843:                    // 'attributes' 'schema-attributes'
+    case 117882:                    // 'element' 'schema-attributes'
+    case 117947:                    // 'namespace' 'schema-attributes'
+    case 117980:                    // 'processing-instruction' 'schema-attributes'
+    case 118355:                    // 'attributes' 'schema-element'
     case 118394:                    // 'element' 'schema-element'
     case 118459:                    // 'namespace' 'schema-element'
     case 118492:                    // 'processing-instruction' 'schema-element'
-    case 118867:                    // 'attribute' 'score'
+    case 118867:                    // 'attributes' 'score'
     case 118906:                    // 'element' 'score'
     case 118971:                    // 'namespace' 'score'
     case 119004:                    // 'processing-instruction' 'score'
-    case 119379:                    // 'attribute' 'select'
+    case 119379:                    // 'attributes' 'select'
     case 119418:                    // 'element' 'select'
     case 119483:                    // 'namespace' 'select'
     case 119516:                    // 'processing-instruction' 'select'
-    case 119891:                    // 'attribute' 'self'
+    case 119891:                    // 'attributes' 'self'
     case 119930:                    // 'element' 'self'
     case 119995:                    // 'namespace' 'self'
     case 120028:                    // 'processing-instruction' 'self'
-    case 122451:                    // 'attribute' 'sliding'
+    case 122451:                    // 'attributes' 'sliding'
     case 122490:                    // 'element' 'sliding'
     case 122555:                    // 'namespace' 'sliding'
     case 122588:                    // 'processing-instruction' 'sliding'
-    case 122963:                    // 'attribute' 'some'
+    case 122963:                    // 'attributes' 'some'
     case 123002:                    // 'element' 'some'
     case 123067:                    // 'namespace' 'some'
     case 123100:                    // 'processing-instruction' 'some'
-    case 125523:                    // 'attribute' 'strict'
+    case 125523:                    // 'attributes' 'strict'
     case 125562:                    // 'element' 'strict'
     case 125627:                    // 'namespace' 'strict'
     case 125660:                    // 'processing-instruction' 'strict'
-    case 126547:                    // 'attribute' 'structured-item'
+    case 126547:                    // 'attributes' 'structured-item'
     case 126586:                    // 'element' 'structured-item'
-    case 127059:                    // 'attribute' 'switch'
+    case 127059:                    // 'attributes' 'switch'
     case 127098:                    // 'element' 'switch'
     case 127163:                    // 'namespace' 'switch'
     case 127196:                    // 'processing-instruction' 'switch'
-    case 127571:                    // 'attribute' 'text'
+    case 127571:                    // 'attributes' 'text'
     case 127610:                    // 'element' 'text'
     case 127675:                    // 'namespace' 'text'
     case 127708:                    // 'processing-instruction' 'text'
-    case 130643:                    // 'attribute' 'true'
+    case 130643:                    // 'attributes' 'true'
     case 130682:                    // 'element' 'true'
     case 130747:                    // 'namespace' 'true'
     case 130780:                    // 'processing-instruction' 'true'
-    case 131155:                    // 'attribute' 'try'
+    case 131155:                    // 'attributes' 'try'
     case 131194:                    // 'element' 'try'
     case 131259:                    // 'namespace' 'try'
     case 131292:                    // 'processing-instruction' 'try'
-    case 131667:                    // 'attribute' 'tumbling'
+    case 131667:                    // 'attributes' 'tumbling'
     case 131706:                    // 'element' 'tumbling'
     case 131771:                    // 'namespace' 'tumbling'
     case 131804:                    // 'processing-instruction' 'tumbling'
-    case 132179:                    // 'attribute' 'type'
+    case 132179:                    // 'attributes' 'type'
     case 132218:                    // 'element' 'type'
     case 132283:                    // 'namespace' 'type'
     case 132316:                    // 'processing-instruction' 'type'
-    case 132691:                    // 'attribute' 'typeswitch'
+    case 132691:                    // 'attributes' 'typeswitch'
     case 132730:                    // 'element' 'typeswitch'
     case 132795:                    // 'namespace' 'typeswitch'
     case 132828:                    // 'processing-instruction' 'typeswitch'
-    case 134227:                    // 'attribute' 'unordered'
+    case 134227:                    // 'attributes' 'unordered'
     case 134266:                    // 'element' 'unordered'
     case 134331:                    // 'namespace' 'unordered'
     case 134364:                    // 'processing-instruction' 'unordered'
-    case 134739:                    // 'attribute' 'updating'
+    case 134739:                    // 'attributes' 'updating'
     case 134778:                    // 'element' 'updating'
     case 134843:                    // 'namespace' 'updating'
     case 134876:                    // 'processing-instruction' 'updating'
-    case 136275:                    // 'attribute' 'validate'
+    case 136275:                    // 'attributes' 'validate'
     case 136314:                    // 'element' 'validate'
     case 136379:                    // 'namespace' 'validate'
     case 136412:                    // 'processing-instruction' 'validate'
-    case 136787:                    // 'attribute' 'value'
+    case 136787:                    // 'attributes' 'value'
     case 136826:                    // 'element' 'value'
     case 136891:                    // 'namespace' 'value'
     case 136924:                    // 'processing-instruction' 'value'
-    case 137299:                    // 'attribute' 'variable'
+    case 137299:                    // 'attributes' 'variable'
     case 137338:                    // 'element' 'variable'
     case 137403:                    // 'namespace' 'variable'
     case 137436:                    // 'processing-instruction' 'variable'
-    case 137811:                    // 'attribute' 'version'
+    case 137811:                    // 'attributes' 'version'
     case 137850:                    // 'element' 'version'
     case 137915:                    // 'namespace' 'version'
     case 137948:                    // 'processing-instruction' 'version'
-    case 139859:                    // 'attribute' 'while'
+    case 139859:                    // 'attributes' 'while'
     case 139898:                    // 'element' 'while'
     case 139963:                    // 'namespace' 'while'
     case 139996:                    // 'processing-instruction' 'while'
-    case 143955:                    // 'attribute' '{'
+    case 143955:                    // 'attributes' '{'
     case 143969:                    // 'comment' '{'
     case 143992:                    // 'document' '{'
     case 143994:                    // 'element' '{'
@@ -10353,7 +10353,7 @@ exports.JSONParseTreeHandler = function (code) {
     eventHandler.startNonterminal("ForwardStep", e0);
     switch (l1)
     {
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
       lookahead2W(236);             // S^WS | EOF | '!' | '!=' | '(' | '(:' | ')' | '*' | '+' | ',' | '-' | '/' | '//' |
       break;
     case 94:                        // 'child'
@@ -10369,7 +10369,7 @@ exports.JSONParseTreeHandler = function (code) {
     }
     switch (lk)
     {
-    case 26707:                     // 'attribute' '::'
+    case 26707:                     // 'attributes' '::'
     case 26718:                     // 'child' '::'
     case 26736:                     // 'descendant' '::'
     case 26737:                     // 'descendant-or-self' '::'
@@ -10391,7 +10391,7 @@ exports.JSONParseTreeHandler = function (code) {
   {
     switch (l1)
     {
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
       lookahead2W(236);             // S^WS | EOF | '!' | '!=' | '(' | '(:' | ')' | '*' | '+' | ',' | '-' | '/' | '//' |
       break;
     case 94:                        // 'child'
@@ -10407,7 +10407,7 @@ exports.JSONParseTreeHandler = function (code) {
     }
     switch (lk)
     {
-    case 26707:                     // 'attribute' '::'
+    case 26707:                     // 'attributes' '::'
     case 26718:                     // 'child' '::'
     case 26736:                     // 'descendant' '::'
     case 26737:                     // 'descendant-or-self' '::'
@@ -10438,8 +10438,8 @@ exports.JSONParseTreeHandler = function (code) {
       lookahead1W(27);              // S^WS | '(:' | '::'
       shift(52);                    // '::'
       break;
-    case 83:                        // 'attribute'
-      shift(83);                    // 'attribute'
+    case 83:                        // 'attributes'
+      shift(83);                    // 'attributes'
       lookahead1W(27);              // S^WS | '(:' | '::'
       shift(52);                    // '::'
       break;
@@ -10480,8 +10480,8 @@ exports.JSONParseTreeHandler = function (code) {
       lookahead1W(27);              // S^WS | '(:' | '::'
       shiftT(52);                   // '::'
       break;
-    case 83:                        // 'attribute'
-      shiftT(83);                   // 'attribute'
+    case 83:                        // 'attributes'
+      shiftT(83);                   // 'attributes'
       lookahead1W(27);              // S^WS | '(:' | '::'
       shiftT(52);                   // '::'
       break;
@@ -10642,14 +10642,14 @@ exports.JSONParseTreeHandler = function (code) {
     eventHandler.startNonterminal("NodeTest", e0);
     switch (l1)
     {
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
     case 97:                        // 'comment'
     case 121:                       // 'document-node'
     case 122:                       // 'element'
     case 188:                       // 'namespace-node'
     case 194:                       // 'node'
     case 220:                       // 'processing-instruction'
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
     case 231:                       // 'schema-element'
     case 249:                       // 'text'
       lookahead2W(231);             // S^WS | EOF | '!' | '!=' | '(' | '(:' | ')' | '*' | '+' | ',' | '-' | '/' | '//' |
@@ -10659,14 +10659,14 @@ exports.JSONParseTreeHandler = function (code) {
     }
     switch (lk)
     {
-    case 18003:                     // 'attribute' '('
+    case 18003:                     // 'attributes' '('
     case 18017:                     // 'comment' '('
     case 18041:                     // 'document-node' '('
     case 18042:                     // 'element' '('
     case 18108:                     // 'namespace-node' '('
     case 18114:                     // 'node' '('
     case 18140:                     // 'processing-instruction' '('
-    case 18150:                     // 'schema-attribute' '('
+    case 18150:                     // 'schema-attributes' '('
     case 18151:                     // 'schema-element' '('
     case 18169:                     // 'text' '('
       parse_KindTest();
@@ -10681,14 +10681,14 @@ exports.JSONParseTreeHandler = function (code) {
   {
     switch (l1)
     {
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
     case 97:                        // 'comment'
     case 121:                       // 'document-node'
     case 122:                       // 'element'
     case 188:                       // 'namespace-node'
     case 194:                       // 'node'
     case 220:                       // 'processing-instruction'
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
     case 231:                       // 'schema-element'
     case 249:                       // 'text'
       lookahead2W(231);             // S^WS | EOF | '!' | '!=' | '(' | '(:' | ')' | '*' | '+' | ',' | '-' | '/' | '//' |
@@ -10698,14 +10698,14 @@ exports.JSONParseTreeHandler = function (code) {
     }
     switch (lk)
     {
-    case 18003:                     // 'attribute' '('
+    case 18003:                     // 'attributes' '('
     case 18017:                     // 'comment' '('
     case 18041:                     // 'document-node' '('
     case 18042:                     // 'element' '('
     case 18108:                     // 'namespace-node' '('
     case 18114:                     // 'node' '('
     case 18140:                     // 'processing-instruction' '('
-    case 18150:                     // 'schema-attribute' '('
+    case 18150:                     // 'schema-attributes' '('
     case 18151:                     // 'schema-element' '('
     case 18169:                     // 'text' '('
       try_KindTest();
@@ -11798,7 +11798,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 122:                       // 'element'
       parse_CompElemConstructor();
       break;
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
       parse_CompAttrConstructor();
       break;
     case 187:                       // 'namespace'
@@ -11826,7 +11826,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 122:                       // 'element'
       try_CompElemConstructor();
       break;
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
       try_CompAttrConstructor();
       break;
     case 187:                       // 'namespace'
@@ -12279,7 +12279,7 @@ exports.JSONParseTreeHandler = function (code) {
     switch (l1)
     {
     case 79:                        // 'array'
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
     case 97:                        // 'comment'
     case 121:                       // 'document-node'
     case 122:                       // 'element'
@@ -12290,7 +12290,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 194:                       // 'node'
     case 198:                       // 'object'
     case 220:                       // 'processing-instruction'
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
     case 231:                       // 'schema-element'
     case 247:                       // 'structured-item'
     case 249:                       // 'text'
@@ -12642,14 +12642,14 @@ exports.JSONParseTreeHandler = function (code) {
     }
     switch (lk)
     {
-    case 18003:                     // 'attribute' '('
+    case 18003:                     // 'attributes' '('
     case 18017:                     // 'comment' '('
     case 18041:                     // 'document-node' '('
     case 18042:                     // 'element' '('
     case 18108:                     // 'namespace-node' '('
     case 18114:                     // 'node' '('
     case 18140:                     // 'processing-instruction' '('
-    case 18150:                     // 'schema-attribute' '('
+    case 18150:                     // 'schema-attributes' '('
     case 18151:                     // 'schema-element' '('
     case 18169:                     // 'text' '('
       parse_KindTest();
@@ -12689,7 +12689,7 @@ exports.JSONParseTreeHandler = function (code) {
     switch (l1)
     {
     case 79:                        // 'array'
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
     case 97:                        // 'comment'
     case 121:                       // 'document-node'
     case 122:                       // 'element'
@@ -12700,7 +12700,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 194:                       // 'node'
     case 198:                       // 'object'
     case 220:                       // 'processing-instruction'
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
     case 231:                       // 'schema-element'
     case 247:                       // 'structured-item'
     case 249:                       // 'text'
@@ -13054,14 +13054,14 @@ exports.JSONParseTreeHandler = function (code) {
     }
     switch (lk)
     {
-    case 18003:                     // 'attribute' '('
+    case 18003:                     // 'attributes' '('
     case 18017:                     // 'comment' '('
     case 18041:                     // 'document-node' '('
     case 18042:                     // 'element' '('
     case 18108:                     // 'namespace-node' '('
     case 18114:                     // 'node' '('
     case 18140:                     // 'processing-instruction' '('
-    case 18150:                     // 'schema-attribute' '('
+    case 18150:                     // 'schema-attributes' '('
     case 18151:                     // 'schema-element' '('
     case 18169:                     // 'text' '('
       try_KindTest();
@@ -13256,13 +13256,13 @@ exports.JSONParseTreeHandler = function (code) {
     case 122:                       // 'element'
       parse_ElementTest();
       break;
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
       parse_AttributeTest();
       break;
     case 231:                       // 'schema-element'
       parse_SchemaElementTest();
       break;
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
       parse_SchemaAttributeTest();
       break;
     case 220:                       // 'processing-instruction'
@@ -13293,13 +13293,13 @@ exports.JSONParseTreeHandler = function (code) {
     case 122:                       // 'element'
       try_ElementTest();
       break;
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
       try_AttributeTest();
       break;
     case 231:                       // 'schema-element'
       try_SchemaElementTest();
       break;
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
       try_SchemaAttributeTest();
       break;
     case 220:                       // 'processing-instruction'
@@ -13493,7 +13493,7 @@ exports.JSONParseTreeHandler = function (code) {
   function parse_AttributeTest()
   {
     eventHandler.startNonterminal("AttributeTest", e0);
-    shift(83);                      // 'attribute'
+    shift(83);                      // 'attributes'
     lookahead1W(22);                // S^WS | '(' | '(:'
     shift(35);                      // '('
     lookahead1W(255);               // EQName^Token | S^WS | '(:' | ')' | '*' | 'after' | 'allowing' | 'ancestor' |
@@ -13517,7 +13517,7 @@ exports.JSONParseTreeHandler = function (code) {
 
   function try_AttributeTest()
   {
-    shiftT(83);                     // 'attribute'
+    shiftT(83);                     // 'attributes'
     lookahead1W(22);                // S^WS | '(' | '(:'
     shiftT(35);                     // '('
     lookahead1W(255);               // EQName^Token | S^WS | '(:' | ')' | '*' | 'after' | 'allowing' | 'ancestor' |
@@ -13565,7 +13565,7 @@ exports.JSONParseTreeHandler = function (code) {
   function parse_SchemaAttributeTest()
   {
     eventHandler.startNonterminal("SchemaAttributeTest", e0);
-    shift(230);                     // 'schema-attribute'
+    shift(230);                     // 'schema-attributes'
     lookahead1W(22);                // S^WS | '(' | '(:'
     shift(35);                      // '('
     lookahead1W(246);               // EQName^Token | S^WS | '(:' | 'after' | 'allowing' | 'ancestor' |
@@ -13578,7 +13578,7 @@ exports.JSONParseTreeHandler = function (code) {
 
   function try_SchemaAttributeTest()
   {
-    shiftT(230);                    // 'schema-attribute'
+    shiftT(230);                    // 'schema-attributes'
     lookahead1W(22);                // S^WS | '(' | '(:'
     shiftT(35);                     // '('
     lookahead1W(246);               // EQName^Token | S^WS | '(:' | 'after' | 'allowing' | 'ancestor' |
@@ -15867,7 +15867,7 @@ exports.JSONParseTreeHandler = function (code) {
   {
     eventHandler.startNonterminal("CollectionTypeDecl", e0);
     shift(80);                      // 'as'
-    lookahead1W(200);               // S^WS | '(:' | 'attribute' | 'comment' | 'document-node' | 'element' |
+    lookahead1W(200);               // S^WS | '(:' | 'attributes' | 'comment' | 'document-node' | 'element' |
     whitespace();
     parse_KindTest();
     lookahead1W(171);               // S^WS | '(:' | '*' | '+' | ';' | '?'
@@ -16177,8 +16177,8 @@ exports.JSONParseTreeHandler = function (code) {
     lookahead1(241);                // EQName^Token | 'after' | 'allowing' | 'ancestor' | 'ancestor-or-self' | 'and' |
     switch (l1)
     {
-    case 83:                        // 'attribute'
-      shift(83);                    // 'attribute'
+    case 83:                        // 'attributes'
+      shift(83);                    // 'attributes'
       break;
     case 97:                        // 'comment'
       shift(97);                    // 'comment'
@@ -16210,8 +16210,8 @@ exports.JSONParseTreeHandler = function (code) {
     case 220:                       // 'processing-instruction'
       shift(220);                   // 'processing-instruction'
       break;
-    case 230:                       // 'schema-attribute'
-      shift(230);                   // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
+      shift(230);                   // 'schema-attributes'
       break;
     case 231:                       // 'schema-element'
       shift(231);                   // 'schema-element'
@@ -16245,8 +16245,8 @@ exports.JSONParseTreeHandler = function (code) {
     lookahead1(241);                // EQName^Token | 'after' | 'allowing' | 'ancestor' | 'ancestor-or-self' | 'and' |
     switch (l1)
     {
-    case 83:                        // 'attribute'
-      shiftT(83);                   // 'attribute'
+    case 83:                        // 'attributes'
+      shiftT(83);                   // 'attributes'
       break;
     case 97:                        // 'comment'
       shiftT(97);                   // 'comment'
@@ -16278,8 +16278,8 @@ exports.JSONParseTreeHandler = function (code) {
     case 220:                       // 'processing-instruction'
       shiftT(220);                  // 'processing-instruction'
       break;
-    case 230:                       // 'schema-attribute'
-      shiftT(230);                  // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
+      shiftT(230);                  // 'schema-attributes'
       break;
     case 231:                       // 'schema-element'
       shiftT(231);                  // 'schema-element'
@@ -17196,8 +17196,8 @@ exports.JSONParseTreeHandler = function (code) {
     case 75:                        // 'ancestor-or-self'
       shift(75);                    // 'ancestor-or-self'
       break;
-    case 83:                        // 'attribute'
-      shift(83);                    // 'attribute'
+    case 83:                        // 'attributes'
+      shift(83);                    // 'attributes'
       break;
     case 94:                        // 'child'
       shift(94);                    // 'child'
@@ -17295,8 +17295,8 @@ exports.JSONParseTreeHandler = function (code) {
     case 223:                       // 'replace'
       shift(223);                   // 'replace'
       break;
-    case 230:                       // 'schema-attribute'
-      shift(230);                   // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
+      shift(230);                   // 'schema-attributes'
       break;
     case 231:                       // 'schema-element'
       shift(231);                   // 'schema-element'
@@ -17614,8 +17614,8 @@ exports.JSONParseTreeHandler = function (code) {
     case 75:                        // 'ancestor-or-self'
       shiftT(75);                   // 'ancestor-or-self'
       break;
-    case 83:                        // 'attribute'
-      shiftT(83);                   // 'attribute'
+    case 83:                        // 'attributes'
+      shiftT(83);                   // 'attributes'
       break;
     case 94:                        // 'child'
       shiftT(94);                   // 'child'
@@ -17713,8 +17713,8 @@ exports.JSONParseTreeHandler = function (code) {
     case 223:                       // 'replace'
       shiftT(223);                  // 'replace'
       break;
-    case 230:                       // 'schema-attribute'
-      shiftT(230);                  // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
+      shiftT(230);                  // 'schema-attributes'
       break;
     case 231:                       // 'schema-element'
       shiftT(231);                  // 'schema-element'
@@ -17968,7 +17968,7 @@ exports.JSONParseTreeHandler = function (code) {
       case 33:                      // '%'
         lookahead2W(246);           // EQName^Token | S^WS | '(:' | 'after' | 'allowing' | 'ancestor' |
         break;
-      case 83:                      // 'attribute'
+      case 83:                      // 'attributes'
       case 122:                     // 'element'
         lookahead2W(253);           // EQName^Token | S^WS | '#' | '(:' | 'after' | 'allowing' | 'ancestor' |
         break;
@@ -18020,7 +18020,7 @@ exports.JSONParseTreeHandler = function (code) {
       case 169:                     // 'json-item'
       case 188:                     // 'namespace-node'
       case 194:                     // 'node'
-      case 230:                     // 'schema-attribute'
+      case 230:                     // 'schema-attributes'
       case 231:                     // 'schema-element'
       case 247:                     // 'structured-item'
         lookahead2W(20);            // S^WS | '#' | '(:'
@@ -18289,7 +18289,7 @@ exports.JSONParseTreeHandler = function (code) {
       case 33:                      // '%'
         lookahead2W(246);           // EQName^Token | S^WS | '(:' | 'after' | 'allowing' | 'ancestor' |
         break;
-      case 83:                      // 'attribute'
+      case 83:                      // 'attributes'
       case 122:                     // 'element'
         lookahead2W(253);           // EQName^Token | S^WS | '#' | '(:' | 'after' | 'allowing' | 'ancestor' |
         break;
@@ -18341,7 +18341,7 @@ exports.JSONParseTreeHandler = function (code) {
       case 169:                     // 'json-item'
       case 188:                     // 'namespace-node'
       case 194:                     // 'node'
-      case 230:                     // 'schema-attribute'
+      case 230:                     // 'schema-attributes'
       case 231:                     // 'schema-element'
       case 247:                     // 'structured-item'
         lookahead2W(20);            // S^WS | '#' | '(:'
@@ -18646,7 +18646,7 @@ exports.JSONParseTreeHandler = function (code) {
      && lk != 80                    // 'as'
      && lk != 81                    // 'ascending'
      && lk != 82                    // 'at'
-     && lk != 83                    // 'attribute'
+     && lk != 83                    // 'attributes'
      && lk != 84                    // 'base-uri'
      && lk != 85                    // 'before'
      && lk != 86                    // 'boundary-space'
@@ -18740,7 +18740,7 @@ exports.JSONParseTreeHandler = function (code) {
      && lk != 226                   // 'revalidation'
      && lk != 228                   // 'satisfies'
      && lk != 229                   // 'schema'
-     && lk != 230                   // 'schema-attribute'
+     && lk != 230                   // 'schema-attributes'
      && lk != 231                   // 'schema-element'
      && lk != 232                   // 'score'
      && lk != 233                   // 'select'
@@ -18972,7 +18972,7 @@ exports.JSONParseTreeHandler = function (code) {
      && lk != 80                    // 'as'
      && lk != 81                    // 'ascending'
      && lk != 82                    // 'at'
-     && lk != 83                    // 'attribute'
+     && lk != 83                    // 'attributes'
      && lk != 84                    // 'base-uri'
      && lk != 85                    // 'before'
      && lk != 86                    // 'boundary-space'
@@ -19066,7 +19066,7 @@ exports.JSONParseTreeHandler = function (code) {
      && lk != 226                   // 'revalidation'
      && lk != 228                   // 'satisfies'
      && lk != 229                   // 'schema'
-     && lk != 230                   // 'schema-attribute'
+     && lk != 230                   // 'schema-attributes'
      && lk != 231                   // 'schema-element'
      && lk != 232                   // 'score'
      && lk != 233                   // 'select'
@@ -19588,7 +19588,7 @@ exports.JSONParseTreeHandler = function (code) {
        && lk != 41052               // 'catch' 'as'
        && lk != 41564               // 'catch' 'ascending'
        && lk != 42076               // 'catch' 'at'
-       && lk != 42588               // 'catch' 'attribute'
+       && lk != 42588               // 'catch' 'attributes'
        && lk != 43100               // 'catch' 'base-uri'
        && lk != 43612               // 'catch' 'before'
        && lk != 44124               // 'catch' 'boundary-space'
@@ -19687,7 +19687,7 @@ exports.JSONParseTreeHandler = function (code) {
        && lk != 115804              // 'catch' 'revalidation'
        && lk != 116828              // 'catch' 'satisfies'
        && lk != 117340              // 'catch' 'schema'
-       && lk != 117852              // 'catch' 'schema-attribute'
+       && lk != 117852              // 'catch' 'schema-attributes'
        && lk != 118364              // 'catch' 'schema-element'
        && lk != 118876              // 'catch' 'score'
        && lk != 119388              // 'catch' 'select'
@@ -19757,7 +19757,7 @@ exports.JSONParseTreeHandler = function (code) {
        && lk != 41052               // 'catch' 'as'
        && lk != 41564               // 'catch' 'ascending'
        && lk != 42076               // 'catch' 'at'
-       && lk != 42588               // 'catch' 'attribute'
+       && lk != 42588               // 'catch' 'attributes'
        && lk != 43100               // 'catch' 'base-uri'
        && lk != 43612               // 'catch' 'before'
        && lk != 44124               // 'catch' 'boundary-space'
@@ -19856,7 +19856,7 @@ exports.JSONParseTreeHandler = function (code) {
        && lk != 115804              // 'catch' 'revalidation'
        && lk != 116828              // 'catch' 'satisfies'
        && lk != 117340              // 'catch' 'schema'
-       && lk != 117852              // 'catch' 'schema-attribute'
+       && lk != 117852              // 'catch' 'schema-attributes'
        && lk != 118364              // 'catch' 'schema-element'
        && lk != 118876              // 'catch' 'score'
        && lk != 119388              // 'catch' 'select'
@@ -20453,7 +20453,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 41071:                     // 'delete' 'as'
     case 41583:                     // 'delete' 'ascending'
     case 42095:                     // 'delete' 'at'
-    case 42607:                     // 'delete' 'attribute'
+    case 42607:                     // 'delete' 'attributes'
     case 43119:                     // 'delete' 'base-uri'
     case 43631:                     // 'delete' 'before'
     case 44143:                     // 'delete' 'boundary-space'
@@ -20550,7 +20550,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 115823:                    // 'delete' 'revalidation'
     case 116847:                    // 'delete' 'satisfies'
     case 117359:                    // 'delete' 'schema'
-    case 117871:                    // 'delete' 'schema-attribute'
+    case 117871:                    // 'delete' 'schema-attributes'
     case 118383:                    // 'delete' 'schema-element'
     case 118895:                    // 'delete' 'score'
     case 119407:                    // 'delete' 'select'
@@ -20613,7 +20613,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 41121:                     // 'insert' 'as'
     case 41633:                     // 'insert' 'ascending'
     case 42145:                     // 'insert' 'at'
-    case 42657:                     // 'insert' 'attribute'
+    case 42657:                     // 'insert' 'attributes'
     case 43169:                     // 'insert' 'base-uri'
     case 43681:                     // 'insert' 'before'
     case 44193:                     // 'insert' 'boundary-space'
@@ -20711,7 +20711,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 115873:                    // 'insert' 'revalidation'
     case 116897:                    // 'insert' 'satisfies'
     case 117409:                    // 'insert' 'schema'
-    case 117921:                    // 'insert' 'schema-attribute'
+    case 117921:                    // 'insert' 'schema-attributes'
     case 118433:                    // 'insert' 'schema-element'
     case 118945:                    // 'insert' 'score'
     case 119457:                    // 'insert' 'select'
@@ -20768,7 +20768,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 41182:                     // 'rename' 'as'
     case 41694:                     // 'rename' 'ascending'
     case 42206:                     // 'rename' 'at'
-    case 42718:                     // 'rename' 'attribute'
+    case 42718:                     // 'rename' 'attributes'
     case 43230:                     // 'rename' 'base-uri'
     case 43742:                     // 'rename' 'before'
     case 44254:                     // 'rename' 'boundary-space'
@@ -20866,7 +20866,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 115934:                    // 'rename' 'revalidation'
     case 116958:                    // 'rename' 'satisfies'
     case 117470:                    // 'rename' 'schema'
-    case 117982:                    // 'rename' 'schema-attribute'
+    case 117982:                    // 'rename' 'schema-attributes'
     case 118494:                    // 'rename' 'schema-element'
     case 119006:                    // 'rename' 'score'
     case 119518:                    // 'rename' 'select'
@@ -20931,7 +20931,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 41038:                     // 'append' 'as'
     case 41550:                     // 'append' 'ascending'
     case 42062:                     // 'append' 'at'
-    case 42574:                     // 'append' 'attribute'
+    case 42574:                     // 'append' 'attributes'
     case 43086:                     // 'append' 'base-uri'
     case 43598:                     // 'append' 'before'
     case 44110:                     // 'append' 'boundary-space'
@@ -21031,7 +21031,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 115790:                    // 'append' 'revalidation'
     case 116814:                    // 'append' 'satisfies'
     case 117326:                    // 'append' 'schema'
-    case 117838:                    // 'append' 'schema-attribute'
+    case 117838:                    // 'append' 'schema-attributes'
     case 118350:                    // 'append' 'schema-element'
     case 118862:                    // 'append' 'score'
     case 119374:                    // 'append' 'select'
@@ -21270,7 +21270,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 41071:                     // 'delete' 'as'
     case 41583:                     // 'delete' 'ascending'
     case 42095:                     // 'delete' 'at'
-    case 42607:                     // 'delete' 'attribute'
+    case 42607:                     // 'delete' 'attributes'
     case 43119:                     // 'delete' 'base-uri'
     case 43631:                     // 'delete' 'before'
     case 44143:                     // 'delete' 'boundary-space'
@@ -21367,7 +21367,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 115823:                    // 'delete' 'revalidation'
     case 116847:                    // 'delete' 'satisfies'
     case 117359:                    // 'delete' 'schema'
-    case 117871:                    // 'delete' 'schema-attribute'
+    case 117871:                    // 'delete' 'schema-attributes'
     case 118383:                    // 'delete' 'schema-element'
     case 118895:                    // 'delete' 'score'
     case 119407:                    // 'delete' 'select'
@@ -21430,7 +21430,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 41121:                     // 'insert' 'as'
     case 41633:                     // 'insert' 'ascending'
     case 42145:                     // 'insert' 'at'
-    case 42657:                     // 'insert' 'attribute'
+    case 42657:                     // 'insert' 'attributes'
     case 43169:                     // 'insert' 'base-uri'
     case 43681:                     // 'insert' 'before'
     case 44193:                     // 'insert' 'boundary-space'
@@ -21528,7 +21528,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 115873:                    // 'insert' 'revalidation'
     case 116897:                    // 'insert' 'satisfies'
     case 117409:                    // 'insert' 'schema'
-    case 117921:                    // 'insert' 'schema-attribute'
+    case 117921:                    // 'insert' 'schema-attributes'
     case 118433:                    // 'insert' 'schema-element'
     case 118945:                    // 'insert' 'score'
     case 119457:                    // 'insert' 'select'
@@ -21585,7 +21585,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 41182:                     // 'rename' 'as'
     case 41694:                     // 'rename' 'ascending'
     case 42206:                     // 'rename' 'at'
-    case 42718:                     // 'rename' 'attribute'
+    case 42718:                     // 'rename' 'attributes'
     case 43230:                     // 'rename' 'base-uri'
     case 43742:                     // 'rename' 'before'
     case 44254:                     // 'rename' 'boundary-space'
@@ -21683,7 +21683,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 115934:                    // 'rename' 'revalidation'
     case 116958:                    // 'rename' 'satisfies'
     case 117470:                    // 'rename' 'schema'
-    case 117982:                    // 'rename' 'schema-attribute'
+    case 117982:                    // 'rename' 'schema-attributes'
     case 118494:                    // 'rename' 'schema-element'
     case 119006:                    // 'rename' 'score'
     case 119518:                    // 'rename' 'select'
@@ -21748,7 +21748,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 41038:                     // 'append' 'as'
     case 41550:                     // 'append' 'ascending'
     case 42062:                     // 'append' 'at'
-    case 42574:                     // 'append' 'attribute'
+    case 42574:                     // 'append' 'attributes'
     case 43086:                     // 'append' 'base-uri'
     case 43598:                     // 'append' 'before'
     case 44110:                     // 'append' 'boundary-space'
@@ -21848,7 +21848,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 115790:                    // 'append' 'revalidation'
     case 116814:                    // 'append' 'satisfies'
     case 117326:                    // 'append' 'schema'
-    case 117838:                    // 'append' 'schema-attribute'
+    case 117838:                    // 'append' 'schema-attributes'
     case 118350:                    // 'append' 'schema-element'
     case 118862:                    // 'append' 'score'
     case 119374:                    // 'append' 'select'
@@ -21948,7 +21948,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 41128                 // 'json' 'as'
      || lk == 41640                 // 'json' 'ascending'
      || lk == 42152                 // 'json' 'at'
-     || lk == 42664                 // 'json' 'attribute'
+     || lk == 42664                 // 'json' 'attributes'
      || lk == 43176                 // 'json' 'base-uri'
      || lk == 43688                 // 'json' 'before'
      || lk == 44200                 // 'json' 'boundary-space'
@@ -22047,7 +22047,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 115880                // 'json' 'revalidation'
      || lk == 116904                // 'json' 'satisfies'
      || lk == 117416                // 'json' 'schema'
-     || lk == 117928                // 'json' 'schema-attribute'
+     || lk == 117928                // 'json' 'schema-attributes'
      || lk == 118440                // 'json' 'schema-element'
      || lk == 118952                // 'json' 'score'
      || lk == 119464                // 'json' 'select'
@@ -22146,7 +22146,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 41128                 // 'json' 'as'
      || lk == 41640                 // 'json' 'ascending'
      || lk == 42152                 // 'json' 'at'
-     || lk == 42664                 // 'json' 'attribute'
+     || lk == 42664                 // 'json' 'attributes'
      || lk == 43176                 // 'json' 'base-uri'
      || lk == 43688                 // 'json' 'before'
      || lk == 44200                 // 'json' 'boundary-space'
@@ -22245,7 +22245,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 115880                // 'json' 'revalidation'
      || lk == 116904                // 'json' 'satisfies'
      || lk == 117416                // 'json' 'schema'
-     || lk == 117928                // 'json' 'schema-attribute'
+     || lk == 117928                // 'json' 'schema-attributes'
      || lk == 118440                // 'json' 'schema-element'
      || lk == 118952                // 'json' 'score'
      || lk == 119464                // 'json' 'select'
@@ -22366,7 +22366,7 @@ exports.JSONParseTreeHandler = function (code) {
            || lk == 41128           // 'json' 'as'
            || lk == 41640           // 'json' 'ascending'
            || lk == 42152           // 'json' 'at'
-           || lk == 42664           // 'json' 'attribute'
+           || lk == 42664           // 'json' 'attributes'
            || lk == 43176           // 'json' 'base-uri'
            || lk == 43688           // 'json' 'before'
            || lk == 44200           // 'json' 'boundary-space'
@@ -22466,7 +22466,7 @@ exports.JSONParseTreeHandler = function (code) {
            || lk == 115880          // 'json' 'revalidation'
            || lk == 116904          // 'json' 'satisfies'
            || lk == 117416          // 'json' 'schema'
-           || lk == 117928          // 'json' 'schema-attribute'
+           || lk == 117928          // 'json' 'schema-attributes'
            || lk == 118440          // 'json' 'schema-element'
            || lk == 118952          // 'json' 'score'
            || lk == 119464          // 'json' 'select'
@@ -22625,7 +22625,7 @@ exports.JSONParseTreeHandler = function (code) {
        || lk == 41128               // 'json' 'as'
        || lk == 41640               // 'json' 'ascending'
        || lk == 42152               // 'json' 'at'
-       || lk == 42664               // 'json' 'attribute'
+       || lk == 42664               // 'json' 'attributes'
        || lk == 43176               // 'json' 'base-uri'
        || lk == 43688               // 'json' 'before'
        || lk == 44200               // 'json' 'boundary-space'
@@ -22725,7 +22725,7 @@ exports.JSONParseTreeHandler = function (code) {
        || lk == 115880              // 'json' 'revalidation'
        || lk == 116904              // 'json' 'satisfies'
        || lk == 117416              // 'json' 'schema'
-       || lk == 117928              // 'json' 'schema-attribute'
+       || lk == 117928              // 'json' 'schema-attributes'
        || lk == 118440              // 'json' 'schema-element'
        || lk == 118952              // 'json' 'score'
        || lk == 119464              // 'json' 'select'
@@ -22875,7 +22875,7 @@ exports.JSONParseTreeHandler = function (code) {
        || lk == 41128               // 'json' 'as'
        || lk == 41640               // 'json' 'ascending'
        || lk == 42152               // 'json' 'at'
-       || lk == 42664               // 'json' 'attribute'
+       || lk == 42664               // 'json' 'attributes'
        || lk == 43176               // 'json' 'base-uri'
        || lk == 43688               // 'json' 'before'
        || lk == 44200               // 'json' 'boundary-space'
@@ -22975,7 +22975,7 @@ exports.JSONParseTreeHandler = function (code) {
        || lk == 115880              // 'json' 'revalidation'
        || lk == 116904              // 'json' 'satisfies'
        || lk == 117416              // 'json' 'schema'
-       || lk == 117928              // 'json' 'schema-attribute'
+       || lk == 117928              // 'json' 'schema-attributes'
        || lk == 118440              // 'json' 'schema-element'
        || lk == 118952              // 'json' 'score'
        || lk == 119464              // 'json' 'select'
@@ -23102,7 +23102,7 @@ exports.JSONParseTreeHandler = function (code) {
            || lk == 41128           // 'json' 'as'
            || lk == 41640           // 'json' 'ascending'
            || lk == 42152           // 'json' 'at'
-           || lk == 42664           // 'json' 'attribute'
+           || lk == 42664           // 'json' 'attributes'
            || lk == 43176           // 'json' 'base-uri'
            || lk == 43688           // 'json' 'before'
            || lk == 44200           // 'json' 'boundary-space'
@@ -23202,7 +23202,7 @@ exports.JSONParseTreeHandler = function (code) {
            || lk == 115880          // 'json' 'revalidation'
            || lk == 116904          // 'json' 'satisfies'
            || lk == 117416          // 'json' 'schema'
-           || lk == 117928          // 'json' 'schema-attribute'
+           || lk == 117928          // 'json' 'schema-attributes'
            || lk == 118440          // 'json' 'schema-element'
            || lk == 118952          // 'json' 'score'
            || lk == 119464          // 'json' 'select'
@@ -23362,7 +23362,7 @@ exports.JSONParseTreeHandler = function (code) {
        || lk == 41128               // 'json' 'as'
        || lk == 41640               // 'json' 'ascending'
        || lk == 42152               // 'json' 'at'
-       || lk == 42664               // 'json' 'attribute'
+       || lk == 42664               // 'json' 'attributes'
        || lk == 43176               // 'json' 'base-uri'
        || lk == 43688               // 'json' 'before'
        || lk == 44200               // 'json' 'boundary-space'
@@ -23462,7 +23462,7 @@ exports.JSONParseTreeHandler = function (code) {
        || lk == 115880              // 'json' 'revalidation'
        || lk == 116904              // 'json' 'satisfies'
        || lk == 117416              // 'json' 'schema'
-       || lk == 117928              // 'json' 'schema-attribute'
+       || lk == 117928              // 'json' 'schema-attributes'
        || lk == 118440              // 'json' 'schema-element'
        || lk == 118952              // 'json' 'score'
        || lk == 119464              // 'json' 'select'
@@ -23611,7 +23611,7 @@ exports.JSONParseTreeHandler = function (code) {
        || lk == 41128               // 'json' 'as'
        || lk == 41640               // 'json' 'ascending'
        || lk == 42152               // 'json' 'at'
-       || lk == 42664               // 'json' 'attribute'
+       || lk == 42664               // 'json' 'attributes'
        || lk == 43176               // 'json' 'base-uri'
        || lk == 43688               // 'json' 'before'
        || lk == 44200               // 'json' 'boundary-space'
@@ -23711,7 +23711,7 @@ exports.JSONParseTreeHandler = function (code) {
        || lk == 115880              // 'json' 'revalidation'
        || lk == 116904              // 'json' 'satisfies'
        || lk == 117416              // 'json' 'schema'
-       || lk == 117928              // 'json' 'schema-attribute'
+       || lk == 117928              // 'json' 'schema-attributes'
        || lk == 118440              // 'json' 'schema-element'
        || lk == 118952              // 'json' 'score'
        || lk == 119464              // 'json' 'select'
@@ -23813,7 +23813,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 41128                 // 'json' 'as'
      || lk == 41640                 // 'json' 'ascending'
      || lk == 42152                 // 'json' 'at'
-     || lk == 42664                 // 'json' 'attribute'
+     || lk == 42664                 // 'json' 'attributes'
      || lk == 43176                 // 'json' 'base-uri'
      || lk == 43688                 // 'json' 'before'
      || lk == 44200                 // 'json' 'boundary-space'
@@ -23912,7 +23912,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 115880                // 'json' 'revalidation'
      || lk == 116904                // 'json' 'satisfies'
      || lk == 117416                // 'json' 'schema'
-     || lk == 117928                // 'json' 'schema-attribute'
+     || lk == 117928                // 'json' 'schema-attributes'
      || lk == 118440                // 'json' 'schema-element'
      || lk == 118952                // 'json' 'score'
      || lk == 119464                // 'json' 'select'
@@ -24015,7 +24015,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 41128                 // 'json' 'as'
      || lk == 41640                 // 'json' 'ascending'
      || lk == 42152                 // 'json' 'at'
-     || lk == 42664                 // 'json' 'attribute'
+     || lk == 42664                 // 'json' 'attributes'
      || lk == 43176                 // 'json' 'base-uri'
      || lk == 43688                 // 'json' 'before'
      || lk == 44200                 // 'json' 'boundary-space'
@@ -24114,7 +24114,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 115880                // 'json' 'revalidation'
      || lk == 116904                // 'json' 'satisfies'
      || lk == 117416                // 'json' 'schema'
-     || lk == 117928                // 'json' 'schema-attribute'
+     || lk == 117928                // 'json' 'schema-attributes'
      || lk == 118440                // 'json' 'schema-element'
      || lk == 118952                // 'json' 'score'
      || lk == 119464                // 'json' 'select'
@@ -24256,7 +24256,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 41128                 // 'json' 'as'
      || lk == 41640                 // 'json' 'ascending'
      || lk == 42152                 // 'json' 'at'
-     || lk == 42664                 // 'json' 'attribute'
+     || lk == 42664                 // 'json' 'attributes'
      || lk == 43176                 // 'json' 'base-uri'
      || lk == 43688                 // 'json' 'before'
      || lk == 44200                 // 'json' 'boundary-space'
@@ -24356,7 +24356,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 115880                // 'json' 'revalidation'
      || lk == 116904                // 'json' 'satisfies'
      || lk == 117416                // 'json' 'schema'
-     || lk == 117928                // 'json' 'schema-attribute'
+     || lk == 117928                // 'json' 'schema-attributes'
      || lk == 118440                // 'json' 'schema-element'
      || lk == 118952                // 'json' 'score'
      || lk == 119464                // 'json' 'select'
@@ -24464,7 +24464,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 41128                 // 'json' 'as'
      || lk == 41640                 // 'json' 'ascending'
      || lk == 42152                 // 'json' 'at'
-     || lk == 42664                 // 'json' 'attribute'
+     || lk == 42664                 // 'json' 'attributes'
      || lk == 43176                 // 'json' 'base-uri'
      || lk == 43688                 // 'json' 'before'
      || lk == 44200                 // 'json' 'boundary-space'
@@ -24564,7 +24564,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 115880                // 'json' 'revalidation'
      || lk == 116904                // 'json' 'satisfies'
      || lk == 117416                // 'json' 'schema'
-     || lk == 117928                // 'json' 'schema-attribute'
+     || lk == 117928                // 'json' 'schema-attributes'
      || lk == 118440                // 'json' 'schema-element'
      || lk == 118952                // 'json' 'score'
      || lk == 119464                // 'json' 'select'
@@ -24682,7 +24682,7 @@ exports.JSONParseTreeHandler = function (code) {
   function parse_CompAttrConstructor()
   {
     eventHandler.startNonterminal("CompAttrConstructor", e0);
-    shift(83);                      // 'attribute'
+    shift(83);                      // 'attributes'
     lookahead1W(250);               // EQName^Token | S^WS | '(:' | 'after' | 'allowing' | 'ancestor' |
     switch (l1)
     {
@@ -24747,7 +24747,7 @@ exports.JSONParseTreeHandler = function (code) {
 
   function try_CompAttrConstructor()
   {
-    shiftT(83);                     // 'attribute'
+    shiftT(83);                     // 'attributes'
     lookahead1W(250);               // EQName^Token | S^WS | '(:' | 'after' | 'allowing' | 'ancestor' |
     switch (l1)
     {
@@ -24987,7 +24987,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 281:                       // '{'
       lookahead2W(283);             // EQName^Token | IntegerLiteral | DecimalLiteral | DoubleLiteral | StringLiteral |
       break;
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
     case 122:                       // 'element'
       lookahead2W(253);             // EQName^Token | S^WS | '#' | '(:' | 'after' | 'allowing' | 'ancestor' |
       break;
@@ -25155,7 +25155,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 41241                 // '{' 'as'
      || lk == 41753                 // '{' 'ascending'
      || lk == 42265                 // '{' 'at'
-     || lk == 42777                 // '{' 'attribute'
+     || lk == 42777                 // '{' 'attributes'
      || lk == 43289                 // '{' 'base-uri'
      || lk == 43801                 // '{' 'before'
      || lk == 44313                 // '{' 'boundary-space'
@@ -25255,7 +25255,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 115993                // '{' 'revalidation'
      || lk == 117017                // '{' 'satisfies'
      || lk == 117529                // '{' 'schema'
-     || lk == 118041                // '{' 'schema-attribute'
+     || lk == 118041                // '{' 'schema-attributes'
      || lk == 118553                // '{' 'schema-element'
      || lk == 119065                // '{' 'score'
      || lk == 119577                // '{' 'select'
@@ -25721,7 +25721,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 169:                       // 'json-item'
     case 188:                       // 'namespace-node'
     case 194:                       // 'node'
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
     case 231:                       // 'schema-element'
     case 247:                       // 'structured-item'
     case 248:                       // 'switch'
@@ -25736,7 +25736,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 14928:                     // 'as' '#'
     case 14929:                     // 'ascending' '#'
     case 14930:                     // 'at' '#'
-    case 14931:                     // 'attribute' '#'
+    case 14931:                     // 'attributes' '#'
     case 14932:                     // 'base-uri' '#'
     case 14933:                     // 'before' '#'
     case 14934:                     // 'boundary-space' '#'
@@ -25887,7 +25887,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 281:                       // '{'
       lookahead2W(283);             // EQName^Token | IntegerLiteral | DecimalLiteral | DoubleLiteral | StringLiteral |
       break;
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
     case 122:                       // 'element'
       lookahead2W(253);             // EQName^Token | S^WS | '#' | '(:' | 'after' | 'allowing' | 'ancestor' |
       break;
@@ -26055,7 +26055,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 41241                 // '{' 'as'
      || lk == 41753                 // '{' 'ascending'
      || lk == 42265                 // '{' 'at'
-     || lk == 42777                 // '{' 'attribute'
+     || lk == 42777                 // '{' 'attributes'
      || lk == 43289                 // '{' 'base-uri'
      || lk == 43801                 // '{' 'before'
      || lk == 44313                 // '{' 'boundary-space'
@@ -26155,7 +26155,7 @@ exports.JSONParseTreeHandler = function (code) {
      || lk == 115993                // '{' 'revalidation'
      || lk == 117017                // '{' 'satisfies'
      || lk == 117529                // '{' 'schema'
-     || lk == 118041                // '{' 'schema-attribute'
+     || lk == 118041                // '{' 'schema-attributes'
      || lk == 118553                // '{' 'schema-element'
      || lk == 119065                // '{' 'score'
      || lk == 119577                // '{' 'select'
@@ -26624,7 +26624,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 169:                       // 'json-item'
     case 188:                       // 'namespace-node'
     case 194:                       // 'node'
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
     case 231:                       // 'schema-element'
     case 247:                       // 'structured-item'
     case 248:                       // 'switch'
@@ -26639,7 +26639,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 14928:                     // 'as' '#'
     case 14929:                     // 'ascending' '#'
     case 14930:                     // 'at' '#'
-    case 14931:                     // 'attribute' '#'
+    case 14931:                     // 'attributes' '#'
     case 14932:                     // 'base-uri' '#'
     case 14933:                     // 'before' '#'
     case 14934:                     // 'boundary-space' '#'
@@ -26890,7 +26890,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 266:                       // 'validate'
       lookahead2W(191);             // S^WS | '#' | '(' | '(:' | ':' | 'lax' | 'strict' | 'type' | '{'
       break;
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
     case 122:                       // 'element'
       lookahead2W(257);             // EQName^Token | S^WS | '#' | '(:' | ':' | 'after' | 'allowing' | 'ancestor' |
       break;
@@ -26923,7 +26923,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 167:                       // 'item'
     case 188:                       // 'namespace-node'
     case 194:                       // 'node'
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
     case 231:                       // 'schema-element'
       lookahead2W(96);              // S^WS | '#' | '(:' | ':'
       break;
@@ -27075,7 +27075,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 25680:                     // 'as' ':'
     case 25681:                     // 'ascending' ':'
     case 25682:                     // 'at' ':'
-    case 25683:                     // 'attribute' ':'
+    case 25683:                     // 'attributes' ':'
     case 25684:                     // 'base-uri' ':'
     case 25685:                     // 'before' ':'
     case 25686:                     // 'boundary-space' ':'
@@ -27171,7 +27171,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 25826:                     // 'revalidation' ':'
     case 25828:                     // 'satisfies' ':'
     case 25829:                     // 'schema' ':'
-    case 25830:                     // 'schema-attribute' ':'
+    case 25830:                     // 'schema-attributes' ':'
     case 25831:                     // 'schema-element' ':'
     case 25832:                     // 'score' ':'
     case 25833:                     // 'select' ':'
@@ -27240,7 +27240,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 266:                       // 'validate'
       lookahead2W(191);             // S^WS | '#' | '(' | '(:' | ':' | 'lax' | 'strict' | 'type' | '{'
       break;
-    case 83:                        // 'attribute'
+    case 83:                        // 'attributes'
     case 122:                       // 'element'
       lookahead2W(257);             // EQName^Token | S^WS | '#' | '(:' | ':' | 'after' | 'allowing' | 'ancestor' |
       break;
@@ -27273,7 +27273,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 167:                       // 'item'
     case 188:                       // 'namespace-node'
     case 194:                       // 'node'
-    case 230:                       // 'schema-attribute'
+    case 230:                       // 'schema-attributes'
     case 231:                       // 'schema-element'
       lookahead2W(96);              // S^WS | '#' | '(:' | ':'
       break;
@@ -27426,7 +27426,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 25680:                     // 'as' ':'
     case 25681:                     // 'ascending' ':'
     case 25682:                     // 'at' ':'
-    case 25683:                     // 'attribute' ':'
+    case 25683:                     // 'attributes' ':'
     case 25684:                     // 'base-uri' ':'
     case 25685:                     // 'before' ':'
     case 25686:                     // 'boundary-space' ':'
@@ -27522,7 +27522,7 @@ exports.JSONParseTreeHandler = function (code) {
     case 25826:                     // 'revalidation' ':'
     case 25828:                     // 'satisfies' ':'
     case 25829:                     // 'schema' ':'
-    case 25830:                     // 'schema-attribute' ':'
+    case 25830:                     // 'schema-attributes' ':'
     case 25831:                     // 'schema-element' ':'
     case 25832:                     // 'score' ':'
     case 25833:                     // 'select' ':'
@@ -28017,7 +28017,7 @@ JSONiqParser.TOKEN =
   "'as'",
   "'ascending'",
   "'at'",
-  "'attribute'",
+  "'attributes'",
   "'base-uri'",
   "'before'",
   "'boundary-space'",
@@ -28164,7 +28164,7 @@ JSONiqParser.TOKEN =
   "'same'",
   "'satisfies'",
   "'schema'",
-  "'schema-attribute'",
+  "'schema-attributes'",
   "'schema-element'",
   "'score'",
   "'select'",
@@ -30243,7 +30243,7 @@ JSONiqParser.TOKEN =
      || lk == 40479                 // '$' 'as'
      || lk == 40991                 // '$' 'ascending'
      || lk == 41503                 // '$' 'at'
-     || lk == 42015                 // '$' 'attribute'
+     || lk == 42015                 // '$' 'attributes'
      || lk == 42527                 // '$' 'base-uri'
      || lk == 43039                 // '$' 'before'
      || lk == 43551                 // '$' 'boundary-space'
@@ -30338,7 +30338,7 @@ JSONiqParser.TOKEN =
      || lk == 113695                // '$' 'revalidation'
      || lk == 114719                // '$' 'satisfies'
      || lk == 115231                // '$' 'schema'
-     || lk == 115743                // '$' 'schema-attribute'
+     || lk == 115743                // '$' 'schema-attributes'
      || lk == 116255                // '$' 'schema-element'
      || lk == 116767                // '$' 'score'
      || lk == 117279                // '$' 'self'
@@ -30461,7 +30461,7 @@ JSONiqParser.TOKEN =
      || lk == 40479                 // '$' 'as'
      || lk == 40991                 // '$' 'ascending'
      || lk == 41503                 // '$' 'at'
-     || lk == 42015                 // '$' 'attribute'
+     || lk == 42015                 // '$' 'attributes'
      || lk == 42527                 // '$' 'base-uri'
      || lk == 43039                 // '$' 'before'
      || lk == 43551                 // '$' 'boundary-space'
@@ -30556,7 +30556,7 @@ JSONiqParser.TOKEN =
      || lk == 113695                // '$' 'revalidation'
      || lk == 114719                // '$' 'satisfies'
      || lk == 115231                // '$' 'schema'
-     || lk == 115743                // '$' 'schema-attribute'
+     || lk == 115743                // '$' 'schema-attributes'
      || lk == 116255                // '$' 'schema-element'
      || lk == 116767                // '$' 'score'
      || lk == 117279                // '$' 'self'
@@ -32802,7 +32802,7 @@ JSONiqParser.TOKEN =
     eventHandler.startNonterminal("StepExpr", e0);
     switch (l1)
     {
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
       lookahead2W(285);             // EQName^Token | S^WS | EOF | '!' | '!=' | '#' | '(' | '(:' | ')' | '*' | '+' |
       break;
     case 121:                       // 'element'
@@ -32926,7 +32926,7 @@ JSONiqParser.TOKEN =
     case 222:                       // 'revalidation'
     case 224:                       // 'satisfies'
     case 225:                       // 'schema'
-    case 226:                       // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
     case 227:                       // 'schema-element'
     case 228:                       // 'score'
     case 234:                       // 'sliding'
@@ -32954,187 +32954,187 @@ JSONiqParser.TOKEN =
     default:
       lk = l1;
     }
-    if (lk == 35922                 // 'attribute' 'after'
+    if (lk == 35922                 // 'attributes' 'after'
      || lk == 35961                 // 'element' 'after'
      || lk == 36024                 // 'namespace' 'after'
      || lk == 36056                 // 'processing-instruction' 'after'
-     || lk == 38482                 // 'attribute' 'and'
+     || lk == 38482                 // 'attributes' 'and'
      || lk == 38521                 // 'element' 'and'
      || lk == 38584                 // 'namespace' 'and'
      || lk == 38616                 // 'processing-instruction' 'and'
-     || lk == 40530                 // 'attribute' 'as'
+     || lk == 40530                 // 'attributes' 'as'
      || lk == 40569                 // 'element' 'as'
      || lk == 40632                 // 'namespace' 'as'
      || lk == 40664                 // 'processing-instruction' 'as'
-     || lk == 41042                 // 'attribute' 'ascending'
+     || lk == 41042                 // 'attributes' 'ascending'
      || lk == 41081                 // 'element' 'ascending'
      || lk == 41144                 // 'namespace' 'ascending'
      || lk == 41176                 // 'processing-instruction' 'ascending'
-     || lk == 41554                 // 'attribute' 'at'
+     || lk == 41554                 // 'attributes' 'at'
      || lk == 41593                 // 'element' 'at'
      || lk == 41656                 // 'namespace' 'at'
      || lk == 41688                 // 'processing-instruction' 'at'
-     || lk == 43090                 // 'attribute' 'before'
+     || lk == 43090                 // 'attributes' 'before'
      || lk == 43129                 // 'element' 'before'
      || lk == 43192                 // 'namespace' 'before'
      || lk == 43224                 // 'processing-instruction' 'before'
-     || lk == 45138                 // 'attribute' 'case'
+     || lk == 45138                 // 'attributes' 'case'
      || lk == 45177                 // 'element' 'case'
      || lk == 45240                 // 'namespace' 'case'
      || lk == 45272                 // 'processing-instruction' 'case'
-     || lk == 45650                 // 'attribute' 'cast'
+     || lk == 45650                 // 'attributes' 'cast'
      || lk == 45689                 // 'element' 'cast'
      || lk == 45752                 // 'namespace' 'cast'
      || lk == 45784                 // 'processing-instruction' 'cast'
-     || lk == 46162                 // 'attribute' 'castable'
+     || lk == 46162                 // 'attributes' 'castable'
      || lk == 46201                 // 'element' 'castable'
      || lk == 46264                 // 'namespace' 'castable'
      || lk == 46296                 // 'processing-instruction' 'castable'
-     || lk == 48210                 // 'attribute' 'collation'
+     || lk == 48210                 // 'attributes' 'collation'
      || lk == 48249                 // 'element' 'collation'
      || lk == 48312                 // 'namespace' 'collation'
      || lk == 48344                 // 'processing-instruction' 'collation'
-     || lk == 53842                 // 'attribute' 'count'
+     || lk == 53842                 // 'attributes' 'count'
      || lk == 53881                 // 'element' 'count'
      || lk == 53944                 // 'namespace' 'count'
      || lk == 53976                 // 'processing-instruction' 'count'
-     || lk == 55890                 // 'attribute' 'default'
+     || lk == 55890                 // 'attributes' 'default'
      || lk == 55929                 // 'element' 'default'
      || lk == 55992                 // 'namespace' 'default'
      || lk == 56024                 // 'processing-instruction' 'default'
-     || lk == 57938                 // 'attribute' 'descending'
+     || lk == 57938                 // 'attributes' 'descending'
      || lk == 57977                 // 'element' 'descending'
      || lk == 58040                 // 'namespace' 'descending'
      || lk == 58072                 // 'processing-instruction' 'descending'
-     || lk == 60498                 // 'attribute' 'div'
+     || lk == 60498                 // 'attributes' 'div'
      || lk == 60537                 // 'element' 'div'
      || lk == 60600                 // 'namespace' 'div'
      || lk == 60632                 // 'processing-instruction' 'div'
-     || lk == 62546                 // 'attribute' 'else'
+     || lk == 62546                 // 'attributes' 'else'
      || lk == 62585                 // 'element' 'else'
      || lk == 62648                 // 'namespace' 'else'
      || lk == 62680                 // 'processing-instruction' 'else'
-     || lk == 63058                 // 'attribute' 'empty'
+     || lk == 63058                 // 'attributes' 'empty'
      || lk == 63097                 // 'element' 'empty'
      || lk == 63160                 // 'namespace' 'empty'
      || lk == 63192                 // 'processing-instruction' 'empty'
-     || lk == 64594                 // 'attribute' 'end'
+     || lk == 64594                 // 'attributes' 'end'
      || lk == 64633                 // 'element' 'end'
      || lk == 64696                 // 'namespace' 'end'
      || lk == 64728                 // 'processing-instruction' 'end'
-     || lk == 65618                 // 'attribute' 'eq'
+     || lk == 65618                 // 'attributes' 'eq'
      || lk == 65657                 // 'element' 'eq'
      || lk == 65720                 // 'namespace' 'eq'
      || lk == 65752                 // 'processing-instruction' 'eq'
-     || lk == 67154                 // 'attribute' 'except'
+     || lk == 67154                 // 'attributes' 'except'
      || lk == 67193                 // 'element' 'except'
      || lk == 67256                 // 'namespace' 'except'
      || lk == 67288                 // 'processing-instruction' 'except'
-     || lk == 70226                 // 'attribute' 'for'
+     || lk == 70226                 // 'attributes' 'for'
      || lk == 70265                 // 'element' 'for'
      || lk == 70328                 // 'namespace' 'for'
      || lk == 70360                 // 'processing-instruction' 'for'
-     || lk == 74834                 // 'attribute' 'ge'
+     || lk == 74834                 // 'attributes' 'ge'
      || lk == 74873                 // 'element' 'ge'
      || lk == 74936                 // 'namespace' 'ge'
      || lk == 74968                 // 'processing-instruction' 'ge'
-     || lk == 75858                 // 'attribute' 'group'
+     || lk == 75858                 // 'attributes' 'group'
      || lk == 75897                 // 'element' 'group'
      || lk == 75960                 // 'namespace' 'group'
      || lk == 75992                 // 'processing-instruction' 'group'
-     || lk == 76882                 // 'attribute' 'gt'
+     || lk == 76882                 // 'attributes' 'gt'
      || lk == 76921                 // 'element' 'gt'
      || lk == 76984                 // 'namespace' 'gt'
      || lk == 77016                 // 'processing-instruction' 'gt'
-     || lk == 77394                 // 'attribute' 'idiv'
+     || lk == 77394                 // 'attributes' 'idiv'
      || lk == 77433                 // 'element' 'idiv'
      || lk == 77496                 // 'namespace' 'idiv'
      || lk == 77528                 // 'processing-instruction' 'idiv'
-     || lk == 82002                 // 'attribute' 'instance'
+     || lk == 82002                 // 'attributes' 'instance'
      || lk == 82041                 // 'element' 'instance'
      || lk == 82104                 // 'namespace' 'instance'
      || lk == 82136                 // 'processing-instruction' 'instance'
-     || lk == 83026                 // 'attribute' 'intersect'
+     || lk == 83026                 // 'attributes' 'intersect'
      || lk == 83065                 // 'element' 'intersect'
      || lk == 83128                 // 'namespace' 'intersect'
      || lk == 83160                 // 'processing-instruction' 'intersect'
-     || lk == 83538                 // 'attribute' 'into'
+     || lk == 83538                 // 'attributes' 'into'
      || lk == 83577                 // 'element' 'into'
      || lk == 83640                 // 'namespace' 'into'
      || lk == 83672                 // 'processing-instruction' 'into'
-     || lk == 84050                 // 'attribute' 'is'
+     || lk == 84050                 // 'attributes' 'is'
      || lk == 84089                 // 'element' 'is'
      || lk == 84152                 // 'namespace' 'is'
      || lk == 84184                 // 'processing-instruction' 'is'
-     || lk == 88146                 // 'attribute' 'le'
+     || lk == 88146                 // 'attributes' 'le'
      || lk == 88185                 // 'element' 'le'
      || lk == 88248                 // 'namespace' 'le'
      || lk == 88280                 // 'processing-instruction' 'le'
-     || lk == 89170                 // 'attribute' 'let'
+     || lk == 89170                 // 'attributes' 'let'
      || lk == 89209                 // 'element' 'let'
      || lk == 89272                 // 'namespace' 'let'
      || lk == 89304                 // 'processing-instruction' 'let'
-     || lk == 91218                 // 'attribute' 'lt'
+     || lk == 91218                 // 'attributes' 'lt'
      || lk == 91257                 // 'element' 'lt'
      || lk == 91320                 // 'namespace' 'lt'
      || lk == 91352                 // 'processing-instruction' 'lt'
-     || lk == 92242                 // 'attribute' 'mod'
+     || lk == 92242                 // 'attributes' 'mod'
      || lk == 92281                 // 'element' 'mod'
      || lk == 92344                 // 'namespace' 'mod'
      || lk == 92376                 // 'processing-instruction' 'mod'
-     || lk == 92754                 // 'attribute' 'modify'
+     || lk == 92754                 // 'attributes' 'modify'
      || lk == 92793                 // 'element' 'modify'
      || lk == 92856                 // 'namespace' 'modify'
      || lk == 92888                 // 'processing-instruction' 'modify'
-     || lk == 95314                 // 'attribute' 'ne'
+     || lk == 95314                 // 'attributes' 'ne'
      || lk == 95353                 // 'element' 'ne'
      || lk == 95416                 // 'namespace' 'ne'
      || lk == 95448                 // 'processing-instruction' 'ne'
-     || lk == 101458                // 'attribute' 'only'
+     || lk == 101458                // 'attributes' 'only'
      || lk == 101497                // 'element' 'only'
      || lk == 101560                // 'namespace' 'only'
      || lk == 101592                // 'processing-instruction' 'only'
-     || lk == 102482                // 'attribute' 'or'
+     || lk == 102482                // 'attributes' 'or'
      || lk == 102521                // 'element' 'or'
      || lk == 102584                // 'namespace' 'or'
      || lk == 102616                // 'processing-instruction' 'or'
-     || lk == 102994                // 'attribute' 'order'
+     || lk == 102994                // 'attributes' 'order'
      || lk == 103033                // 'element' 'order'
      || lk == 103096                // 'namespace' 'order'
      || lk == 103128                // 'processing-instruction' 'order'
-     || lk == 112722                // 'attribute' 'return'
+     || lk == 112722                // 'attributes' 'return'
      || lk == 112761                // 'element' 'return'
      || lk == 112824                // 'namespace' 'return'
      || lk == 112856                // 'processing-instruction' 'return'
-     || lk == 114770                // 'attribute' 'satisfies'
+     || lk == 114770                // 'attributes' 'satisfies'
      || lk == 114809                // 'element' 'satisfies'
      || lk == 114872                // 'namespace' 'satisfies'
      || lk == 114904                // 'processing-instruction' 'satisfies'
-     || lk == 120914                // 'attribute' 'stable'
+     || lk == 120914                // 'attributes' 'stable'
      || lk == 120953                // 'element' 'stable'
      || lk == 121016                // 'namespace' 'stable'
      || lk == 121048                // 'processing-instruction' 'stable'
-     || lk == 121426                // 'attribute' 'start'
+     || lk == 121426                // 'attributes' 'start'
      || lk == 121465                // 'element' 'start'
      || lk == 121528                // 'namespace' 'start'
      || lk == 121560                // 'processing-instruction' 'start'
-     || lk == 127058                // 'attribute' 'to'
+     || lk == 127058                // 'attributes' 'to'
      || lk == 127097                // 'element' 'to'
      || lk == 127160                // 'namespace' 'to'
      || lk == 127192                // 'processing-instruction' 'to'
-     || lk == 127570                // 'attribute' 'treat'
+     || lk == 127570                // 'attributes' 'treat'
      || lk == 127609                // 'element' 'treat'
      || lk == 127672                // 'namespace' 'treat'
      || lk == 127704                // 'processing-instruction' 'treat'
-     || lk == 130130                // 'attribute' 'union'
+     || lk == 130130                // 'attributes' 'union'
      || lk == 130169                // 'element' 'union'
      || lk == 130232                // 'namespace' 'union'
      || lk == 130264                // 'processing-instruction' 'union'
-     || lk == 136274                // 'attribute' 'where'
+     || lk == 136274                // 'attributes' 'where'
      || lk == 136313                // 'element' 'where'
      || lk == 136376                // 'namespace' 'where'
      || lk == 136408                // 'processing-instruction' 'where'
-     || lk == 138322                // 'attribute' 'with'
+     || lk == 138322                // 'attributes' 'with'
      || lk == 138361                // 'element' 'with'
      || lk == 138424                // 'namespace' 'with'
      || lk == 138456)               // 'processing-instruction' 'with'
@@ -33177,7 +33177,7 @@ JSONiqParser.TOKEN =
     case 68:                        // '['
     case 276:                       // '{'
     case 278:                       // '{|'
-    case 3154:                      // 'attribute' EQName^Token
+    case 3154:                      // 'attributes' EQName^Token
     case 3193:                      // 'element' EQName^Token
     case 9912:                      // 'namespace' NCName^Token
     case 9944:                      // 'processing-instruction' NCName^Token
@@ -33192,7 +33192,7 @@ JSONiqParser.TOKEN =
     case 14927:                     // 'as' '#'
     case 14928:                     // 'ascending' '#'
     case 14929:                     // 'at' '#'
-    case 14930:                     // 'attribute' '#'
+    case 14930:                     // 'attributes' '#'
     case 14931:                     // 'base-uri' '#'
     case 14932:                     // 'before' '#'
     case 14933:                     // 'boundary-space' '#'
@@ -33287,7 +33287,7 @@ JSONiqParser.TOKEN =
     case 15070:                     // 'revalidation' '#'
     case 15072:                     // 'satisfies' '#'
     case 15073:                     // 'schema' '#'
-    case 15074:                     // 'schema-attribute' '#'
+    case 15074:                     // 'schema-attributes' '#'
     case 15075:                     // 'schema-element' '#'
     case 15076:                     // 'score' '#'
     case 15077:                     // 'self' '#'
@@ -33433,353 +33433,353 @@ JSONiqParser.TOKEN =
     case 17675:                     // 'while' '('
     case 17678:                     // 'with' '('
     case 17682:                     // 'xquery' '('
-    case 36946:                     // 'attribute' 'allowing'
+    case 36946:                     // 'attributes' 'allowing'
     case 36985:                     // 'element' 'allowing'
     case 37048:                     // 'namespace' 'allowing'
     case 37080:                     // 'processing-instruction' 'allowing'
-    case 37458:                     // 'attribute' 'ancestor'
+    case 37458:                     // 'attributes' 'ancestor'
     case 37497:                     // 'element' 'ancestor'
     case 37560:                     // 'namespace' 'ancestor'
     case 37592:                     // 'processing-instruction' 'ancestor'
-    case 37970:                     // 'attribute' 'ancestor-or-self'
+    case 37970:                     // 'attributes' 'ancestor-or-self'
     case 38009:                     // 'element' 'ancestor-or-self'
     case 38072:                     // 'namespace' 'ancestor-or-self'
     case 38104:                     // 'processing-instruction' 'ancestor-or-self'
-    case 39506:                     // 'attribute' 'append'
+    case 39506:                     // 'attributes' 'append'
     case 39545:                     // 'element' 'append'
     case 39608:                     // 'namespace' 'append'
     case 39640:                     // 'processing-instruction' 'append'
-    case 40018:                     // 'attribute' 'array'
+    case 40018:                     // 'attributes' 'array'
     case 40057:                     // 'element' 'array'
-    case 42066:                     // 'attribute' 'attribute'
-    case 42105:                     // 'element' 'attribute'
-    case 42168:                     // 'namespace' 'attribute'
-    case 42200:                     // 'processing-instruction' 'attribute'
-    case 42578:                     // 'attribute' 'base-uri'
+    case 42066:                     // 'attributes' 'attributes'
+    case 42105:                     // 'element' 'attributes'
+    case 42168:                     // 'namespace' 'attributes'
+    case 42200:                     // 'processing-instruction' 'attributes'
+    case 42578:                     // 'attributes' 'base-uri'
     case 42617:                     // 'element' 'base-uri'
     case 42680:                     // 'namespace' 'base-uri'
     case 42712:                     // 'processing-instruction' 'base-uri'
-    case 43602:                     // 'attribute' 'boundary-space'
+    case 43602:                     // 'attributes' 'boundary-space'
     case 43641:                     // 'element' 'boundary-space'
     case 43704:                     // 'namespace' 'boundary-space'
     case 43736:                     // 'processing-instruction' 'boundary-space'
-    case 44114:                     // 'attribute' 'break'
+    case 44114:                     // 'attributes' 'break'
     case 44153:                     // 'element' 'break'
     case 44216:                     // 'namespace' 'break'
     case 44248:                     // 'processing-instruction' 'break'
-    case 46674:                     // 'attribute' 'catch'
+    case 46674:                     // 'attributes' 'catch'
     case 46713:                     // 'element' 'catch'
     case 46776:                     // 'namespace' 'catch'
     case 46808:                     // 'processing-instruction' 'catch'
-    case 47698:                     // 'attribute' 'child'
+    case 47698:                     // 'attributes' 'child'
     case 47737:                     // 'element' 'child'
     case 47800:                     // 'namespace' 'child'
     case 47832:                     // 'processing-instruction' 'child'
-    case 49234:                     // 'attribute' 'comment'
+    case 49234:                     // 'attributes' 'comment'
     case 49273:                     // 'element' 'comment'
     case 49336:                     // 'namespace' 'comment'
     case 49368:                     // 'processing-instruction' 'comment'
-    case 49746:                     // 'attribute' 'constraint'
+    case 49746:                     // 'attributes' 'constraint'
     case 49785:                     // 'element' 'constraint'
     case 49848:                     // 'namespace' 'constraint'
     case 49880:                     // 'processing-instruction' 'constraint'
-    case 50258:                     // 'attribute' 'construction'
+    case 50258:                     // 'attributes' 'construction'
     case 50297:                     // 'element' 'construction'
     case 50360:                     // 'namespace' 'construction'
     case 50392:                     // 'processing-instruction' 'construction'
-    case 51794:                     // 'attribute' 'context'
+    case 51794:                     // 'attributes' 'context'
     case 51833:                     // 'element' 'context'
     case 51896:                     // 'namespace' 'context'
     case 51928:                     // 'processing-instruction' 'context'
-    case 52306:                     // 'attribute' 'continue'
+    case 52306:                     // 'attributes' 'continue'
     case 52345:                     // 'element' 'continue'
     case 52408:                     // 'namespace' 'continue'
     case 52440:                     // 'processing-instruction' 'continue'
-    case 52818:                     // 'attribute' 'copy'
+    case 52818:                     // 'attributes' 'copy'
     case 52857:                     // 'element' 'copy'
     case 52920:                     // 'namespace' 'copy'
     case 52952:                     // 'processing-instruction' 'copy'
-    case 53330:                     // 'attribute' 'copy-namespaces'
+    case 53330:                     // 'attributes' 'copy-namespaces'
     case 53369:                     // 'element' 'copy-namespaces'
     case 53432:                     // 'namespace' 'copy-namespaces'
     case 53464:                     // 'processing-instruction' 'copy-namespaces'
-    case 54354:                     // 'attribute' 'decimal-format'
+    case 54354:                     // 'attributes' 'decimal-format'
     case 54393:                     // 'element' 'decimal-format'
     case 54456:                     // 'namespace' 'decimal-format'
     case 54488:                     // 'processing-instruction' 'decimal-format'
-    case 55378:                     // 'attribute' 'declare'
+    case 55378:                     // 'attributes' 'declare'
     case 55417:                     // 'element' 'declare'
     case 55480:                     // 'namespace' 'declare'
     case 55512:                     // 'processing-instruction' 'declare'
-    case 56402:                     // 'attribute' 'delete'
+    case 56402:                     // 'attributes' 'delete'
     case 56441:                     // 'element' 'delete'
     case 56504:                     // 'namespace' 'delete'
     case 56536:                     // 'processing-instruction' 'delete'
-    case 56914:                     // 'attribute' 'descendant'
+    case 56914:                     // 'attributes' 'descendant'
     case 56953:                     // 'element' 'descendant'
     case 57016:                     // 'namespace' 'descendant'
     case 57048:                     // 'processing-instruction' 'descendant'
-    case 57426:                     // 'attribute' 'descendant-or-self'
+    case 57426:                     // 'attributes' 'descendant-or-self'
     case 57465:                     // 'element' 'descendant-or-self'
     case 57528:                     // 'namespace' 'descendant-or-self'
     case 57560:                     // 'processing-instruction' 'descendant-or-self'
-    case 61010:                     // 'attribute' 'document'
+    case 61010:                     // 'attributes' 'document'
     case 61049:                     // 'element' 'document'
     case 61112:                     // 'namespace' 'document'
     case 61144:                     // 'processing-instruction' 'document'
-    case 61522:                     // 'attribute' 'document-node'
+    case 61522:                     // 'attributes' 'document-node'
     case 61561:                     // 'element' 'document-node'
     case 61624:                     // 'namespace' 'document-node'
     case 61656:                     // 'processing-instruction' 'document-node'
-    case 62034:                     // 'attribute' 'element'
+    case 62034:                     // 'attributes' 'element'
     case 62073:                     // 'element' 'element'
     case 62136:                     // 'namespace' 'element'
     case 62168:                     // 'processing-instruction' 'element'
-    case 63570:                     // 'attribute' 'empty-sequence'
+    case 63570:                     // 'attributes' 'empty-sequence'
     case 63609:                     // 'element' 'empty-sequence'
     case 63672:                     // 'namespace' 'empty-sequence'
     case 63704:                     // 'processing-instruction' 'empty-sequence'
-    case 64082:                     // 'attribute' 'encoding'
+    case 64082:                     // 'attributes' 'encoding'
     case 64121:                     // 'element' 'encoding'
     case 64184:                     // 'namespace' 'encoding'
     case 64216:                     // 'processing-instruction' 'encoding'
-    case 66130:                     // 'attribute' 'every'
+    case 66130:                     // 'attributes' 'every'
     case 66169:                     // 'element' 'every'
     case 66232:                     // 'namespace' 'every'
     case 66264:                     // 'processing-instruction' 'every'
-    case 67666:                     // 'attribute' 'exit'
+    case 67666:                     // 'attributes' 'exit'
     case 67705:                     // 'element' 'exit'
     case 67768:                     // 'namespace' 'exit'
     case 67800:                     // 'processing-instruction' 'exit'
-    case 68178:                     // 'attribute' 'external'
+    case 68178:                     // 'attributes' 'external'
     case 68217:                     // 'element' 'external'
     case 68280:                     // 'namespace' 'external'
     case 68312:                     // 'processing-instruction' 'external'
-    case 68690:                     // 'attribute' 'first'
+    case 68690:                     // 'attributes' 'first'
     case 68729:                     // 'element' 'first'
     case 68792:                     // 'namespace' 'first'
     case 68824:                     // 'processing-instruction' 'first'
-    case 69202:                     // 'attribute' 'following'
+    case 69202:                     // 'attributes' 'following'
     case 69241:                     // 'element' 'following'
     case 69304:                     // 'namespace' 'following'
     case 69336:                     // 'processing-instruction' 'following'
-    case 69714:                     // 'attribute' 'following-sibling'
+    case 69714:                     // 'attributes' 'following-sibling'
     case 69753:                     // 'element' 'following-sibling'
     case 69816:                     // 'namespace' 'following-sibling'
     case 69848:                     // 'processing-instruction' 'following-sibling'
-    case 72274:                     // 'attribute' 'ft-option'
+    case 72274:                     // 'attributes' 'ft-option'
     case 72313:                     // 'element' 'ft-option'
     case 72376:                     // 'namespace' 'ft-option'
     case 72408:                     // 'processing-instruction' 'ft-option'
-    case 74322:                     // 'attribute' 'function'
+    case 74322:                     // 'attributes' 'function'
     case 74361:                     // 'element' 'function'
     case 74424:                     // 'namespace' 'function'
     case 74456:                     // 'processing-instruction' 'function'
-    case 77906:                     // 'attribute' 'if'
+    case 77906:                     // 'attributes' 'if'
     case 77945:                     // 'element' 'if'
     case 78008:                     // 'namespace' 'if'
     case 78040:                     // 'processing-instruction' 'if'
-    case 78418:                     // 'attribute' 'import'
+    case 78418:                     // 'attributes' 'import'
     case 78457:                     // 'element' 'import'
     case 78520:                     // 'namespace' 'import'
     case 78552:                     // 'processing-instruction' 'import'
-    case 78930:                     // 'attribute' 'in'
+    case 78930:                     // 'attributes' 'in'
     case 78969:                     // 'element' 'in'
     case 79032:                     // 'namespace' 'in'
     case 79064:                     // 'processing-instruction' 'in'
-    case 79442:                     // 'attribute' 'index'
+    case 79442:                     // 'attributes' 'index'
     case 79481:                     // 'element' 'index'
     case 79544:                     // 'namespace' 'index'
     case 79576:                     // 'processing-instruction' 'index'
-    case 81490:                     // 'attribute' 'insert'
+    case 81490:                     // 'attributes' 'insert'
     case 81529:                     // 'element' 'insert'
     case 81592:                     // 'namespace' 'insert'
     case 81624:                     // 'processing-instruction' 'insert'
-    case 82514:                     // 'attribute' 'integrity'
+    case 82514:                     // 'attributes' 'integrity'
     case 82553:                     // 'element' 'integrity'
     case 82616:                     // 'namespace' 'integrity'
     case 82648:                     // 'processing-instruction' 'integrity'
-    case 84562:                     // 'attribute' 'item'
+    case 84562:                     // 'attributes' 'item'
     case 84601:                     // 'element' 'item'
     case 84664:                     // 'namespace' 'item'
     case 84696:                     // 'processing-instruction' 'item'
-    case 85074:                     // 'attribute' 'json'
+    case 85074:                     // 'attributes' 'json'
     case 85113:                     // 'element' 'json'
     case 85176:                     // 'namespace' 'json'
     case 85208:                     // 'processing-instruction' 'json'
-    case 85586:                     // 'attribute' 'json-item'
+    case 85586:                     // 'attributes' 'json-item'
     case 85625:                     // 'element' 'json-item'
-    case 87122:                     // 'attribute' 'last'
+    case 87122:                     // 'attributes' 'last'
     case 87161:                     // 'element' 'last'
     case 87224:                     // 'namespace' 'last'
     case 87256:                     // 'processing-instruction' 'last'
-    case 87634:                     // 'attribute' 'lax'
+    case 87634:                     // 'attributes' 'lax'
     case 87673:                     // 'element' 'lax'
     case 87736:                     // 'namespace' 'lax'
     case 87768:                     // 'processing-instruction' 'lax'
-    case 90194:                     // 'attribute' 'loop'
+    case 90194:                     // 'attributes' 'loop'
     case 90233:                     // 'element' 'loop'
     case 90296:                     // 'namespace' 'loop'
     case 90328:                     // 'processing-instruction' 'loop'
-    case 93266:                     // 'attribute' 'module'
+    case 93266:                     // 'attributes' 'module'
     case 93305:                     // 'element' 'module'
     case 93368:                     // 'namespace' 'module'
     case 93400:                     // 'processing-instruction' 'module'
-    case 94290:                     // 'attribute' 'namespace'
+    case 94290:                     // 'attributes' 'namespace'
     case 94329:                     // 'element' 'namespace'
     case 94392:                     // 'namespace' 'namespace'
     case 94424:                     // 'processing-instruction' 'namespace'
-    case 94802:                     // 'attribute' 'namespace-node'
+    case 94802:                     // 'attributes' 'namespace-node'
     case 94841:                     // 'element' 'namespace-node'
     case 94904:                     // 'namespace' 'namespace-node'
     case 94936:                     // 'processing-instruction' 'namespace-node'
-    case 97874:                     // 'attribute' 'node'
+    case 97874:                     // 'attributes' 'node'
     case 97913:                     // 'element' 'node'
     case 97976:                     // 'namespace' 'node'
     case 98008:                     // 'processing-instruction' 'node'
-    case 98386:                     // 'attribute' 'nodes'
+    case 98386:                     // 'attributes' 'nodes'
     case 98425:                     // 'element' 'nodes'
     case 98488:                     // 'namespace' 'nodes'
     case 98520:                     // 'processing-instruction' 'nodes'
-    case 99410:                     // 'attribute' 'object'
+    case 99410:                     // 'attributes' 'object'
     case 99449:                     // 'element' 'object'
     case 99512:                     // 'namespace' 'object'
     case 99544:                     // 'processing-instruction' 'object'
-    case 101970:                    // 'attribute' 'option'
+    case 101970:                    // 'attributes' 'option'
     case 102009:                    // 'element' 'option'
     case 102072:                    // 'namespace' 'option'
     case 102104:                    // 'processing-instruction' 'option'
-    case 103506:                    // 'attribute' 'ordered'
+    case 103506:                    // 'attributes' 'ordered'
     case 103545:                    // 'element' 'ordered'
     case 103608:                    // 'namespace' 'ordered'
     case 103640:                    // 'processing-instruction' 'ordered'
-    case 104018:                    // 'attribute' 'ordering'
+    case 104018:                    // 'attributes' 'ordering'
     case 104057:                    // 'element' 'ordering'
     case 104120:                    // 'namespace' 'ordering'
     case 104152:                    // 'processing-instruction' 'ordering'
-    case 105554:                    // 'attribute' 'parent'
+    case 105554:                    // 'attributes' 'parent'
     case 105593:                    // 'element' 'parent'
     case 105656:                    // 'namespace' 'parent'
     case 105688:                    // 'processing-instruction' 'parent'
-    case 108626:                    // 'attribute' 'preceding'
+    case 108626:                    // 'attributes' 'preceding'
     case 108665:                    // 'element' 'preceding'
     case 108728:                    // 'namespace' 'preceding'
     case 108760:                    // 'processing-instruction' 'preceding'
-    case 109138:                    // 'attribute' 'preceding-sibling'
+    case 109138:                    // 'attributes' 'preceding-sibling'
     case 109177:                    // 'element' 'preceding-sibling'
     case 109240:                    // 'namespace' 'preceding-sibling'
     case 109272:                    // 'processing-instruction' 'preceding-sibling'
-    case 110674:                    // 'attribute' 'processing-instruction'
+    case 110674:                    // 'attributes' 'processing-instruction'
     case 110713:                    // 'element' 'processing-instruction'
     case 110776:                    // 'namespace' 'processing-instruction'
     case 110808:                    // 'processing-instruction' 'processing-instruction'
-    case 111698:                    // 'attribute' 'rename'
+    case 111698:                    // 'attributes' 'rename'
     case 111737:                    // 'element' 'rename'
     case 111800:                    // 'namespace' 'rename'
     case 111832:                    // 'processing-instruction' 'rename'
-    case 112210:                    // 'attribute' 'replace'
+    case 112210:                    // 'attributes' 'replace'
     case 112249:                    // 'element' 'replace'
     case 112312:                    // 'namespace' 'replace'
     case 112344:                    // 'processing-instruction' 'replace'
-    case 113234:                    // 'attribute' 'returning'
+    case 113234:                    // 'attributes' 'returning'
     case 113273:                    // 'element' 'returning'
     case 113336:                    // 'namespace' 'returning'
     case 113368:                    // 'processing-instruction' 'returning'
-    case 113746:                    // 'attribute' 'revalidation'
+    case 113746:                    // 'attributes' 'revalidation'
     case 113785:                    // 'element' 'revalidation'
     case 113848:                    // 'namespace' 'revalidation'
     case 113880:                    // 'processing-instruction' 'revalidation'
-    case 115282:                    // 'attribute' 'schema'
+    case 115282:                    // 'attributes' 'schema'
     case 115321:                    // 'element' 'schema'
     case 115384:                    // 'namespace' 'schema'
     case 115416:                    // 'processing-instruction' 'schema'
-    case 115794:                    // 'attribute' 'schema-attribute'
-    case 115833:                    // 'element' 'schema-attribute'
-    case 115896:                    // 'namespace' 'schema-attribute'
-    case 115928:                    // 'processing-instruction' 'schema-attribute'
-    case 116306:                    // 'attribute' 'schema-element'
+    case 115794:                    // 'attributes' 'schema-attributes'
+    case 115833:                    // 'element' 'schema-attributes'
+    case 115896:                    // 'namespace' 'schema-attributes'
+    case 115928:                    // 'processing-instruction' 'schema-attributes'
+    case 116306:                    // 'attributes' 'schema-element'
     case 116345:                    // 'element' 'schema-element'
     case 116408:                    // 'namespace' 'schema-element'
     case 116440:                    // 'processing-instruction' 'schema-element'
-    case 116818:                    // 'attribute' 'score'
+    case 116818:                    // 'attributes' 'score'
     case 116857:                    // 'element' 'score'
     case 116920:                    // 'namespace' 'score'
     case 116952:                    // 'processing-instruction' 'score'
-    case 117330:                    // 'attribute' 'self'
+    case 117330:                    // 'attributes' 'self'
     case 117369:                    // 'element' 'self'
     case 117432:                    // 'namespace' 'self'
     case 117464:                    // 'processing-instruction' 'self'
-    case 119890:                    // 'attribute' 'sliding'
+    case 119890:                    // 'attributes' 'sliding'
     case 119929:                    // 'element' 'sliding'
     case 119992:                    // 'namespace' 'sliding'
     case 120024:                    // 'processing-instruction' 'sliding'
-    case 120402:                    // 'attribute' 'some'
+    case 120402:                    // 'attributes' 'some'
     case 120441:                    // 'element' 'some'
     case 120504:                    // 'namespace' 'some'
     case 120536:                    // 'processing-instruction' 'some'
-    case 122962:                    // 'attribute' 'strict'
+    case 122962:                    // 'attributes' 'strict'
     case 123001:                    // 'element' 'strict'
     case 123064:                    // 'namespace' 'strict'
     case 123096:                    // 'processing-instruction' 'strict'
-    case 123986:                    // 'attribute' 'structured-item'
+    case 123986:                    // 'attributes' 'structured-item'
     case 124025:                    // 'element' 'structured-item'
-    case 124498:                    // 'attribute' 'switch'
+    case 124498:                    // 'attributes' 'switch'
     case 124537:                    // 'element' 'switch'
     case 124600:                    // 'namespace' 'switch'
     case 124632:                    // 'processing-instruction' 'switch'
-    case 125010:                    // 'attribute' 'text'
+    case 125010:                    // 'attributes' 'text'
     case 125049:                    // 'element' 'text'
     case 125112:                    // 'namespace' 'text'
     case 125144:                    // 'processing-instruction' 'text'
-    case 128082:                    // 'attribute' 'try'
+    case 128082:                    // 'attributes' 'try'
     case 128121:                    // 'element' 'try'
     case 128184:                    // 'namespace' 'try'
     case 128216:                    // 'processing-instruction' 'try'
-    case 128594:                    // 'attribute' 'tumbling'
+    case 128594:                    // 'attributes' 'tumbling'
     case 128633:                    // 'element' 'tumbling'
     case 128696:                    // 'namespace' 'tumbling'
     case 128728:                    // 'processing-instruction' 'tumbling'
-    case 129106:                    // 'attribute' 'type'
+    case 129106:                    // 'attributes' 'type'
     case 129145:                    // 'element' 'type'
     case 129208:                    // 'namespace' 'type'
     case 129240:                    // 'processing-instruction' 'type'
-    case 129618:                    // 'attribute' 'typeswitch'
+    case 129618:                    // 'attributes' 'typeswitch'
     case 129657:                    // 'element' 'typeswitch'
     case 129720:                    // 'namespace' 'typeswitch'
     case 129752:                    // 'processing-instruction' 'typeswitch'
-    case 131154:                    // 'attribute' 'unordered'
+    case 131154:                    // 'attributes' 'unordered'
     case 131193:                    // 'element' 'unordered'
     case 131256:                    // 'namespace' 'unordered'
     case 131288:                    // 'processing-instruction' 'unordered'
-    case 131666:                    // 'attribute' 'updating'
+    case 131666:                    // 'attributes' 'updating'
     case 131705:                    // 'element' 'updating'
     case 131768:                    // 'namespace' 'updating'
     case 131800:                    // 'processing-instruction' 'updating'
-    case 133202:                    // 'attribute' 'validate'
+    case 133202:                    // 'attributes' 'validate'
     case 133241:                    // 'element' 'validate'
     case 133304:                    // 'namespace' 'validate'
     case 133336:                    // 'processing-instruction' 'validate'
-    case 133714:                    // 'attribute' 'value'
+    case 133714:                    // 'attributes' 'value'
     case 133753:                    // 'element' 'value'
     case 133816:                    // 'namespace' 'value'
     case 133848:                    // 'processing-instruction' 'value'
-    case 134226:                    // 'attribute' 'variable'
+    case 134226:                    // 'attributes' 'variable'
     case 134265:                    // 'element' 'variable'
     case 134328:                    // 'namespace' 'variable'
     case 134360:                    // 'processing-instruction' 'variable'
-    case 134738:                    // 'attribute' 'version'
+    case 134738:                    // 'attributes' 'version'
     case 134777:                    // 'element' 'version'
     case 134840:                    // 'namespace' 'version'
     case 134872:                    // 'processing-instruction' 'version'
-    case 136786:                    // 'attribute' 'while'
+    case 136786:                    // 'attributes' 'while'
     case 136825:                    // 'element' 'while'
     case 136888:                    // 'namespace' 'while'
     case 136920:                    // 'processing-instruction' 'while'
-    case 140370:                    // 'attribute' 'xquery'
+    case 140370:                    // 'attributes' 'xquery'
     case 140409:                    // 'element' 'xquery'
     case 140472:                    // 'namespace' 'xquery'
     case 140504:                    // 'processing-instruction' 'xquery'
-    case 141394:                    // 'attribute' '{'
+    case 141394:                    // 'attributes' '{'
     case 141408:                    // 'comment' '{'
     case 141431:                    // 'document' '{'
     case 141433:                    // 'element' '{'
@@ -33800,7 +33800,7 @@ JSONiqParser.TOKEN =
   {
     switch (l1)
     {
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
       lookahead2W(285);             // EQName^Token | S^WS | EOF | '!' | '!=' | '#' | '(' | '(:' | ')' | '*' | '+' |
       break;
     case 121:                       // 'element'
@@ -33924,7 +33924,7 @@ JSONiqParser.TOKEN =
     case 222:                       // 'revalidation'
     case 224:                       // 'satisfies'
     case 225:                       // 'schema'
-    case 226:                       // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
     case 227:                       // 'schema-element'
     case 228:                       // 'score'
     case 234:                       // 'sliding'
@@ -33952,187 +33952,187 @@ JSONiqParser.TOKEN =
     default:
       lk = l1;
     }
-    if (lk == 35922                 // 'attribute' 'after'
+    if (lk == 35922                 // 'attributes' 'after'
      || lk == 35961                 // 'element' 'after'
      || lk == 36024                 // 'namespace' 'after'
      || lk == 36056                 // 'processing-instruction' 'after'
-     || lk == 38482                 // 'attribute' 'and'
+     || lk == 38482                 // 'attributes' 'and'
      || lk == 38521                 // 'element' 'and'
      || lk == 38584                 // 'namespace' 'and'
      || lk == 38616                 // 'processing-instruction' 'and'
-     || lk == 40530                 // 'attribute' 'as'
+     || lk == 40530                 // 'attributes' 'as'
      || lk == 40569                 // 'element' 'as'
      || lk == 40632                 // 'namespace' 'as'
      || lk == 40664                 // 'processing-instruction' 'as'
-     || lk == 41042                 // 'attribute' 'ascending'
+     || lk == 41042                 // 'attributes' 'ascending'
      || lk == 41081                 // 'element' 'ascending'
      || lk == 41144                 // 'namespace' 'ascending'
      || lk == 41176                 // 'processing-instruction' 'ascending'
-     || lk == 41554                 // 'attribute' 'at'
+     || lk == 41554                 // 'attributes' 'at'
      || lk == 41593                 // 'element' 'at'
      || lk == 41656                 // 'namespace' 'at'
      || lk == 41688                 // 'processing-instruction' 'at'
-     || lk == 43090                 // 'attribute' 'before'
+     || lk == 43090                 // 'attributes' 'before'
      || lk == 43129                 // 'element' 'before'
      || lk == 43192                 // 'namespace' 'before'
      || lk == 43224                 // 'processing-instruction' 'before'
-     || lk == 45138                 // 'attribute' 'case'
+     || lk == 45138                 // 'attributes' 'case'
      || lk == 45177                 // 'element' 'case'
      || lk == 45240                 // 'namespace' 'case'
      || lk == 45272                 // 'processing-instruction' 'case'
-     || lk == 45650                 // 'attribute' 'cast'
+     || lk == 45650                 // 'attributes' 'cast'
      || lk == 45689                 // 'element' 'cast'
      || lk == 45752                 // 'namespace' 'cast'
      || lk == 45784                 // 'processing-instruction' 'cast'
-     || lk == 46162                 // 'attribute' 'castable'
+     || lk == 46162                 // 'attributes' 'castable'
      || lk == 46201                 // 'element' 'castable'
      || lk == 46264                 // 'namespace' 'castable'
      || lk == 46296                 // 'processing-instruction' 'castable'
-     || lk == 48210                 // 'attribute' 'collation'
+     || lk == 48210                 // 'attributes' 'collation'
      || lk == 48249                 // 'element' 'collation'
      || lk == 48312                 // 'namespace' 'collation'
      || lk == 48344                 // 'processing-instruction' 'collation'
-     || lk == 53842                 // 'attribute' 'count'
+     || lk == 53842                 // 'attributes' 'count'
      || lk == 53881                 // 'element' 'count'
      || lk == 53944                 // 'namespace' 'count'
      || lk == 53976                 // 'processing-instruction' 'count'
-     || lk == 55890                 // 'attribute' 'default'
+     || lk == 55890                 // 'attributes' 'default'
      || lk == 55929                 // 'element' 'default'
      || lk == 55992                 // 'namespace' 'default'
      || lk == 56024                 // 'processing-instruction' 'default'
-     || lk == 57938                 // 'attribute' 'descending'
+     || lk == 57938                 // 'attributes' 'descending'
      || lk == 57977                 // 'element' 'descending'
      || lk == 58040                 // 'namespace' 'descending'
      || lk == 58072                 // 'processing-instruction' 'descending'
-     || lk == 60498                 // 'attribute' 'div'
+     || lk == 60498                 // 'attributes' 'div'
      || lk == 60537                 // 'element' 'div'
      || lk == 60600                 // 'namespace' 'div'
      || lk == 60632                 // 'processing-instruction' 'div'
-     || lk == 62546                 // 'attribute' 'else'
+     || lk == 62546                 // 'attributes' 'else'
      || lk == 62585                 // 'element' 'else'
      || lk == 62648                 // 'namespace' 'else'
      || lk == 62680                 // 'processing-instruction' 'else'
-     || lk == 63058                 // 'attribute' 'empty'
+     || lk == 63058                 // 'attributes' 'empty'
      || lk == 63097                 // 'element' 'empty'
      || lk == 63160                 // 'namespace' 'empty'
      || lk == 63192                 // 'processing-instruction' 'empty'
-     || lk == 64594                 // 'attribute' 'end'
+     || lk == 64594                 // 'attributes' 'end'
      || lk == 64633                 // 'element' 'end'
      || lk == 64696                 // 'namespace' 'end'
      || lk == 64728                 // 'processing-instruction' 'end'
-     || lk == 65618                 // 'attribute' 'eq'
+     || lk == 65618                 // 'attributes' 'eq'
      || lk == 65657                 // 'element' 'eq'
      || lk == 65720                 // 'namespace' 'eq'
      || lk == 65752                 // 'processing-instruction' 'eq'
-     || lk == 67154                 // 'attribute' 'except'
+     || lk == 67154                 // 'attributes' 'except'
      || lk == 67193                 // 'element' 'except'
      || lk == 67256                 // 'namespace' 'except'
      || lk == 67288                 // 'processing-instruction' 'except'
-     || lk == 70226                 // 'attribute' 'for'
+     || lk == 70226                 // 'attributes' 'for'
      || lk == 70265                 // 'element' 'for'
      || lk == 70328                 // 'namespace' 'for'
      || lk == 70360                 // 'processing-instruction' 'for'
-     || lk == 74834                 // 'attribute' 'ge'
+     || lk == 74834                 // 'attributes' 'ge'
      || lk == 74873                 // 'element' 'ge'
      || lk == 74936                 // 'namespace' 'ge'
      || lk == 74968                 // 'processing-instruction' 'ge'
-     || lk == 75858                 // 'attribute' 'group'
+     || lk == 75858                 // 'attributes' 'group'
      || lk == 75897                 // 'element' 'group'
      || lk == 75960                 // 'namespace' 'group'
      || lk == 75992                 // 'processing-instruction' 'group'
-     || lk == 76882                 // 'attribute' 'gt'
+     || lk == 76882                 // 'attributes' 'gt'
      || lk == 76921                 // 'element' 'gt'
      || lk == 76984                 // 'namespace' 'gt'
      || lk == 77016                 // 'processing-instruction' 'gt'
-     || lk == 77394                 // 'attribute' 'idiv'
+     || lk == 77394                 // 'attributes' 'idiv'
      || lk == 77433                 // 'element' 'idiv'
      || lk == 77496                 // 'namespace' 'idiv'
      || lk == 77528                 // 'processing-instruction' 'idiv'
-     || lk == 82002                 // 'attribute' 'instance'
+     || lk == 82002                 // 'attributes' 'instance'
      || lk == 82041                 // 'element' 'instance'
      || lk == 82104                 // 'namespace' 'instance'
      || lk == 82136                 // 'processing-instruction' 'instance'
-     || lk == 83026                 // 'attribute' 'intersect'
+     || lk == 83026                 // 'attributes' 'intersect'
      || lk == 83065                 // 'element' 'intersect'
      || lk == 83128                 // 'namespace' 'intersect'
      || lk == 83160                 // 'processing-instruction' 'intersect'
-     || lk == 83538                 // 'attribute' 'into'
+     || lk == 83538                 // 'attributes' 'into'
      || lk == 83577                 // 'element' 'into'
      || lk == 83640                 // 'namespace' 'into'
      || lk == 83672                 // 'processing-instruction' 'into'
-     || lk == 84050                 // 'attribute' 'is'
+     || lk == 84050                 // 'attributes' 'is'
      || lk == 84089                 // 'element' 'is'
      || lk == 84152                 // 'namespace' 'is'
      || lk == 84184                 // 'processing-instruction' 'is'
-     || lk == 88146                 // 'attribute' 'le'
+     || lk == 88146                 // 'attributes' 'le'
      || lk == 88185                 // 'element' 'le'
      || lk == 88248                 // 'namespace' 'le'
      || lk == 88280                 // 'processing-instruction' 'le'
-     || lk == 89170                 // 'attribute' 'let'
+     || lk == 89170                 // 'attributes' 'let'
      || lk == 89209                 // 'element' 'let'
      || lk == 89272                 // 'namespace' 'let'
      || lk == 89304                 // 'processing-instruction' 'let'
-     || lk == 91218                 // 'attribute' 'lt'
+     || lk == 91218                 // 'attributes' 'lt'
      || lk == 91257                 // 'element' 'lt'
      || lk == 91320                 // 'namespace' 'lt'
      || lk == 91352                 // 'processing-instruction' 'lt'
-     || lk == 92242                 // 'attribute' 'mod'
+     || lk == 92242                 // 'attributes' 'mod'
      || lk == 92281                 // 'element' 'mod'
      || lk == 92344                 // 'namespace' 'mod'
      || lk == 92376                 // 'processing-instruction' 'mod'
-     || lk == 92754                 // 'attribute' 'modify'
+     || lk == 92754                 // 'attributes' 'modify'
      || lk == 92793                 // 'element' 'modify'
      || lk == 92856                 // 'namespace' 'modify'
      || lk == 92888                 // 'processing-instruction' 'modify'
-     || lk == 95314                 // 'attribute' 'ne'
+     || lk == 95314                 // 'attributes' 'ne'
      || lk == 95353                 // 'element' 'ne'
      || lk == 95416                 // 'namespace' 'ne'
      || lk == 95448                 // 'processing-instruction' 'ne'
-     || lk == 101458                // 'attribute' 'only'
+     || lk == 101458                // 'attributes' 'only'
      || lk == 101497                // 'element' 'only'
      || lk == 101560                // 'namespace' 'only'
      || lk == 101592                // 'processing-instruction' 'only'
-     || lk == 102482                // 'attribute' 'or'
+     || lk == 102482                // 'attributes' 'or'
      || lk == 102521                // 'element' 'or'
      || lk == 102584                // 'namespace' 'or'
      || lk == 102616                // 'processing-instruction' 'or'
-     || lk == 102994                // 'attribute' 'order'
+     || lk == 102994                // 'attributes' 'order'
      || lk == 103033                // 'element' 'order'
      || lk == 103096                // 'namespace' 'order'
      || lk == 103128                // 'processing-instruction' 'order'
-     || lk == 112722                // 'attribute' 'return'
+     || lk == 112722                // 'attributes' 'return'
      || lk == 112761                // 'element' 'return'
      || lk == 112824                // 'namespace' 'return'
      || lk == 112856                // 'processing-instruction' 'return'
-     || lk == 114770                // 'attribute' 'satisfies'
+     || lk == 114770                // 'attributes' 'satisfies'
      || lk == 114809                // 'element' 'satisfies'
      || lk == 114872                // 'namespace' 'satisfies'
      || lk == 114904                // 'processing-instruction' 'satisfies'
-     || lk == 120914                // 'attribute' 'stable'
+     || lk == 120914                // 'attributes' 'stable'
      || lk == 120953                // 'element' 'stable'
      || lk == 121016                // 'namespace' 'stable'
      || lk == 121048                // 'processing-instruction' 'stable'
-     || lk == 121426                // 'attribute' 'start'
+     || lk == 121426                // 'attributes' 'start'
      || lk == 121465                // 'element' 'start'
      || lk == 121528                // 'namespace' 'start'
      || lk == 121560                // 'processing-instruction' 'start'
-     || lk == 127058                // 'attribute' 'to'
+     || lk == 127058                // 'attributes' 'to'
      || lk == 127097                // 'element' 'to'
      || lk == 127160                // 'namespace' 'to'
      || lk == 127192                // 'processing-instruction' 'to'
-     || lk == 127570                // 'attribute' 'treat'
+     || lk == 127570                // 'attributes' 'treat'
      || lk == 127609                // 'element' 'treat'
      || lk == 127672                // 'namespace' 'treat'
      || lk == 127704                // 'processing-instruction' 'treat'
-     || lk == 130130                // 'attribute' 'union'
+     || lk == 130130                // 'attributes' 'union'
      || lk == 130169                // 'element' 'union'
      || lk == 130232                // 'namespace' 'union'
      || lk == 130264                // 'processing-instruction' 'union'
-     || lk == 136274                // 'attribute' 'where'
+     || lk == 136274                // 'attributes' 'where'
      || lk == 136313                // 'element' 'where'
      || lk == 136376                // 'namespace' 'where'
      || lk == 136408                // 'processing-instruction' 'where'
-     || lk == 138322                // 'attribute' 'with'
+     || lk == 138322                // 'attributes' 'with'
      || lk == 138361                // 'element' 'with'
      || lk == 138424                // 'namespace' 'with'
      || lk == 138456)               // 'processing-instruction' 'with'
@@ -34176,7 +34176,7 @@ JSONiqParser.TOKEN =
     case 68:                        // '['
     case 276:                       // '{'
     case 278:                       // '{|'
-    case 3154:                      // 'attribute' EQName^Token
+    case 3154:                      // 'attributes' EQName^Token
     case 3193:                      // 'element' EQName^Token
     case 9912:                      // 'namespace' NCName^Token
     case 9944:                      // 'processing-instruction' NCName^Token
@@ -34191,7 +34191,7 @@ JSONiqParser.TOKEN =
     case 14927:                     // 'as' '#'
     case 14928:                     // 'ascending' '#'
     case 14929:                     // 'at' '#'
-    case 14930:                     // 'attribute' '#'
+    case 14930:                     // 'attributes' '#'
     case 14931:                     // 'base-uri' '#'
     case 14932:                     // 'before' '#'
     case 14933:                     // 'boundary-space' '#'
@@ -34286,7 +34286,7 @@ JSONiqParser.TOKEN =
     case 15070:                     // 'revalidation' '#'
     case 15072:                     // 'satisfies' '#'
     case 15073:                     // 'schema' '#'
-    case 15074:                     // 'schema-attribute' '#'
+    case 15074:                     // 'schema-attributes' '#'
     case 15075:                     // 'schema-element' '#'
     case 15076:                     // 'score' '#'
     case 15077:                     // 'self' '#'
@@ -34432,353 +34432,353 @@ JSONiqParser.TOKEN =
     case 17675:                     // 'while' '('
     case 17678:                     // 'with' '('
     case 17682:                     // 'xquery' '('
-    case 36946:                     // 'attribute' 'allowing'
+    case 36946:                     // 'attributes' 'allowing'
     case 36985:                     // 'element' 'allowing'
     case 37048:                     // 'namespace' 'allowing'
     case 37080:                     // 'processing-instruction' 'allowing'
-    case 37458:                     // 'attribute' 'ancestor'
+    case 37458:                     // 'attributes' 'ancestor'
     case 37497:                     // 'element' 'ancestor'
     case 37560:                     // 'namespace' 'ancestor'
     case 37592:                     // 'processing-instruction' 'ancestor'
-    case 37970:                     // 'attribute' 'ancestor-or-self'
+    case 37970:                     // 'attributes' 'ancestor-or-self'
     case 38009:                     // 'element' 'ancestor-or-self'
     case 38072:                     // 'namespace' 'ancestor-or-self'
     case 38104:                     // 'processing-instruction' 'ancestor-or-self'
-    case 39506:                     // 'attribute' 'append'
+    case 39506:                     // 'attributes' 'append'
     case 39545:                     // 'element' 'append'
     case 39608:                     // 'namespace' 'append'
     case 39640:                     // 'processing-instruction' 'append'
-    case 40018:                     // 'attribute' 'array'
+    case 40018:                     // 'attributes' 'array'
     case 40057:                     // 'element' 'array'
-    case 42066:                     // 'attribute' 'attribute'
-    case 42105:                     // 'element' 'attribute'
-    case 42168:                     // 'namespace' 'attribute'
-    case 42200:                     // 'processing-instruction' 'attribute'
-    case 42578:                     // 'attribute' 'base-uri'
+    case 42066:                     // 'attributes' 'attributes'
+    case 42105:                     // 'element' 'attributes'
+    case 42168:                     // 'namespace' 'attributes'
+    case 42200:                     // 'processing-instruction' 'attributes'
+    case 42578:                     // 'attributes' 'base-uri'
     case 42617:                     // 'element' 'base-uri'
     case 42680:                     // 'namespace' 'base-uri'
     case 42712:                     // 'processing-instruction' 'base-uri'
-    case 43602:                     // 'attribute' 'boundary-space'
+    case 43602:                     // 'attributes' 'boundary-space'
     case 43641:                     // 'element' 'boundary-space'
     case 43704:                     // 'namespace' 'boundary-space'
     case 43736:                     // 'processing-instruction' 'boundary-space'
-    case 44114:                     // 'attribute' 'break'
+    case 44114:                     // 'attributes' 'break'
     case 44153:                     // 'element' 'break'
     case 44216:                     // 'namespace' 'break'
     case 44248:                     // 'processing-instruction' 'break'
-    case 46674:                     // 'attribute' 'catch'
+    case 46674:                     // 'attributes' 'catch'
     case 46713:                     // 'element' 'catch'
     case 46776:                     // 'namespace' 'catch'
     case 46808:                     // 'processing-instruction' 'catch'
-    case 47698:                     // 'attribute' 'child'
+    case 47698:                     // 'attributes' 'child'
     case 47737:                     // 'element' 'child'
     case 47800:                     // 'namespace' 'child'
     case 47832:                     // 'processing-instruction' 'child'
-    case 49234:                     // 'attribute' 'comment'
+    case 49234:                     // 'attributes' 'comment'
     case 49273:                     // 'element' 'comment'
     case 49336:                     // 'namespace' 'comment'
     case 49368:                     // 'processing-instruction' 'comment'
-    case 49746:                     // 'attribute' 'constraint'
+    case 49746:                     // 'attributes' 'constraint'
     case 49785:                     // 'element' 'constraint'
     case 49848:                     // 'namespace' 'constraint'
     case 49880:                     // 'processing-instruction' 'constraint'
-    case 50258:                     // 'attribute' 'construction'
+    case 50258:                     // 'attributes' 'construction'
     case 50297:                     // 'element' 'construction'
     case 50360:                     // 'namespace' 'construction'
     case 50392:                     // 'processing-instruction' 'construction'
-    case 51794:                     // 'attribute' 'context'
+    case 51794:                     // 'attributes' 'context'
     case 51833:                     // 'element' 'context'
     case 51896:                     // 'namespace' 'context'
     case 51928:                     // 'processing-instruction' 'context'
-    case 52306:                     // 'attribute' 'continue'
+    case 52306:                     // 'attributes' 'continue'
     case 52345:                     // 'element' 'continue'
     case 52408:                     // 'namespace' 'continue'
     case 52440:                     // 'processing-instruction' 'continue'
-    case 52818:                     // 'attribute' 'copy'
+    case 52818:                     // 'attributes' 'copy'
     case 52857:                     // 'element' 'copy'
     case 52920:                     // 'namespace' 'copy'
     case 52952:                     // 'processing-instruction' 'copy'
-    case 53330:                     // 'attribute' 'copy-namespaces'
+    case 53330:                     // 'attributes' 'copy-namespaces'
     case 53369:                     // 'element' 'copy-namespaces'
     case 53432:                     // 'namespace' 'copy-namespaces'
     case 53464:                     // 'processing-instruction' 'copy-namespaces'
-    case 54354:                     // 'attribute' 'decimal-format'
+    case 54354:                     // 'attributes' 'decimal-format'
     case 54393:                     // 'element' 'decimal-format'
     case 54456:                     // 'namespace' 'decimal-format'
     case 54488:                     // 'processing-instruction' 'decimal-format'
-    case 55378:                     // 'attribute' 'declare'
+    case 55378:                     // 'attributes' 'declare'
     case 55417:                     // 'element' 'declare'
     case 55480:                     // 'namespace' 'declare'
     case 55512:                     // 'processing-instruction' 'declare'
-    case 56402:                     // 'attribute' 'delete'
+    case 56402:                     // 'attributes' 'delete'
     case 56441:                     // 'element' 'delete'
     case 56504:                     // 'namespace' 'delete'
     case 56536:                     // 'processing-instruction' 'delete'
-    case 56914:                     // 'attribute' 'descendant'
+    case 56914:                     // 'attributes' 'descendant'
     case 56953:                     // 'element' 'descendant'
     case 57016:                     // 'namespace' 'descendant'
     case 57048:                     // 'processing-instruction' 'descendant'
-    case 57426:                     // 'attribute' 'descendant-or-self'
+    case 57426:                     // 'attributes' 'descendant-or-self'
     case 57465:                     // 'element' 'descendant-or-self'
     case 57528:                     // 'namespace' 'descendant-or-self'
     case 57560:                     // 'processing-instruction' 'descendant-or-self'
-    case 61010:                     // 'attribute' 'document'
+    case 61010:                     // 'attributes' 'document'
     case 61049:                     // 'element' 'document'
     case 61112:                     // 'namespace' 'document'
     case 61144:                     // 'processing-instruction' 'document'
-    case 61522:                     // 'attribute' 'document-node'
+    case 61522:                     // 'attributes' 'document-node'
     case 61561:                     // 'element' 'document-node'
     case 61624:                     // 'namespace' 'document-node'
     case 61656:                     // 'processing-instruction' 'document-node'
-    case 62034:                     // 'attribute' 'element'
+    case 62034:                     // 'attributes' 'element'
     case 62073:                     // 'element' 'element'
     case 62136:                     // 'namespace' 'element'
     case 62168:                     // 'processing-instruction' 'element'
-    case 63570:                     // 'attribute' 'empty-sequence'
+    case 63570:                     // 'attributes' 'empty-sequence'
     case 63609:                     // 'element' 'empty-sequence'
     case 63672:                     // 'namespace' 'empty-sequence'
     case 63704:                     // 'processing-instruction' 'empty-sequence'
-    case 64082:                     // 'attribute' 'encoding'
+    case 64082:                     // 'attributes' 'encoding'
     case 64121:                     // 'element' 'encoding'
     case 64184:                     // 'namespace' 'encoding'
     case 64216:                     // 'processing-instruction' 'encoding'
-    case 66130:                     // 'attribute' 'every'
+    case 66130:                     // 'attributes' 'every'
     case 66169:                     // 'element' 'every'
     case 66232:                     // 'namespace' 'every'
     case 66264:                     // 'processing-instruction' 'every'
-    case 67666:                     // 'attribute' 'exit'
+    case 67666:                     // 'attributes' 'exit'
     case 67705:                     // 'element' 'exit'
     case 67768:                     // 'namespace' 'exit'
     case 67800:                     // 'processing-instruction' 'exit'
-    case 68178:                     // 'attribute' 'external'
+    case 68178:                     // 'attributes' 'external'
     case 68217:                     // 'element' 'external'
     case 68280:                     // 'namespace' 'external'
     case 68312:                     // 'processing-instruction' 'external'
-    case 68690:                     // 'attribute' 'first'
+    case 68690:                     // 'attributes' 'first'
     case 68729:                     // 'element' 'first'
     case 68792:                     // 'namespace' 'first'
     case 68824:                     // 'processing-instruction' 'first'
-    case 69202:                     // 'attribute' 'following'
+    case 69202:                     // 'attributes' 'following'
     case 69241:                     // 'element' 'following'
     case 69304:                     // 'namespace' 'following'
     case 69336:                     // 'processing-instruction' 'following'
-    case 69714:                     // 'attribute' 'following-sibling'
+    case 69714:                     // 'attributes' 'following-sibling'
     case 69753:                     // 'element' 'following-sibling'
     case 69816:                     // 'namespace' 'following-sibling'
     case 69848:                     // 'processing-instruction' 'following-sibling'
-    case 72274:                     // 'attribute' 'ft-option'
+    case 72274:                     // 'attributes' 'ft-option'
     case 72313:                     // 'element' 'ft-option'
     case 72376:                     // 'namespace' 'ft-option'
     case 72408:                     // 'processing-instruction' 'ft-option'
-    case 74322:                     // 'attribute' 'function'
+    case 74322:                     // 'attributes' 'function'
     case 74361:                     // 'element' 'function'
     case 74424:                     // 'namespace' 'function'
     case 74456:                     // 'processing-instruction' 'function'
-    case 77906:                     // 'attribute' 'if'
+    case 77906:                     // 'attributes' 'if'
     case 77945:                     // 'element' 'if'
     case 78008:                     // 'namespace' 'if'
     case 78040:                     // 'processing-instruction' 'if'
-    case 78418:                     // 'attribute' 'import'
+    case 78418:                     // 'attributes' 'import'
     case 78457:                     // 'element' 'import'
     case 78520:                     // 'namespace' 'import'
     case 78552:                     // 'processing-instruction' 'import'
-    case 78930:                     // 'attribute' 'in'
+    case 78930:                     // 'attributes' 'in'
     case 78969:                     // 'element' 'in'
     case 79032:                     // 'namespace' 'in'
     case 79064:                     // 'processing-instruction' 'in'
-    case 79442:                     // 'attribute' 'index'
+    case 79442:                     // 'attributes' 'index'
     case 79481:                     // 'element' 'index'
     case 79544:                     // 'namespace' 'index'
     case 79576:                     // 'processing-instruction' 'index'
-    case 81490:                     // 'attribute' 'insert'
+    case 81490:                     // 'attributes' 'insert'
     case 81529:                     // 'element' 'insert'
     case 81592:                     // 'namespace' 'insert'
     case 81624:                     // 'processing-instruction' 'insert'
-    case 82514:                     // 'attribute' 'integrity'
+    case 82514:                     // 'attributes' 'integrity'
     case 82553:                     // 'element' 'integrity'
     case 82616:                     // 'namespace' 'integrity'
     case 82648:                     // 'processing-instruction' 'integrity'
-    case 84562:                     // 'attribute' 'item'
+    case 84562:                     // 'attributes' 'item'
     case 84601:                     // 'element' 'item'
     case 84664:                     // 'namespace' 'item'
     case 84696:                     // 'processing-instruction' 'item'
-    case 85074:                     // 'attribute' 'json'
+    case 85074:                     // 'attributes' 'json'
     case 85113:                     // 'element' 'json'
     case 85176:                     // 'namespace' 'json'
     case 85208:                     // 'processing-instruction' 'json'
-    case 85586:                     // 'attribute' 'json-item'
+    case 85586:                     // 'attributes' 'json-item'
     case 85625:                     // 'element' 'json-item'
-    case 87122:                     // 'attribute' 'last'
+    case 87122:                     // 'attributes' 'last'
     case 87161:                     // 'element' 'last'
     case 87224:                     // 'namespace' 'last'
     case 87256:                     // 'processing-instruction' 'last'
-    case 87634:                     // 'attribute' 'lax'
+    case 87634:                     // 'attributes' 'lax'
     case 87673:                     // 'element' 'lax'
     case 87736:                     // 'namespace' 'lax'
     case 87768:                     // 'processing-instruction' 'lax'
-    case 90194:                     // 'attribute' 'loop'
+    case 90194:                     // 'attributes' 'loop'
     case 90233:                     // 'element' 'loop'
     case 90296:                     // 'namespace' 'loop'
     case 90328:                     // 'processing-instruction' 'loop'
-    case 93266:                     // 'attribute' 'module'
+    case 93266:                     // 'attributes' 'module'
     case 93305:                     // 'element' 'module'
     case 93368:                     // 'namespace' 'module'
     case 93400:                     // 'processing-instruction' 'module'
-    case 94290:                     // 'attribute' 'namespace'
+    case 94290:                     // 'attributes' 'namespace'
     case 94329:                     // 'element' 'namespace'
     case 94392:                     // 'namespace' 'namespace'
     case 94424:                     // 'processing-instruction' 'namespace'
-    case 94802:                     // 'attribute' 'namespace-node'
+    case 94802:                     // 'attributes' 'namespace-node'
     case 94841:                     // 'element' 'namespace-node'
     case 94904:                     // 'namespace' 'namespace-node'
     case 94936:                     // 'processing-instruction' 'namespace-node'
-    case 97874:                     // 'attribute' 'node'
+    case 97874:                     // 'attributes' 'node'
     case 97913:                     // 'element' 'node'
     case 97976:                     // 'namespace' 'node'
     case 98008:                     // 'processing-instruction' 'node'
-    case 98386:                     // 'attribute' 'nodes'
+    case 98386:                     // 'attributes' 'nodes'
     case 98425:                     // 'element' 'nodes'
     case 98488:                     // 'namespace' 'nodes'
     case 98520:                     // 'processing-instruction' 'nodes'
-    case 99410:                     // 'attribute' 'object'
+    case 99410:                     // 'attributes' 'object'
     case 99449:                     // 'element' 'object'
     case 99512:                     // 'namespace' 'object'
     case 99544:                     // 'processing-instruction' 'object'
-    case 101970:                    // 'attribute' 'option'
+    case 101970:                    // 'attributes' 'option'
     case 102009:                    // 'element' 'option'
     case 102072:                    // 'namespace' 'option'
     case 102104:                    // 'processing-instruction' 'option'
-    case 103506:                    // 'attribute' 'ordered'
+    case 103506:                    // 'attributes' 'ordered'
     case 103545:                    // 'element' 'ordered'
     case 103608:                    // 'namespace' 'ordered'
     case 103640:                    // 'processing-instruction' 'ordered'
-    case 104018:                    // 'attribute' 'ordering'
+    case 104018:                    // 'attributes' 'ordering'
     case 104057:                    // 'element' 'ordering'
     case 104120:                    // 'namespace' 'ordering'
     case 104152:                    // 'processing-instruction' 'ordering'
-    case 105554:                    // 'attribute' 'parent'
+    case 105554:                    // 'attributes' 'parent'
     case 105593:                    // 'element' 'parent'
     case 105656:                    // 'namespace' 'parent'
     case 105688:                    // 'processing-instruction' 'parent'
-    case 108626:                    // 'attribute' 'preceding'
+    case 108626:                    // 'attributes' 'preceding'
     case 108665:                    // 'element' 'preceding'
     case 108728:                    // 'namespace' 'preceding'
     case 108760:                    // 'processing-instruction' 'preceding'
-    case 109138:                    // 'attribute' 'preceding-sibling'
+    case 109138:                    // 'attributes' 'preceding-sibling'
     case 109177:                    // 'element' 'preceding-sibling'
     case 109240:                    // 'namespace' 'preceding-sibling'
     case 109272:                    // 'processing-instruction' 'preceding-sibling'
-    case 110674:                    // 'attribute' 'processing-instruction'
+    case 110674:                    // 'attributes' 'processing-instruction'
     case 110713:                    // 'element' 'processing-instruction'
     case 110776:                    // 'namespace' 'processing-instruction'
     case 110808:                    // 'processing-instruction' 'processing-instruction'
-    case 111698:                    // 'attribute' 'rename'
+    case 111698:                    // 'attributes' 'rename'
     case 111737:                    // 'element' 'rename'
     case 111800:                    // 'namespace' 'rename'
     case 111832:                    // 'processing-instruction' 'rename'
-    case 112210:                    // 'attribute' 'replace'
+    case 112210:                    // 'attributes' 'replace'
     case 112249:                    // 'element' 'replace'
     case 112312:                    // 'namespace' 'replace'
     case 112344:                    // 'processing-instruction' 'replace'
-    case 113234:                    // 'attribute' 'returning'
+    case 113234:                    // 'attributes' 'returning'
     case 113273:                    // 'element' 'returning'
     case 113336:                    // 'namespace' 'returning'
     case 113368:                    // 'processing-instruction' 'returning'
-    case 113746:                    // 'attribute' 'revalidation'
+    case 113746:                    // 'attributes' 'revalidation'
     case 113785:                    // 'element' 'revalidation'
     case 113848:                    // 'namespace' 'revalidation'
     case 113880:                    // 'processing-instruction' 'revalidation'
-    case 115282:                    // 'attribute' 'schema'
+    case 115282:                    // 'attributes' 'schema'
     case 115321:                    // 'element' 'schema'
     case 115384:                    // 'namespace' 'schema'
     case 115416:                    // 'processing-instruction' 'schema'
-    case 115794:                    // 'attribute' 'schema-attribute'
-    case 115833:                    // 'element' 'schema-attribute'
-    case 115896:                    // 'namespace' 'schema-attribute'
-    case 115928:                    // 'processing-instruction' 'schema-attribute'
-    case 116306:                    // 'attribute' 'schema-element'
+    case 115794:                    // 'attributes' 'schema-attributes'
+    case 115833:                    // 'element' 'schema-attributes'
+    case 115896:                    // 'namespace' 'schema-attributes'
+    case 115928:                    // 'processing-instruction' 'schema-attributes'
+    case 116306:                    // 'attributes' 'schema-element'
     case 116345:                    // 'element' 'schema-element'
     case 116408:                    // 'namespace' 'schema-element'
     case 116440:                    // 'processing-instruction' 'schema-element'
-    case 116818:                    // 'attribute' 'score'
+    case 116818:                    // 'attributes' 'score'
     case 116857:                    // 'element' 'score'
     case 116920:                    // 'namespace' 'score'
     case 116952:                    // 'processing-instruction' 'score'
-    case 117330:                    // 'attribute' 'self'
+    case 117330:                    // 'attributes' 'self'
     case 117369:                    // 'element' 'self'
     case 117432:                    // 'namespace' 'self'
     case 117464:                    // 'processing-instruction' 'self'
-    case 119890:                    // 'attribute' 'sliding'
+    case 119890:                    // 'attributes' 'sliding'
     case 119929:                    // 'element' 'sliding'
     case 119992:                    // 'namespace' 'sliding'
     case 120024:                    // 'processing-instruction' 'sliding'
-    case 120402:                    // 'attribute' 'some'
+    case 120402:                    // 'attributes' 'some'
     case 120441:                    // 'element' 'some'
     case 120504:                    // 'namespace' 'some'
     case 120536:                    // 'processing-instruction' 'some'
-    case 122962:                    // 'attribute' 'strict'
+    case 122962:                    // 'attributes' 'strict'
     case 123001:                    // 'element' 'strict'
     case 123064:                    // 'namespace' 'strict'
     case 123096:                    // 'processing-instruction' 'strict'
-    case 123986:                    // 'attribute' 'structured-item'
+    case 123986:                    // 'attributes' 'structured-item'
     case 124025:                    // 'element' 'structured-item'
-    case 124498:                    // 'attribute' 'switch'
+    case 124498:                    // 'attributes' 'switch'
     case 124537:                    // 'element' 'switch'
     case 124600:                    // 'namespace' 'switch'
     case 124632:                    // 'processing-instruction' 'switch'
-    case 125010:                    // 'attribute' 'text'
+    case 125010:                    // 'attributes' 'text'
     case 125049:                    // 'element' 'text'
     case 125112:                    // 'namespace' 'text'
     case 125144:                    // 'processing-instruction' 'text'
-    case 128082:                    // 'attribute' 'try'
+    case 128082:                    // 'attributes' 'try'
     case 128121:                    // 'element' 'try'
     case 128184:                    // 'namespace' 'try'
     case 128216:                    // 'processing-instruction' 'try'
-    case 128594:                    // 'attribute' 'tumbling'
+    case 128594:                    // 'attributes' 'tumbling'
     case 128633:                    // 'element' 'tumbling'
     case 128696:                    // 'namespace' 'tumbling'
     case 128728:                    // 'processing-instruction' 'tumbling'
-    case 129106:                    // 'attribute' 'type'
+    case 129106:                    // 'attributes' 'type'
     case 129145:                    // 'element' 'type'
     case 129208:                    // 'namespace' 'type'
     case 129240:                    // 'processing-instruction' 'type'
-    case 129618:                    // 'attribute' 'typeswitch'
+    case 129618:                    // 'attributes' 'typeswitch'
     case 129657:                    // 'element' 'typeswitch'
     case 129720:                    // 'namespace' 'typeswitch'
     case 129752:                    // 'processing-instruction' 'typeswitch'
-    case 131154:                    // 'attribute' 'unordered'
+    case 131154:                    // 'attributes' 'unordered'
     case 131193:                    // 'element' 'unordered'
     case 131256:                    // 'namespace' 'unordered'
     case 131288:                    // 'processing-instruction' 'unordered'
-    case 131666:                    // 'attribute' 'updating'
+    case 131666:                    // 'attributes' 'updating'
     case 131705:                    // 'element' 'updating'
     case 131768:                    // 'namespace' 'updating'
     case 131800:                    // 'processing-instruction' 'updating'
-    case 133202:                    // 'attribute' 'validate'
+    case 133202:                    // 'attributes' 'validate'
     case 133241:                    // 'element' 'validate'
     case 133304:                    // 'namespace' 'validate'
     case 133336:                    // 'processing-instruction' 'validate'
-    case 133714:                    // 'attribute' 'value'
+    case 133714:                    // 'attributes' 'value'
     case 133753:                    // 'element' 'value'
     case 133816:                    // 'namespace' 'value'
     case 133848:                    // 'processing-instruction' 'value'
-    case 134226:                    // 'attribute' 'variable'
+    case 134226:                    // 'attributes' 'variable'
     case 134265:                    // 'element' 'variable'
     case 134328:                    // 'namespace' 'variable'
     case 134360:                    // 'processing-instruction' 'variable'
-    case 134738:                    // 'attribute' 'version'
+    case 134738:                    // 'attributes' 'version'
     case 134777:                    // 'element' 'version'
     case 134840:                    // 'namespace' 'version'
     case 134872:                    // 'processing-instruction' 'version'
-    case 136786:                    // 'attribute' 'while'
+    case 136786:                    // 'attributes' 'while'
     case 136825:                    // 'element' 'while'
     case 136888:                    // 'namespace' 'while'
     case 136920:                    // 'processing-instruction' 'while'
-    case 140370:                    // 'attribute' 'xquery'
+    case 140370:                    // 'attributes' 'xquery'
     case 140409:                    // 'element' 'xquery'
     case 140472:                    // 'namespace' 'xquery'
     case 140504:                    // 'processing-instruction' 'xquery'
-    case 141394:                    // 'attribute' '{'
+    case 141394:                    // 'attributes' '{'
     case 141408:                    // 'comment' '{'
     case 141431:                    // 'document' '{'
     case 141433:                    // 'element' '{'
@@ -34866,7 +34866,7 @@ JSONiqParser.TOKEN =
     eventHandler.startNonterminal("ForwardStep", e0);
     switch (l1)
     {
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
       lookahead2W(245);             // S^WS | EOF | '!' | '!=' | '(' | '(:' | ')' | '*' | '+' | ',' | '-' | '/' | '//' |
       break;
     case 93:                        // 'child'
@@ -34882,7 +34882,7 @@ JSONiqParser.TOKEN =
     }
     switch (lk)
     {
-    case 26194:                     // 'attribute' '::'
+    case 26194:                     // 'attributes' '::'
     case 26205:                     // 'child' '::'
     case 26223:                     // 'descendant' '::'
     case 26224:                     // 'descendant-or-self' '::'
@@ -34904,7 +34904,7 @@ JSONiqParser.TOKEN =
   {
     switch (l1)
     {
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
       lookahead2W(245);             // S^WS | EOF | '!' | '!=' | '(' | '(:' | ')' | '*' | '+' | ',' | '-' | '/' | '//' |
       break;
     case 93:                        // 'child'
@@ -34920,7 +34920,7 @@ JSONiqParser.TOKEN =
     }
     switch (lk)
     {
-    case 26194:                     // 'attribute' '::'
+    case 26194:                     // 'attributes' '::'
     case 26205:                     // 'child' '::'
     case 26223:                     // 'descendant' '::'
     case 26224:                     // 'descendant-or-self' '::'
@@ -34951,8 +34951,8 @@ JSONiqParser.TOKEN =
       lookahead1W(26);              // S^WS | '(:' | '::'
       shift(51);                    // '::'
       break;
-    case 82:                        // 'attribute'
-      shift(82);                    // 'attribute'
+    case 82:                        // 'attributes'
+      shift(82);                    // 'attributes'
       lookahead1W(26);              // S^WS | '(:' | '::'
       shift(51);                    // '::'
       break;
@@ -34993,8 +34993,8 @@ JSONiqParser.TOKEN =
       lookahead1W(26);              // S^WS | '(:' | '::'
       shiftT(51);                   // '::'
       break;
-    case 82:                        // 'attribute'
-      shiftT(82);                   // 'attribute'
+    case 82:                        // 'attributes'
+      shiftT(82);                   // 'attributes'
       lookahead1W(26);              // S^WS | '(:' | '::'
       shiftT(51);                   // '::'
       break;
@@ -35155,14 +35155,14 @@ JSONiqParser.TOKEN =
     eventHandler.startNonterminal("NodeTest", e0);
     switch (l1)
     {
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
     case 96:                        // 'comment'
     case 120:                       // 'document-node'
     case 121:                       // 'element'
     case 185:                       // 'namespace-node'
     case 191:                       // 'node'
     case 216:                       // 'processing-instruction'
-    case 226:                       // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
     case 227:                       // 'schema-element'
     case 244:                       // 'text'
       lookahead2W(241);             // S^WS | EOF | '!' | '!=' | '(' | '(:' | ')' | '*' | '+' | ',' | '-' | '/' | '//' |
@@ -35172,14 +35172,14 @@ JSONiqParser.TOKEN =
     }
     switch (lk)
     {
-    case 17490:                     // 'attribute' '('
+    case 17490:                     // 'attributes' '('
     case 17504:                     // 'comment' '('
     case 17528:                     // 'document-node' '('
     case 17529:                     // 'element' '('
     case 17593:                     // 'namespace-node' '('
     case 17599:                     // 'node' '('
     case 17624:                     // 'processing-instruction' '('
-    case 17634:                     // 'schema-attribute' '('
+    case 17634:                     // 'schema-attributes' '('
     case 17635:                     // 'schema-element' '('
     case 17652:                     // 'text' '('
       parse_KindTest();
@@ -35194,14 +35194,14 @@ JSONiqParser.TOKEN =
   {
     switch (l1)
     {
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
     case 96:                        // 'comment'
     case 120:                       // 'document-node'
     case 121:                       // 'element'
     case 185:                       // 'namespace-node'
     case 191:                       // 'node'
     case 216:                       // 'processing-instruction'
-    case 226:                       // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
     case 227:                       // 'schema-element'
     case 244:                       // 'text'
       lookahead2W(241);             // S^WS | EOF | '!' | '!=' | '(' | '(:' | ')' | '*' | '+' | ',' | '-' | '/' | '//' |
@@ -35211,14 +35211,14 @@ JSONiqParser.TOKEN =
     }
     switch (lk)
     {
-    case 17490:                     // 'attribute' '('
+    case 17490:                     // 'attributes' '('
     case 17504:                     // 'comment' '('
     case 17528:                     // 'document-node' '('
     case 17529:                     // 'element' '('
     case 17593:                     // 'namespace-node' '('
     case 17599:                     // 'node' '('
     case 17624:                     // 'processing-instruction' '('
-    case 17634:                     // 'schema-attribute' '('
+    case 17634:                     // 'schema-attributes' '('
     case 17635:                     // 'schema-element' '('
     case 17652:                     // 'text' '('
       try_KindTest();
@@ -36076,7 +36076,7 @@ JSONiqParser.TOKEN =
     case 121:                       // 'element'
       parse_CompElemConstructor();
       break;
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
       parse_CompAttrConstructor();
       break;
     case 184:                       // 'namespace'
@@ -36104,7 +36104,7 @@ JSONiqParser.TOKEN =
     case 121:                       // 'element'
       try_CompElemConstructor();
       break;
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
       try_CompAttrConstructor();
       break;
     case 184:                       // 'namespace'
@@ -36543,7 +36543,7 @@ JSONiqParser.TOKEN =
     switch (l1)
     {
     case 78:                        // 'array'
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
     case 96:                        // 'comment'
     case 120:                       // 'document-node'
     case 121:                       // 'element'
@@ -36554,7 +36554,7 @@ JSONiqParser.TOKEN =
     case 191:                       // 'node'
     case 194:                       // 'object'
     case 216:                       // 'processing-instruction'
-    case 226:                       // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
     case 227:                       // 'schema-element'
     case 242:                       // 'structured-item'
     case 244:                       // 'text'
@@ -36565,14 +36565,14 @@ JSONiqParser.TOKEN =
     }
     switch (lk)
     {
-    case 17490:                     // 'attribute' '('
+    case 17490:                     // 'attributes' '('
     case 17504:                     // 'comment' '('
     case 17528:                     // 'document-node' '('
     case 17529:                     // 'element' '('
     case 17593:                     // 'namespace-node' '('
     case 17599:                     // 'node' '('
     case 17624:                     // 'processing-instruction' '('
-    case 17634:                     // 'schema-attribute' '('
+    case 17634:                     // 'schema-attributes' '('
     case 17635:                     // 'schema-element' '('
     case 17652:                     // 'text' '('
       parse_KindTest();
@@ -36610,7 +36610,7 @@ JSONiqParser.TOKEN =
     switch (l1)
     {
     case 78:                        // 'array'
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
     case 96:                        // 'comment'
     case 120:                       // 'document-node'
     case 121:                       // 'element'
@@ -36621,7 +36621,7 @@ JSONiqParser.TOKEN =
     case 191:                       // 'node'
     case 194:                       // 'object'
     case 216:                       // 'processing-instruction'
-    case 226:                       // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
     case 227:                       // 'schema-element'
     case 242:                       // 'structured-item'
     case 244:                       // 'text'
@@ -36632,14 +36632,14 @@ JSONiqParser.TOKEN =
     }
     switch (lk)
     {
-    case 17490:                     // 'attribute' '('
+    case 17490:                     // 'attributes' '('
     case 17504:                     // 'comment' '('
     case 17528:                     // 'document-node' '('
     case 17529:                     // 'element' '('
     case 17593:                     // 'namespace-node' '('
     case 17599:                     // 'node' '('
     case 17624:                     // 'processing-instruction' '('
-    case 17634:                     // 'schema-attribute' '('
+    case 17634:                     // 'schema-attributes' '('
     case 17635:                     // 'schema-element' '('
     case 17652:                     // 'text' '('
       try_KindTest();
@@ -36806,13 +36806,13 @@ JSONiqParser.TOKEN =
     case 121:                       // 'element'
       parse_ElementTest();
       break;
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
       parse_AttributeTest();
       break;
     case 227:                       // 'schema-element'
       parse_SchemaElementTest();
       break;
-    case 226:                       // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
       parse_SchemaAttributeTest();
       break;
     case 216:                       // 'processing-instruction'
@@ -36843,13 +36843,13 @@ JSONiqParser.TOKEN =
     case 121:                       // 'element'
       try_ElementTest();
       break;
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
       try_AttributeTest();
       break;
     case 227:                       // 'schema-element'
       try_SchemaElementTest();
       break;
-    case 226:                       // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
       try_SchemaAttributeTest();
       break;
     case 216:                       // 'processing-instruction'
@@ -37043,7 +37043,7 @@ JSONiqParser.TOKEN =
   function parse_AttributeTest()
   {
     eventHandler.startNonterminal("AttributeTest", e0);
-    shift(82);                      // 'attribute'
+    shift(82);                      // 'attributes'
     lookahead1W(22);                // S^WS | '(' | '(:'
     shift(34);                      // '('
     lookahead1W(261);               // EQName^Token | S^WS | '(:' | ')' | '*' | 'after' | 'allowing' | 'ancestor' |
@@ -37067,7 +37067,7 @@ JSONiqParser.TOKEN =
 
   function try_AttributeTest()
   {
-    shiftT(82);                     // 'attribute'
+    shiftT(82);                     // 'attributes'
     lookahead1W(22);                // S^WS | '(' | '(:'
     shiftT(34);                     // '('
     lookahead1W(261);               // EQName^Token | S^WS | '(:' | ')' | '*' | 'after' | 'allowing' | 'ancestor' |
@@ -37115,7 +37115,7 @@ JSONiqParser.TOKEN =
   function parse_SchemaAttributeTest()
   {
     eventHandler.startNonterminal("SchemaAttributeTest", e0);
-    shift(226);                     // 'schema-attribute'
+    shift(226);                     // 'schema-attributes'
     lookahead1W(22);                // S^WS | '(' | '(:'
     shift(34);                      // '('
     lookahead1W(255);               // EQName^Token | S^WS | '(:' | 'after' | 'allowing' | 'ancestor' |
@@ -37128,7 +37128,7 @@ JSONiqParser.TOKEN =
 
   function try_SchemaAttributeTest()
   {
-    shiftT(226);                    // 'schema-attribute'
+    shiftT(226);                    // 'schema-attributes'
     lookahead1W(22);                // S^WS | '(' | '(:'
     shiftT(34);                     // '('
     lookahead1W(255);               // EQName^Token | S^WS | '(:' | 'after' | 'allowing' | 'ancestor' |
@@ -39417,7 +39417,7 @@ JSONiqParser.TOKEN =
   {
     eventHandler.startNonterminal("CollectionTypeDecl", e0);
     shift(79);                      // 'as'
-    lookahead1W(178);               // S^WS | '(:' | 'attribute' | 'comment' | 'document-node' | 'element' |
+    lookahead1W(178);               // S^WS | '(:' | 'attributes' | 'comment' | 'document-node' | 'element' |
     whitespace();
     parse_KindTest();
     lookahead1W(156);               // S^WS | '(:' | '*' | '+' | ';' | '?'
@@ -39727,8 +39727,8 @@ JSONiqParser.TOKEN =
     lookahead1(250);                // EQName^Token | 'after' | 'allowing' | 'ancestor' | 'ancestor-or-self' | 'and' |
     switch (l1)
     {
-    case 82:                        // 'attribute'
-      shift(82);                    // 'attribute'
+    case 82:                        // 'attributes'
+      shift(82);                    // 'attributes'
       break;
     case 96:                        // 'comment'
       shift(96);                    // 'comment'
@@ -39760,8 +39760,8 @@ JSONiqParser.TOKEN =
     case 216:                       // 'processing-instruction'
       shift(216);                   // 'processing-instruction'
       break;
-    case 226:                       // 'schema-attribute'
-      shift(226);                   // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
+      shift(226);                   // 'schema-attributes'
       break;
     case 227:                       // 'schema-element'
       shift(227);                   // 'schema-element'
@@ -39795,8 +39795,8 @@ JSONiqParser.TOKEN =
     lookahead1(250);                // EQName^Token | 'after' | 'allowing' | 'ancestor' | 'ancestor-or-self' | 'and' |
     switch (l1)
     {
-    case 82:                        // 'attribute'
-      shiftT(82);                   // 'attribute'
+    case 82:                        // 'attributes'
+      shiftT(82);                   // 'attributes'
       break;
     case 96:                        // 'comment'
       shiftT(96);                   // 'comment'
@@ -39828,8 +39828,8 @@ JSONiqParser.TOKEN =
     case 216:                       // 'processing-instruction'
       shiftT(216);                  // 'processing-instruction'
       break;
-    case 226:                       // 'schema-attribute'
-      shiftT(226);                  // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
+      shiftT(226);                  // 'schema-attributes'
       break;
     case 227:                       // 'schema-element'
       shiftT(227);                  // 'schema-element'
@@ -40716,8 +40716,8 @@ JSONiqParser.TOKEN =
     case 74:                        // 'ancestor-or-self'
       shift(74);                    // 'ancestor-or-self'
       break;
-    case 82:                        // 'attribute'
-      shift(82);                    // 'attribute'
+    case 82:                        // 'attributes'
+      shift(82);                    // 'attributes'
       break;
     case 93:                        // 'child'
       shift(93);                    // 'child'
@@ -40815,8 +40815,8 @@ JSONiqParser.TOKEN =
     case 219:                       // 'replace'
       shift(219);                   // 'replace'
       break;
-    case 226:                       // 'schema-attribute'
-      shift(226);                   // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
+      shift(226);                   // 'schema-attributes'
       break;
     case 227:                       // 'schema-element'
       shift(227);                   // 'schema-element'
@@ -41119,8 +41119,8 @@ JSONiqParser.TOKEN =
     case 74:                        // 'ancestor-or-self'
       shiftT(74);                   // 'ancestor-or-self'
       break;
-    case 82:                        // 'attribute'
-      shiftT(82);                   // 'attribute'
+    case 82:                        // 'attributes'
+      shiftT(82);                   // 'attributes'
       break;
     case 93:                        // 'child'
       shiftT(93);                   // 'child'
@@ -41218,8 +41218,8 @@ JSONiqParser.TOKEN =
     case 219:                       // 'replace'
       shiftT(219);                  // 'replace'
       break;
-    case 226:                       // 'schema-attribute'
-      shiftT(226);                  // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
+      shiftT(226);                  // 'schema-attributes'
       break;
     case 227:                       // 'schema-element'
       shiftT(227);                  // 'schema-element'
@@ -41427,7 +41427,7 @@ JSONiqParser.TOKEN =
       case 77:                      // 'append'
         lookahead2W(200);           // S^WS | EOF | '!' | '!=' | '#' | '(' | '(:' | '*' | '+' | ',' | '-' | '/' | '//' |
         break;
-      case 82:                      // 'attribute'
+      case 82:                      // 'attributes'
         lookahead2W(281);           // EQName^Token | S^WS | EOF | '!' | '!=' | '#' | '(' | '(:' | '*' | '+' | ',' |
         break;
       case 121:                     // 'element'
@@ -41595,7 +41595,7 @@ JSONiqParser.TOKEN =
       case 222:                     // 'revalidation'
       case 224:                     // 'satisfies'
       case 225:                     // 'schema'
-      case 226:                     // 'schema-attribute'
+      case 226:                     // 'schema-attributes'
       case 227:                     // 'schema-element'
       case 228:                     // 'score'
       case 234:                     // 'sliding'
@@ -41643,7 +41643,7 @@ JSONiqParser.TOKEN =
        && lk != 12879               // 'as' EOF
        && lk != 12880               // 'ascending' EOF
        && lk != 12881               // 'at' EOF
-       && lk != 12882               // 'attribute' EOF
+       && lk != 12882               // 'attributes' EOF
        && lk != 12883               // 'base-uri' EOF
        && lk != 12884               // 'before' EOF
        && lk != 12885               // 'boundary-space' EOF
@@ -41738,7 +41738,7 @@ JSONiqParser.TOKEN =
        && lk != 13022               // 'revalidation' EOF
        && lk != 13024               // 'satisfies' EOF
        && lk != 13025               // 'schema' EOF
-       && lk != 13026               // 'schema-attribute' EOF
+       && lk != 13026               // 'schema-attributes' EOF
        && lk != 13027               // 'schema-element' EOF
        && lk != 13028               // 'score' EOF
        && lk != 13029               // 'self' EOF
@@ -41787,7 +41787,7 @@ JSONiqParser.TOKEN =
        && lk != 21071               // 'as' ','
        && lk != 21072               // 'ascending' ','
        && lk != 21073               // 'at' ','
-       && lk != 21074               // 'attribute' ','
+       && lk != 21074               // 'attributes' ','
        && lk != 21075               // 'base-uri' ','
        && lk != 21076               // 'before' ','
        && lk != 21077               // 'boundary-space' ','
@@ -41882,7 +41882,7 @@ JSONiqParser.TOKEN =
        && lk != 21214               // 'revalidation' ','
        && lk != 21216               // 'satisfies' ','
        && lk != 21217               // 'schema' ','
-       && lk != 21218               // 'schema-attribute' ','
+       && lk != 21218               // 'schema-attributes' ','
        && lk != 21219               // 'schema-element' ','
        && lk != 21220               // 'score' ','
        && lk != 21221               // 'self' ','
@@ -41930,7 +41930,7 @@ JSONiqParser.TOKEN =
        && lk != 27215               // 'as' ';'
        && lk != 27216               // 'ascending' ';'
        && lk != 27217               // 'at' ';'
-       && lk != 27218               // 'attribute' ';'
+       && lk != 27218               // 'attributes' ';'
        && lk != 27219               // 'base-uri' ';'
        && lk != 27220               // 'before' ';'
        && lk != 27221               // 'boundary-space' ';'
@@ -42025,7 +42025,7 @@ JSONiqParser.TOKEN =
        && lk != 27358               // 'revalidation' ';'
        && lk != 27360               // 'satisfies' ';'
        && lk != 27361               // 'schema' ';'
-       && lk != 27362               // 'schema-attribute' ';'
+       && lk != 27362               // 'schema-attributes' ';'
        && lk != 27363               // 'schema-element' ';'
        && lk != 27364               // 'score' ';'
        && lk != 27365               // 'self' ';'
@@ -42076,7 +42076,7 @@ JSONiqParser.TOKEN =
        && lk != 144463              // 'as' '}'
        && lk != 144464              // 'ascending' '}'
        && lk != 144465              // 'at' '}'
-       && lk != 144466              // 'attribute' '}'
+       && lk != 144466              // 'attributes' '}'
        && lk != 144467              // 'base-uri' '}'
        && lk != 144468              // 'before' '}'
        && lk != 144469              // 'boundary-space' '}'
@@ -42171,7 +42171,7 @@ JSONiqParser.TOKEN =
        && lk != 144606              // 'revalidation' '}'
        && lk != 144608              // 'satisfies' '}'
        && lk != 144609              // 'schema' '}'
-       && lk != 144610              // 'schema-attribute' '}'
+       && lk != 144610              // 'schema-attributes' '}'
        && lk != 144611              // 'schema-element' '}'
        && lk != 144612              // 'score' '}'
        && lk != 144613              // 'self' '}'
@@ -42244,7 +42244,7 @@ JSONiqParser.TOKEN =
        && lk != 27215               // 'as' ';'
        && lk != 27216               // 'ascending' ';'
        && lk != 27217               // 'at' ';'
-       && lk != 27218               // 'attribute' ';'
+       && lk != 27218               // 'attributes' ';'
        && lk != 27219               // 'base-uri' ';'
        && lk != 27220               // 'before' ';'
        && lk != 27221               // 'boundary-space' ';'
@@ -42339,7 +42339,7 @@ JSONiqParser.TOKEN =
        && lk != 27358               // 'revalidation' ';'
        && lk != 27360               // 'satisfies' ';'
        && lk != 27361               // 'schema' ';'
-       && lk != 27362               // 'schema-attribute' ';'
+       && lk != 27362               // 'schema-attributes' ';'
        && lk != 27363               // 'schema-element' ';'
        && lk != 27364               // 'score' ';'
        && lk != 27365               // 'self' ';'
@@ -42417,7 +42417,7 @@ JSONiqParser.TOKEN =
       case 77:                      // 'append'
         lookahead2W(200);           // S^WS | EOF | '!' | '!=' | '#' | '(' | '(:' | '*' | '+' | ',' | '-' | '/' | '//' |
         break;
-      case 82:                      // 'attribute'
+      case 82:                      // 'attributes'
         lookahead2W(281);           // EQName^Token | S^WS | EOF | '!' | '!=' | '#' | '(' | '(:' | '*' | '+' | ',' |
         break;
       case 121:                     // 'element'
@@ -42585,7 +42585,7 @@ JSONiqParser.TOKEN =
       case 222:                     // 'revalidation'
       case 224:                     // 'satisfies'
       case 225:                     // 'schema'
-      case 226:                     // 'schema-attribute'
+      case 226:                     // 'schema-attributes'
       case 227:                     // 'schema-element'
       case 228:                     // 'score'
       case 234:                     // 'sliding'
@@ -42633,7 +42633,7 @@ JSONiqParser.TOKEN =
        && lk != 12879               // 'as' EOF
        && lk != 12880               // 'ascending' EOF
        && lk != 12881               // 'at' EOF
-       && lk != 12882               // 'attribute' EOF
+       && lk != 12882               // 'attributes' EOF
        && lk != 12883               // 'base-uri' EOF
        && lk != 12884               // 'before' EOF
        && lk != 12885               // 'boundary-space' EOF
@@ -42728,7 +42728,7 @@ JSONiqParser.TOKEN =
        && lk != 13022               // 'revalidation' EOF
        && lk != 13024               // 'satisfies' EOF
        && lk != 13025               // 'schema' EOF
-       && lk != 13026               // 'schema-attribute' EOF
+       && lk != 13026               // 'schema-attributes' EOF
        && lk != 13027               // 'schema-element' EOF
        && lk != 13028               // 'score' EOF
        && lk != 13029               // 'self' EOF
@@ -42777,7 +42777,7 @@ JSONiqParser.TOKEN =
        && lk != 21071               // 'as' ','
        && lk != 21072               // 'ascending' ','
        && lk != 21073               // 'at' ','
-       && lk != 21074               // 'attribute' ','
+       && lk != 21074               // 'attributes' ','
        && lk != 21075               // 'base-uri' ','
        && lk != 21076               // 'before' ','
        && lk != 21077               // 'boundary-space' ','
@@ -42872,7 +42872,7 @@ JSONiqParser.TOKEN =
        && lk != 21214               // 'revalidation' ','
        && lk != 21216               // 'satisfies' ','
        && lk != 21217               // 'schema' ','
-       && lk != 21218               // 'schema-attribute' ','
+       && lk != 21218               // 'schema-attributes' ','
        && lk != 21219               // 'schema-element' ','
        && lk != 21220               // 'score' ','
        && lk != 21221               // 'self' ','
@@ -42920,7 +42920,7 @@ JSONiqParser.TOKEN =
        && lk != 27215               // 'as' ';'
        && lk != 27216               // 'ascending' ';'
        && lk != 27217               // 'at' ';'
-       && lk != 27218               // 'attribute' ';'
+       && lk != 27218               // 'attributes' ';'
        && lk != 27219               // 'base-uri' ';'
        && lk != 27220               // 'before' ';'
        && lk != 27221               // 'boundary-space' ';'
@@ -43015,7 +43015,7 @@ JSONiqParser.TOKEN =
        && lk != 27358               // 'revalidation' ';'
        && lk != 27360               // 'satisfies' ';'
        && lk != 27361               // 'schema' ';'
-       && lk != 27362               // 'schema-attribute' ';'
+       && lk != 27362               // 'schema-attributes' ';'
        && lk != 27363               // 'schema-element' ';'
        && lk != 27364               // 'score' ';'
        && lk != 27365               // 'self' ';'
@@ -43066,7 +43066,7 @@ JSONiqParser.TOKEN =
        && lk != 144463              // 'as' '}'
        && lk != 144464              // 'ascending' '}'
        && lk != 144465              // 'at' '}'
-       && lk != 144466              // 'attribute' '}'
+       && lk != 144466              // 'attributes' '}'
        && lk != 144467              // 'base-uri' '}'
        && lk != 144468              // 'before' '}'
        && lk != 144469              // 'boundary-space' '}'
@@ -43161,7 +43161,7 @@ JSONiqParser.TOKEN =
        && lk != 144606              // 'revalidation' '}'
        && lk != 144608              // 'satisfies' '}'
        && lk != 144609              // 'schema' '}'
-       && lk != 144610              // 'schema-attribute' '}'
+       && lk != 144610              // 'schema-attributes' '}'
        && lk != 144611              // 'schema-element' '}'
        && lk != 144612              // 'score' '}'
        && lk != 144613              // 'self' '}'
@@ -43235,7 +43235,7 @@ JSONiqParser.TOKEN =
        && lk != 27215               // 'as' ';'
        && lk != 27216               // 'ascending' ';'
        && lk != 27217               // 'at' ';'
-       && lk != 27218               // 'attribute' ';'
+       && lk != 27218               // 'attributes' ';'
        && lk != 27219               // 'base-uri' ';'
        && lk != 27220               // 'before' ';'
        && lk != 27221               // 'boundary-space' ';'
@@ -43330,7 +43330,7 @@ JSONiqParser.TOKEN =
        && lk != 27358               // 'revalidation' ';'
        && lk != 27360               // 'satisfies' ';'
        && lk != 27361               // 'schema' ';'
-       && lk != 27362               // 'schema-attribute' ';'
+       && lk != 27362               // 'schema-attributes' ';'
        && lk != 27363               // 'schema-element' ';'
        && lk != 27364               // 'score' ';'
        && lk != 27365               // 'self' ';'
@@ -43502,9 +43502,9 @@ JSONiqParser.TOKEN =
      || lk == 41503                 // '$' 'at'
      || lk == 41504                 // '%' 'at'
      || lk == 41748                 // '{' 'at'
-     || lk == 42015                 // '$' 'attribute'
-     || lk == 42016                 // '%' 'attribute'
-     || lk == 42260                 // '{' 'attribute'
+     || lk == 42015                 // '$' 'attributes'
+     || lk == 42016                 // '%' 'attributes'
+     || lk == 42260                 // '{' 'attributes'
      || lk == 42527                 // '$' 'base-uri'
      || lk == 42528                 // '%' 'base-uri'
      || lk == 42772                 // '{' 'base-uri'
@@ -43787,9 +43787,9 @@ JSONiqParser.TOKEN =
      || lk == 115231                // '$' 'schema'
      || lk == 115232                // '%' 'schema'
      || lk == 115476                // '{' 'schema'
-     || lk == 115743                // '$' 'schema-attribute'
-     || lk == 115744                // '%' 'schema-attribute'
-     || lk == 115988                // '{' 'schema-attribute'
+     || lk == 115743                // '$' 'schema-attributes'
+     || lk == 115744                // '%' 'schema-attributes'
+     || lk == 115988                // '{' 'schema-attributes'
      || lk == 116255                // '$' 'schema-element'
      || lk == 116256                // '%' 'schema-element'
      || lk == 116500                // '{' 'schema-element'
@@ -44078,9 +44078,9 @@ JSONiqParser.TOKEN =
      || lk == 41503                 // '$' 'at'
      || lk == 41504                 // '%' 'at'
      || lk == 41748                 // '{' 'at'
-     || lk == 42015                 // '$' 'attribute'
-     || lk == 42016                 // '%' 'attribute'
-     || lk == 42260                 // '{' 'attribute'
+     || lk == 42015                 // '$' 'attributes'
+     || lk == 42016                 // '%' 'attributes'
+     || lk == 42260                 // '{' 'attributes'
      || lk == 42527                 // '$' 'base-uri'
      || lk == 42528                 // '%' 'base-uri'
      || lk == 42772                 // '{' 'base-uri'
@@ -44363,9 +44363,9 @@ JSONiqParser.TOKEN =
      || lk == 115231                // '$' 'schema'
      || lk == 115232                // '%' 'schema'
      || lk == 115476                // '{' 'schema'
-     || lk == 115743                // '$' 'schema-attribute'
-     || lk == 115744                // '%' 'schema-attribute'
-     || lk == 115988                // '{' 'schema-attribute'
+     || lk == 115743                // '$' 'schema-attributes'
+     || lk == 115744                // '%' 'schema-attributes'
+     || lk == 115988                // '{' 'schema-attributes'
      || lk == 116255                // '$' 'schema-element'
      || lk == 116256                // '%' 'schema-element'
      || lk == 116500                // '{' 'schema-element'
@@ -44957,7 +44957,7 @@ JSONiqParser.TOKEN =
        && lk != 40539               // 'catch' 'as'
        && lk != 41051               // 'catch' 'ascending'
        && lk != 41563               // 'catch' 'at'
-       && lk != 42075               // 'catch' 'attribute'
+       && lk != 42075               // 'catch' 'attributes'
        && lk != 42587               // 'catch' 'base-uri'
        && lk != 43099               // 'catch' 'before'
        && lk != 43611               // 'catch' 'boundary-space'
@@ -45036,7 +45036,7 @@ JSONiqParser.TOKEN =
        && lk != 113755              // 'catch' 'revalidation'
        && lk != 114779              // 'catch' 'satisfies'
        && lk != 115291              // 'catch' 'schema'
-       && lk != 115803              // 'catch' 'schema-attribute'
+       && lk != 115803              // 'catch' 'schema-attributes'
        && lk != 116315              // 'catch' 'schema-element'
        && lk != 116827              // 'catch' 'score'
        && lk != 117339              // 'catch' 'self'
@@ -45149,7 +45149,7 @@ JSONiqParser.TOKEN =
        && lk != 40539               // 'catch' 'as'
        && lk != 41051               // 'catch' 'ascending'
        && lk != 41563               // 'catch' 'at'
-       && lk != 42075               // 'catch' 'attribute'
+       && lk != 42075               // 'catch' 'attributes'
        && lk != 42587               // 'catch' 'base-uri'
        && lk != 43099               // 'catch' 'before'
        && lk != 43611               // 'catch' 'boundary-space'
@@ -45228,7 +45228,7 @@ JSONiqParser.TOKEN =
        && lk != 113755              // 'catch' 'revalidation'
        && lk != 114779              // 'catch' 'satisfies'
        && lk != 115291              // 'catch' 'schema'
-       && lk != 115803              // 'catch' 'schema-attribute'
+       && lk != 115803              // 'catch' 'schema-attributes'
        && lk != 116315              // 'catch' 'schema-element'
        && lk != 116827              // 'catch' 'score'
        && lk != 117339              // 'catch' 'self'
@@ -46317,7 +46317,7 @@ JSONiqParser.TOKEN =
   function parse_CompAttrConstructor()
   {
     eventHandler.startNonterminal("CompAttrConstructor", e0);
-    shift(82);                      // 'attribute'
+    shift(82);                      // 'attributes'
     lookahead1W(258);               // EQName^Token | S^WS | '(:' | 'after' | 'allowing' | 'ancestor' |
     switch (l1)
     {
@@ -46382,7 +46382,7 @@ JSONiqParser.TOKEN =
 
   function try_CompAttrConstructor()
   {
-    shiftT(82);                     // 'attribute'
+    shiftT(82);                     // 'attributes'
     lookahead1W(258);               // EQName^Token | S^WS | '(:' | 'after' | 'allowing' | 'ancestor' |
     switch (l1)
     {
@@ -46622,7 +46622,7 @@ JSONiqParser.TOKEN =
     case 276:                       // '{'
       lookahead2W(277);             // Wildcard | EQName^Token | IntegerLiteral | DecimalLiteral | DoubleLiteral |
       break;
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
     case 121:                       // 'element'
       lookahead2W(259);             // EQName^Token | S^WS | '#' | '(:' | 'after' | 'allowing' | 'ancestor' |
       break;
@@ -46783,7 +46783,7 @@ JSONiqParser.TOKEN =
      || lk == 40724                 // '{' 'as'
      || lk == 41236                 // '{' 'ascending'
      || lk == 41748                 // '{' 'at'
-     || lk == 42260                 // '{' 'attribute'
+     || lk == 42260                 // '{' 'attributes'
      || lk == 42772                 // '{' 'base-uri'
      || lk == 43284                 // '{' 'before'
      || lk == 43796                 // '{' 'boundary-space'
@@ -46878,7 +46878,7 @@ JSONiqParser.TOKEN =
      || lk == 113940                // '{' 'revalidation'
      || lk == 114964                // '{' 'satisfies'
      || lk == 115476                // '{' 'schema'
-     || lk == 115988                // '{' 'schema-attribute'
+     || lk == 115988                // '{' 'schema-attributes'
      || lk == 116500                // '{' 'schema-element'
      || lk == 117012                // '{' 'score'
      || lk == 117524                // '{' 'self'
@@ -47083,7 +47083,7 @@ JSONiqParser.TOKEN =
     case 167:                       // 'json-item'
     case 185:                       // 'namespace-node'
     case 191:                       // 'node'
-    case 226:                       // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
     case 227:                       // 'schema-element'
     case 242:                       // 'structured-item'
     case 243:                       // 'switch'
@@ -47098,7 +47098,7 @@ JSONiqParser.TOKEN =
     case 14927:                     // 'as' '#'
     case 14928:                     // 'ascending' '#'
     case 14929:                     // 'at' '#'
-    case 14930:                     // 'attribute' '#'
+    case 14930:                     // 'attributes' '#'
     case 14931:                     // 'base-uri' '#'
     case 14932:                     // 'before' '#'
     case 14933:                     // 'boundary-space' '#'
@@ -47243,7 +47243,7 @@ JSONiqParser.TOKEN =
     case 276:                       // '{'
       lookahead2W(277);             // Wildcard | EQName^Token | IntegerLiteral | DecimalLiteral | DoubleLiteral |
       break;
-    case 82:                        // 'attribute'
+    case 82:                        // 'attributes'
     case 121:                       // 'element'
       lookahead2W(259);             // EQName^Token | S^WS | '#' | '(:' | 'after' | 'allowing' | 'ancestor' |
       break;
@@ -47404,7 +47404,7 @@ JSONiqParser.TOKEN =
      || lk == 40724                 // '{' 'as'
      || lk == 41236                 // '{' 'ascending'
      || lk == 41748                 // '{' 'at'
-     || lk == 42260                 // '{' 'attribute'
+     || lk == 42260                 // '{' 'attributes'
      || lk == 42772                 // '{' 'base-uri'
      || lk == 43284                 // '{' 'before'
      || lk == 43796                 // '{' 'boundary-space'
@@ -47499,7 +47499,7 @@ JSONiqParser.TOKEN =
      || lk == 113940                // '{' 'revalidation'
      || lk == 114964                // '{' 'satisfies'
      || lk == 115476                // '{' 'schema'
-     || lk == 115988                // '{' 'schema-attribute'
+     || lk == 115988                // '{' 'schema-attributes'
      || lk == 116500                // '{' 'schema-element'
      || lk == 117012                // '{' 'score'
      || lk == 117524                // '{' 'self'
@@ -47705,7 +47705,7 @@ JSONiqParser.TOKEN =
     case 167:                       // 'json-item'
     case 185:                       // 'namespace-node'
     case 191:                       // 'node'
-    case 226:                       // 'schema-attribute'
+    case 226:                       // 'schema-attributes'
     case 227:                       // 'schema-element'
     case 242:                       // 'structured-item'
     case 243:                       // 'switch'
@@ -47720,7 +47720,7 @@ JSONiqParser.TOKEN =
     case 14927:                     // 'as' '#'
     case 14928:                     // 'ascending' '#'
     case 14929:                     // 'at' '#'
-    case 14930:                     // 'attribute' '#'
+    case 14930:                     // 'attributes' '#'
     case 14931:                     // 'base-uri' '#'
     case 14932:                     // 'before' '#'
     case 14933:                     // 'boundary-space' '#'
@@ -48408,7 +48408,7 @@ XQueryParser.TOKEN =
   "'as'",
   "'ascending'",
   "'at'",
-  "'attribute'",
+  "'attributes'",
   "'base-uri'",
   "'before'",
   "'boundary-space'",
@@ -48552,7 +48552,7 @@ XQueryParser.TOKEN =
   "'same'",
   "'satisfies'",
   "'schema'",
-  "'schema-attribute'",
+  "'schema-attributes'",
   "'schema-element'",
   "'score'",
   "'self'",
@@ -48632,7 +48632,7 @@ exports.TreeOps = {
         }
         return value;
     },
-    
+
     concat: function(obj1, obj2, copy){
         var result = copy ? {} : obj1;
         if(copy){
@@ -48646,7 +48646,7 @@ exports.TreeOps = {
         });
         return result;
     },
-    
+
     removeParentPtr: function(ast){
         if(ast.getParent !== undefined) {
             delete ast.getParent;
@@ -48656,7 +48656,7 @@ exports.TreeOps = {
             this.removeParentPtr(child);
         }
     },
-    
+
     inRange: function(p, pos, exclusive){
         if(p && p.sl <= pos.line && pos.line <= p.el) {
             if(p.sl < pos.line && pos.line < p.el) {
@@ -48670,7 +48670,7 @@ exports.TreeOps = {
             }
         }
     },
-    
+
     findNode: function(ast, pos) {
         if(!ast) {
             return;
@@ -48689,7 +48689,7 @@ exports.TreeOps = {
             return;
         }
     },
-    
+
     astAsXML: function(node, indent){
         var result =  '';
         indent = indent ? indent : '';
@@ -48716,7 +48716,7 @@ var JSONParseTreeHandler = require('./parsers/JSONParseTreeHandler').JSONParseTr
 var Translator = require('./compiler/translator').Translator;
 var StyleChecker = require('./formatter/style_checker').StyleChecker;
 var completer = require('../lib/completion/completer');
-    
+
 var createStaticContext = exports.createStaticContext = function(){
     var StaticContext = require('./compiler/static_context').StaticContext;
     return new StaticContext();
@@ -48764,7 +48764,7 @@ exports.XQLint = function (source, opts) {
     this.getMarkers = function () {
         return markers;
     };
-    
+
     this.getMarkers = function(type){
         var m = [];
         markers.forEach(function(marker){
@@ -48782,7 +48782,7 @@ exports.XQLint = function (source, opts) {
     this.getWarnings = function(){
         return this.getMarkers('warning');
     };
-    
+
     this.getCompletions = function(pos){
         return completer.complete(source, ast, sctx, pos);
     };
@@ -48833,7 +48833,7 @@ exports.XQLint = function (source, opts) {
 
 define("ace/mode/xquery_worker",["require","exports","module","ace/lib/oop","ace/worker/mirror","ace/mode/xquery/xqlint"], function(require, exports, module) {
 "use strict";
-    
+
 var oop = require("../lib/oop");
 var Mirror = require("../worker/mirror").Mirror;
 var XQLintLib = require("./xquery/xqlint");
@@ -48892,7 +48892,7 @@ var XQueryWorker = exports.XQueryWorker = function(sender) {
 oop.inherits(XQueryWorker, Mirror);
 
 (function() {
-    
+
     this.onUpdate = function() {
         this.sender.emit("start");
         var value = this.doc.getValue();
@@ -48980,7 +48980,7 @@ if ([1,2].splice(0).length != 2) {
             return a;
         }
         var array = [], lengthBefore;
-        
+
         array.splice.apply(array, makeArray(20));
         array.splice.apply(array, makeArray(26));
 
@@ -49021,7 +49021,7 @@ if ([1,2].splice(0).length != 2) {
 
             var removed = this.slice(pos, pos+removeCount);
             var insert = slice.call(arguments, 2);
-            var add = insert.length;            
+            var add = insert.length;
             if (pos === length) {
                 if (add) {
                     this.push.apply(this, insert);

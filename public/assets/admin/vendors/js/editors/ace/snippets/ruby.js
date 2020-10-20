@@ -835,25 +835,25 @@ snippet tctss\n\
 	t.timestamps\n\
 	${1}\n\
 snippet va\n\
-	validates_associated :${1:attribute}\n\
+	validates_associated :${1:attributes}\n\
 snippet vao\n\
 	validates_acceptance_of :${1:terms}\n\
 snippet vc\n\
-	validates_confirmation_of :${1:attribute}\n\
+	validates_confirmation_of :${1:attributes}\n\
 snippet ve\n\
-	validates_exclusion_of :${1:attribute}, :in => ${2:%w( mov avi )}\n\
+	validates_exclusion_of :${1:attributes}, :in => ${2:%w( mov avi )}\n\
 snippet vf\n\
-	validates_format_of :${1:attribute}, :with => /${2:regex}/\n\
+	validates_format_of :${1:attributes}, :with => /${2:regex}/\n\
 snippet vi\n\
-	validates_inclusion_of :${1:attribute}, :in => %w(${2: mov avi })\n\
+	validates_inclusion_of :${1:attributes}, :in => %w(${2: mov avi })\n\
 snippet vl\n\
-	validates_length_of :${1:attribute}, :within => ${2:3}..${3:20}\n\
+	validates_length_of :${1:attributes}, :within => ${2:3}..${3:20}\n\
 snippet vn\n\
-	validates_numericality_of :${1:attribute}\n\
+	validates_numericality_of :${1:attributes}\n\
 snippet vpo\n\
-	validates_presence_of :${1:attribute}\n\
+	validates_presence_of :${1:attributes}\n\
 snippet vu\n\
-	validates_uniqueness_of :${1:attribute}\n\
+	validates_uniqueness_of :${1:attributes}\n\
 snippet wants\n\
 	wants.${1:js|xml|html} { ${2} }\n\
 snippet wc\n\

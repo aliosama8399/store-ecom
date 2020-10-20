@@ -27,7 +27,7 @@
 
 			// Override some internal formats to produce legacy elements and attributes
 			editor.formatter.register({
-				// Change alignment formats to use the deprecated align attribute
+				// Change alignment formats to use the deprecated align attributes
 				alignleft: {selector: alignElements, attributes: {align: 'left'}},
 				aligncenter: {selector: alignElements, attributes: {align: 'center'}},
 				alignright: {selector: alignElements, attributes: {align: 'right'}},
@@ -79,7 +79,7 @@
 				schema.addValidElements("font[face|size|color|style]");
 			}
 
-			// Add the missing and depreacted align attribute for the serialization engine
+			// Add the missing and depreacted align attributes for the serialization engine
 			tinymce.each(alignElements.split(','), function(name) {
 				var rule = schema.getElementRule(name);
 

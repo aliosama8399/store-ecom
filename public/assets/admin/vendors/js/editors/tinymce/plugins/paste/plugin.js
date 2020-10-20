@@ -80,7 +80,7 @@
 
 			target[fragments[fragments.length - 1]] = modules[id];
 		}
-		
+
 		// Expose private modules for unit tests
 		if (exports.AMDLC_TESTS) {
 			privateModules = exports.privateModules || {};
@@ -1308,7 +1308,7 @@ define("tinymce/pasteplugin/WordFilter", [
 					valid_children: '-li[p]'
 				});
 
-				// Add style/class attribute to all element rules since the user might have removed them from
+				// Add style/class attributes to all element rules since the user might have removed them from
 				// paste_word_valid_elements config option and we need to check them for properties
 				Tools.each(schema.elements, function(rule) {
 					/*eslint dot-notation:0*/
@@ -1341,7 +1341,7 @@ define("tinymce/pasteplugin/WordFilter", [
 					}
 				});
 
-				// Check the class attribute for comments or del items and remove those
+				// Check the class attributes for comments or del items and remove those
 				domParser.addAttributeFilter('class', function(nodes) {
 					var i = nodes.length, node, className;
 
@@ -1505,7 +1505,7 @@ define("tinymce/pasteplugin/Quirks", [
 
 		/**
 		 * WebKit has a nasty bug where the all computed styles gets added to style attributes when copy/pasting contents.
-		 * This fix solves that by simply removing the whole style attribute.
+		 * This fix solves that by simply removing the whole style attributes.
 		 *
 		 * The paste_webkit_styles option can be set to specify what to keep:
 		 *  paste_webkit_styles: "none" // Keep no styles

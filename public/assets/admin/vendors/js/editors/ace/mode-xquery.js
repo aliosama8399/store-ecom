@@ -543,8 +543,8 @@ module.exports = (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=ty
     eventHandler.startNonterminal("EQName", e0);
     switch (l1)
     {
-    case 77:                        // 'attribute'
-      shift(77);                    // 'attribute'
+    case 77:                        // 'attributes'
+      shift(77);                    // 'attributes'
       break;
     case 91:                        // 'comment'
       shift(91);                    // 'comment'
@@ -576,8 +576,8 @@ module.exports = (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=ty
     case 211:                       // 'processing-instruction'
       shift(211);                   // 'processing-instruction'
       break;
-    case 221:                       // 'schema-attribute'
-      shift(221);                   // 'schema-attribute'
+    case 221:                       // 'schema-attributes'
+      shift(221);                   // 'schema-attributes'
       break;
     case 222:                       // 'schema-element'
       shift(222);                   // 'schema-element'
@@ -1093,8 +1093,8 @@ module.exports = (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=ty
     case 69:                        // 'ancestor-or-self'
       shift(69);                    // 'ancestor-or-self'
       break;
-    case 77:                        // 'attribute'
-      shift(77);                    // 'attribute'
+    case 77:                        // 'attributes'
+      shift(77);                    // 'attributes'
       break;
     case 88:                        // 'child'
       shift(88);                    // 'child'
@@ -1192,8 +1192,8 @@ module.exports = (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=ty
     case 214:                       // 'replace'
       shift(214);                   // 'replace'
       break;
-    case 221:                       // 'schema-attribute'
-      shift(221);                   // 'schema-attribute'
+    case 221:                       // 'schema-attributes'
+      shift(221);                   // 'schema-attributes'
       break;
     case 222:                       // 'schema-element'
       shift(222);                   // 'schema-element'
@@ -1619,7 +1619,7 @@ XQueryTokenizer.TOKEN =
   "'as'",
   "'ascending'",
   "'at'",
-  "'attribute'",
+  "'attributes'",
   "'base-uri'",
   "'before'",
   "'boundary-space'",
@@ -1763,7 +1763,7 @@ XQueryTokenizer.TOKEN =
   "'same'",
   "'satisfies'",
   "'schema'",
-  "'schema-attribute'",
+  "'schema-attributes'",
   "'schema-element'",
   "'score'",
   "'self'",
@@ -1828,12 +1828,12 @@ XQueryTokenizer.TOKEN =
 var TokenHandler = function(code) {
     var input = code;
     this.tokens = [];
- 
+
     this.reset = function() {
         input = input;
         this.tokens = [];
     };
-    
+
     this.startNonterminal = function() {};
     this.endNonterminal = function() {};
 
@@ -1855,21 +1855,21 @@ var TokenHandler = function(code) {
 exports.Lexer = function(Tokenizer, Rules) {
 
     this.tokens = [];
-  
+
     this.getLineTokens = function(line, state) {
         state = (state === 'start' || !state) ? '["start"]' : state;
         var stack = JSON.parse(state);
         var h = new TokenHandler(line);
         var tokenizer = new Tokenizer(line, h);
         var tokens = [];
-    
+
         while(true) {
             var currentState = stack[stack.length - 1];
             try {
                 h.tokens = [];
                 tokenizer['parse_' + currentState]();
                 var info = null;
-        
+
                 if(h.tokens.length > 1 && h.tokens[0].name === 'WS') {
                     tokens.push({
                         type: 'text',
@@ -1877,7 +1877,7 @@ exports.Lexer = function(Tokenizer, Rules) {
                     });
                     h.tokens.splice(0, 1);
                 }
-        
+
                 var token = h.tokens[0];
                 var rules  = Rules[currentState];
                 for(var k = 0; k < rules.length; k++) {
@@ -1887,19 +1887,19 @@ exports.Lexer = function(Tokenizer, Rules) {
                         break;
                     }
                 }
-        
+
                 if(token.name === 'EOF') { break; }
                 if(token.value === '') { throw 'Encountered empty string lexical rule.'; }
-        
+
                 tokens.push({
                     type: info === null ? 'text' : (typeof(info.token) === 'function' ? info.token(token.value) : info.token),
                     value: token.value
                 });
-        
+
                 if(info && info.next) {
                     info.next(stack);
                 }
-      
+
             } catch(e) {
                 if(e instanceof tokenizer.ParseException) {
                     var index = 0;
@@ -1931,7 +1931,7 @@ exports.Lexer = function(Tokenizer, Rules) {
 var XQueryTokenizer = _dereq_('./XQueryTokenizer').XQueryTokenizer;
 var Lexer = _dereq_('./lexer').Lexer;
 
-var keys = 'after|ancestor|ancestor-or-self|and|as|ascending|attribute|before|case|cast|castable|child|collation|comment|copy|count|declare|default|delete|descendant|descendant-or-self|descending|div|document|document-node|element|else|empty|empty-sequence|end|eq|every|except|first|following|following-sibling|for|function|ge|group|gt|idiv|if|import|insert|instance|intersect|into|is|item|last|le|let|lt|mod|modify|module|namespace|namespace-node|ne|node|only|or|order|ordered|parent|preceding|preceding-sibling|processing-instruction|rename|replace|return|satisfies|schema-attribute|schema-element|self|some|stable|start|switch|text|to|treat|try|typeswitch|union|unordered|validate|where|with|xquery|contains|paragraphs|sentences|times|words|by|collectionreturn|variable|version|option|when|encoding|toswitch|catch|tumbling|sliding|window|at|using|stemming|collection|schema|while|on|nodes|index|external|then|in|updating|value|of|containsbreak|loop|continue|exit|returning|append|json|position|strict'.split('|');
+var keys = 'after|ancestor|ancestor-or-self|and|as|ascending|attributes|before|case|cast|castable|child|collation|comment|copy|count|declare|default|delete|descendant|descendant-or-self|descending|div|document|document-node|element|else|empty|empty-sequence|end|eq|every|except|first|following|following-sibling|for|function|ge|group|gt|idiv|if|import|insert|instance|intersect|into|is|item|last|le|let|lt|mod|modify|module|namespace|namespace-node|ne|node|only|or|order|ordered|parent|preceding|preceding-sibling|processing-instruction|rename|replace|return|satisfies|schema-attributes|schema-element|self|some|stable|start|switch|text|to|treat|try|typeswitch|union|unordered|validate|where|with|xquery|contains|paragraphs|sentences|times|words|by|collectionreturn|variable|version|option|when|encoding|toswitch|catch|tumbling|sliding|window|at|using|stemming|collection|schema|while|on|nodes|index|external|then|in|updating|value|of|containsbreak|loop|continue|exit|returning|append|json|position|strict'.split('|');
 
 var keywords = keys.map(function(val) { return { name: '\'' + val + '\'', token: 'keyword' }; });
 var ncnames = keys.map(function(val) { return { name: '\'' + val + '\'', token: 'text', next: function(stack){ stack.pop(); } }; });
@@ -1978,7 +1978,7 @@ var Rules = {
     ].concat(ncnames),
     StartTag: [
         { name: n('>'), token: 'meta.tag', next: function(stack){ stack.push('TagContent'); } },
-        { name: 'QName', token: 'entity.other.attribute-name' },
+        { name: 'QName', token: 'entity.other.attributes-name' },
         { name: n('='), token: 'text' },
         { name: n('\'\''), token: 'string', next: function(stack){ stack.push('AposAttr'); } },
         { name: n('"'), token: 'string', next: function(stack){ stack.push('QuotAttr'); } },
@@ -2060,7 +2060,7 @@ var Rules = {
         { name: 'QuotChar', token: 'string' }
     ]
 };
-    
+
 exports.XQueryLexer = function(){ return new Lexer(XQueryTokenizer, Rules); };
 },
 {"./XQueryTokenizer":1,"./lexer":2}]},{},[3])
@@ -2302,15 +2302,15 @@ var CstyleBehaviour = function() {
                 var line = session.doc.getLine(cursor.row);
                 var leftChar = line.substring(cursor.column-1, cursor.column);
                 var rightChar = line.substring(cursor.column, cursor.column + 1);
-                
+
                 var token = session.getTokenAt(cursor.row, cursor.column);
                 var rightToken = session.getTokenAt(cursor.row, cursor.column + 1);
                 if (leftChar == "\\" && token && /escape/.test(token.type))
                     return null;
-                
+
                 var stringBefore = token && /string|escape/.test(token.type);
                 var stringAfter = !rightToken || /string|escape/.test(rightToken.type);
-                
+
                 var pair;
                 if (rightChar == quote) {
                     pair = stringBefore !== stringAfter;
@@ -2353,7 +2353,7 @@ var CstyleBehaviour = function() {
 
 };
 
-    
+
 CstyleBehaviour.isSaneInsertion = function(editor, session) {
     var cursor = editor.getCursorPosition();
     var iterator = new TokenIterator(session, cursor.row, cursor.column);
@@ -2456,7 +2456,7 @@ var XmlBehaviour = function () {
             var iterator = new TokenIterator(session, cursor.row, cursor.column);
             var token = iterator.getCurrentToken();
 
-            if (rightChar == quote && (is(token, "attribute-value") || is(token, "string"))) {
+            if (rightChar == quote && (is(token, "attributes-value") || is(token, "string"))) {
                 return {
                     text: "",
                     selection: [1, 1]
@@ -2473,7 +2473,7 @@ var XmlBehaviour = function () {
                 token = iterator.stepBackward();
             }
             var rightSpace = !rightChar || rightChar.match(/\s/);
-            if (is(token, "attribute-equals") && (rightSpace || rightChar == '>') || (is(token, "decl-attribute-equals") && (rightSpace || rightChar == '?'))) {
+            if (is(token, "attributes-equals") && (rightSpace || rightChar == '>') || (is(token, "decl-attributes-equals") && (rightSpace || rightChar == '?'))) {
                 return {
                     text: quote + quote,
                     selection: [1, 1]
@@ -2499,11 +2499,11 @@ var XmlBehaviour = function () {
             var position = editor.getCursorPosition();
             var iterator = new TokenIterator(session, position.row, position.column);
             var token = iterator.getCurrentToken() || iterator.stepBackward();
-            if (!token || !(is(token, "tag-name") || is(token, "tag-whitespace") || is(token, "attribute-name") || is(token, "attribute-equals") || is(token, "attribute-value")))
+            if (!token || !(is(token, "tag-name") || is(token, "tag-whitespace") || is(token, "attributes-name") || is(token, "attributes-equals") || is(token, "attributes-value")))
                 return;
-            if (is(token, "reference.attribute-value"))
+            if (is(token, "reference.attributes-value"))
                 return;
-            if (is(token, "attribute-value")) {
+            if (is(token, "attributes-value")) {
                 var firstChar = token.value.charAt(0);
                 if (firstChar == '"' || firstChar == "'") {
                     var lastChar = token.value.charAt(token.value.length - 1);
@@ -2609,12 +2609,12 @@ function hasType(token, type) {
     });
     return hasType;
 }
- 
+
   var XQueryBehaviour = function () {
-      
+
       this.inherit(CstyleBehaviour, ["braces", "parens", "string_dquotes"]); // Get string behaviour
       this.inherit(XmlBehaviour); // Get xml behaviour
-      
+
       this.add("autoclosing", "insertion", function (state, action, editor, session, text) {
         if (text == '>') {
             var position = editor.getCursorPosition();
@@ -2626,7 +2626,7 @@ function hasType(token, type) {
             if (!token || !hasType(token, 'meta.tag') && !(hasType(token, 'text') && token.value.match('/'))){
                 do {
                     token = iterator.stepBackward();
-                } while (token && (hasType(token, 'string') || hasType(token, 'keyword.operator') || hasType(token, 'entity.attribute-name') || hasType(token, 'text')));
+                } while (token && (hasType(token, 'string') || hasType(token, 'keyword.operator') || hasType(token, 'entity.attributes-name') || hasType(token, 'text')));
             } else {
                 atCursor = true;
             }
@@ -2672,7 +2672,7 @@ var FoldMode = exports.FoldMode = function(commentRegex) {
 oop.inherits(FoldMode, BaseFoldMode);
 
 (function() {
-    
+
     this.foldingStartMarker = /(\{|\[)[^\}\]]*$|^\s*(\/\*)/;
     this.foldingStopMarker = /^[^\[\{]*(\}|\])|^[\s\*]*(\*\/)/;
     this.singleLineBlockCommentRe= /^\s*(\/\*).*\*\/\s*$/;
@@ -2681,42 +2681,42 @@ oop.inherits(FoldMode, BaseFoldMode);
     this._getFoldWidgetBase = this.getFoldWidget;
     this.getFoldWidget = function(session, foldStyle, row) {
         var line = session.getLine(row);
-    
+
         if (this.singleLineBlockCommentRe.test(line)) {
             if (!this.startRegionRe.test(line) && !this.tripleStarBlockCommentRe.test(line))
                 return "";
         }
-    
+
         var fw = this._getFoldWidgetBase(session, foldStyle, row);
-    
+
         if (!fw && this.startRegionRe.test(line))
             return "start"; // lineCommentRegionStart
-    
+
         return fw;
     };
 
     this.getFoldWidgetRange = function(session, foldStyle, row, forceMultiline) {
         var line = session.getLine(row);
-        
+
         if (this.startRegionRe.test(line))
             return this.getCommentRegionBlock(session, line, row);
-        
+
         var match = line.match(this.foldingStartMarker);
         if (match) {
             var i = match.index;
 
             if (match[1])
                 return this.openingBracketBlock(session, match[1], row, i);
-                
+
             var range = session.getCommentFoldRange(row, i + match[0].length, 1);
-            
+
             if (range && !range.isMultiLine()) {
                 if (forceMultiline) {
                     range = this.getSectionRange(session, row);
                 } else if (foldStyle != "all")
                     range = null;
             }
-            
+
             return range;
         }
 
@@ -2733,7 +2733,7 @@ oop.inherits(FoldMode, BaseFoldMode);
             return session.getCommentFoldRange(row, i, -1);
         }
     };
-    
+
     this.getSectionRange = function(session, row) {
         var line = session.getLine(row);
         var startIndent = line.search(/\S/);
@@ -2750,7 +2750,7 @@ oop.inherits(FoldMode, BaseFoldMode);
             if  (startIndent > indent)
                 break;
             var subRange = this.getFoldWidgetRange(session, "all", row);
-            
+
             if (subRange) {
                 if (subRange.start.row <= startRow) {
                     break;
@@ -2762,14 +2762,14 @@ oop.inherits(FoldMode, BaseFoldMode);
             }
             endRow = row;
         }
-        
+
         return new Range(startRow, startColumn, endRow, session.getLine(endRow).length);
     };
     this.getCommentRegionBlock = function(session, line, row) {
         var startColumn = line.search(/\s*$/);
         var maxRow = session.getLength();
         var startRow = row;
-        
+
         var re = /^\s*(?:\/\*|\/\/|--)#?(end)?region\b/;
         var depth = 1;
         while (++row < maxRow) {
@@ -2814,7 +2814,7 @@ var Mode = function() {
 oop.inherits(Mode, TextMode);
 
 (function() {
-    
+
     this.completer = {
         getCompletions: function(editor, session, pos, prefix, callback) {
             if (!session.$worker)
@@ -2833,14 +2833,14 @@ oop.inherits(Mode, TextMode);
             indent += tab;
         return indent;
     };
-    
+
     this.checkOutdent = function(state, line, input) {
         if (! /^\s+$/.test(line))
             return false;
 
         return (/^\s*[\}\)]/).test(input);
     };
-    
+
     this.autoOutdent = function(state, doc, row) {
         var line = doc.getLine(row);
         var match = line.match(/^(\s*[\}\)])/);
@@ -2878,27 +2878,27 @@ oop.inherits(Mode, TextMode);
             doc.replace(range, outdent ? line.match(re)[1] : "(:" + line + ":)");
         }
     };
-    
+
     this.createWorker = function(session) {
-        
+
       var worker = new WorkerClient(["ace"], "ace/mode/xquery_worker", "XQueryWorker");
         var that = this;
 
         worker.attachToDocument(session.getDocument());
-        
+
         worker.on("ok", function(e) {
           session.clearAnnotations();
         });
-        
+
         worker.on("markers", function(e) {
           session.clearAnnotations();
           that.addMarkers(e.data, session);
         });
- 
+
         worker.on("highlight", function(tokens) {
           that.$tokenizer.tokens = tokens.data.tokens;
           that.$tokenizer.lines  = session.getDocument().getAllLines();
-          
+
           var rows = Object.keys(that.$tokenizer.tokens);
           for(var i=0; i < rows.length; i++) {
             var row = parseInt(rows[i]);
@@ -2907,7 +2907,7 @@ oop.inherits(Mode, TextMode);
             session.bgTokenizer.fireUpdateEvent(row, row);
           }
         });
-        
+
         return worker;
     };
 
@@ -2926,7 +2926,7 @@ oop.inherits(Mode, TextMode);
 
     this.addMarkers = function(annos, mySession) {
         var _self = this;
-        
+
         if (!mySession.markerAnchors) mySession.markerAnchors = [];
         this.removeMarkers(mySession);
         mySession.languageAnnos = [];
@@ -2959,8 +2959,8 @@ oop.inherits(Mode, TextMode);
             if (anno.message) mySession.languageAnnos.push(gutterAnno);
         });
         mySession.setAnnotations(mySession.languageAnnos);
-    };    
-        
+    };
+
     this.$id = "ace/mode/xquery";
 }).call(Mode.prototype);
 

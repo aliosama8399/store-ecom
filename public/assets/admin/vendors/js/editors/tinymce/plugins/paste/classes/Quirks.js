@@ -76,7 +76,7 @@ define("tinymce/pasteplugin/Quirks", [
 
 		/**
 		 * WebKit has a nasty bug where the all computed styles gets added to style attributes when copy/pasting contents.
-		 * This fix solves that by simply removing the whole style attribute.
+		 * This fix solves that by simply removing the whole style attributes.
 		 *
 		 * The paste_webkit_styles option can be set to specify what to keep:
 		 *  paste_webkit_styles: "none" // Keep no styles

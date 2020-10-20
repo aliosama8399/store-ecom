@@ -723,7 +723,7 @@ var Lobibox = Lobibox || {};
 
     LobiboxPrompt.DEFAULT_OPTIONS = {
         width: 400,
-        attrs: {},          // Object of any valid attribute of input field
+        attrs: {},          // Object of any valid attributes of input field
         value: '',          // Value which is given to textfield when messagebox is created
         multiline: false,   // Set this true for multiline prompt
         lines: 3,           // This works only for multiline prompt. Number of lines
@@ -1164,7 +1164,7 @@ var Lobibox = Lobibox || {};
         this.$el = null;
 //------------------------------------------------------------------------------
 //-----------------PRIVATE VARIABLES--------------------------------------------
-//------------------------------------------------------------------------------        
+//------------------------------------------------------------------------------
         var me = this;
 //------------------------------------------------------------------------------
 //-----------------PRIVATE FUNCTIONS--------------------------------------------
@@ -1450,7 +1450,7 @@ var Lobibox = Lobibox || {};
     };
     //User can set default options to this variable
     Lobibox.notify.DEFAULTS = {
-        title: true,                // Title of notification. If you do not include the title in options it will automatically takes its value 
+        title: true,                // Title of notification. If you do not include the title in options it will automatically takes its value
         //from Lobibox.notify.OPTIONS object depending of the type of the notifications or set custom string. Set this false to disable title
         size: 'normal',             // normal, mini, large
         soundPath: 'sounds/',   // The folder path where sounds are located

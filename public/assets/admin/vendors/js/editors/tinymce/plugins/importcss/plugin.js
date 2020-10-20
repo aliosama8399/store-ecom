@@ -148,7 +148,7 @@ tinymce.PluginManager.add('importcss', function(editor) {
 			};
 		}
 
-		// Append to or override class attribute
+		// Append to or override class attributes
 		if (editor.settings.importcss_merge_classes !== false) {
 			format.classes = classes;
 		} else {

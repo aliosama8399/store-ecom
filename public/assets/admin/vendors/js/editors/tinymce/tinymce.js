@@ -82,7 +82,7 @@
 
 			target[fragments[fragments.length - 1]] = modules[id];
 		}
-		
+
 		// Expose private modules for unit tests
 		if (exports.AMDLC_TESTS) {
 			privateModules = exports.privateModules || {};
@@ -2135,14 +2135,14 @@ setDocument = Sizzle.setDocument = function( node ) {
 		assert(function( div ) {
 			// Select is set to empty string on purpose
 			// This is to test IE's treatment of not explicitly
-			// setting a boolean content attribute,
+			// setting a boolean content attributes,
 			// since its presence should be enough
 			// http://bugs.jquery.com/ticket/12359
 			div.innerHTML = "<select msallowcapture=''><option selected=''></option></select>";
 
 			// Support: IE8, Opera 11-12.16
 			// Nothing should be selected when empty strings follow ^= or $= or *=
-			// The test attribute must be unknown in Opera but "safe" for WinRT
+			// The test attributes must be unknown in Opera but "safe" for WinRT
 			// http://msdn.microsoft.com/en-us/library/ie/hh465388.aspx#attribute_section
 			if ( div.querySelectorAll("[msallowcapture^='']").length ) {
 				rbuggyQSA.push( "[*^$]=" + whitespace + "*(?:''|\"\")" );
@@ -2170,7 +2170,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			div.appendChild( input ).setAttribute( "name", "D" );
 
 			// Support: IE8
-			// Enforce case-sensitivity of name attribute
+			// Enforce case-sensitivity of name attributes
 			if ( div.querySelectorAll("[name=d]").length ) {
 				rbuggyQSA.push( "name" + whitespace + "*[*^$|!~]?=" );
 			}
@@ -2349,7 +2349,7 @@ Sizzle.matchesSelector = function( elem, expr ) {
 		setDocument( elem );
 	}
 
-	// Make sure that attribute selectors are quoted
+	// Make sure that attributes selectors are quoted
 	expr = expr.replace( rattributeQuotes, "='$1']" );
 
 	if ( support.matchesSelector && documentIsHTML &&
@@ -2889,7 +2889,7 @@ Expr = Sizzle.selectors = {
 				elem.type === "text" &&
 
 				// Support: IE<8
-				// New HTML5 attribute values (e.g., "search") appear with elem.type === "text"
+				// New HTML5 attributes values (e.g., "search") appear with elem.type === "text"
 				( (attr = elem.getAttribute("type")) == null || attr.toLowerCase() === "text" );
 		},
 
@@ -3505,7 +3505,7 @@ support.sortDetached = assert(function( div1 ) {
 });
 
 // Support: IE<8
-// Prevent attribute/property "interpolation"
+// Prevent attributes/property "interpolation"
 // http://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
 if ( !assert(function( div ) {
 	div.innerHTML = "<a href='#'></a>";
@@ -4519,9 +4519,9 @@ define("tinymce/dom/DomQuery", [
 		 * Sets/gets attributes on the elements in the current set.
 		 *
 		 * @method attr
-		 * @param {String/Object} name Name of attribute to get or an object with attributes to set.
+		 * @param {String/Object} name Name of attributes to get or an object with attributes to set.
 		 * @param {String} value Optional value to set.
-		 * @return {tinymce.dom.DomQuery/String} Current set or the specified attribute when only the name is specified.
+		 * @return {tinymce.dom.DomQuery/String} Current set or the specified attributes when only the name is specified.
 		 */
 		attr: function(name, value) {
 			var self = this, hook;
@@ -4576,7 +4576,7 @@ define("tinymce/dom/DomQuery", [
 		 * Removes attributse on the elements in the current set.
 		 *
 		 * @method removeAttr
-		 * @param {String/Object} name Name of attribute to remove.
+		 * @param {String/Object} name Name of attributes to remove.
 		 * @return {tinymce.dom.DomQuery/String} Current set.
 		 */
 		removeAttr: function(name) {
@@ -6025,7 +6025,7 @@ define("tinymce/html/Styles", [], function() {
 						delete styles.border;
 					}
 
-					// IE 11 will produce a border-image: none when getting the style attribute from <p style="border: 1px solid red"></p>
+					// IE 11 will produce a border-image: none when getting the style attributes from <p style="border: 1px solid red"></p>
 					// So let us assume it shouldn't be there
 					if (styles['border-image'] === 'none') {
 						delete styles['border-image'];
@@ -7147,7 +7147,7 @@ define("tinymce/html/Entities", [
 		 *
 		 * @method encodeRaw
 		 * @param {String} text Text to encode.
-		 * @param {Boolean} attr Optional flag to specify if the text is attribute contents.
+		 * @param {Boolean} attr Optional flag to specify if the text is attributes contents.
 		 * @return {String} Entity encoded text.
 		 */
 		encodeRaw: function(text, attr) {
@@ -7158,7 +7158,7 @@ define("tinymce/html/Entities", [
 
 		/**
 		 * Encoded the specified text with both the attributes and text entities. This function will produce larger text contents
-		 * since it doesn't know if the context is within a attribute or text node. This was added for compatibility
+		 * since it doesn't know if the context is within a attributes or text node. This was added for compatibility
 		 * and is exposed as the DOMUtils.encode function.
 		 *
 		 * @method encodeAllRaw
@@ -7177,7 +7177,7 @@ define("tinymce/html/Entities", [
 		 *
 		 * @method encodeNumeric
 		 * @param {String} text Text to encode.
-		 * @param {Boolean} attr Optional flag to specify if the text is attribute contents.
+		 * @param {Boolean} attr Optional flag to specify if the text is attributes contents.
 		 * @return {String} Entity encoded text.
 		 */
 		encodeNumeric: function(text, attr) {
@@ -7197,7 +7197,7 @@ define("tinymce/html/Entities", [
 		 *
 		 * @method encodeNamed
 		 * @param {String} text Text to encode.
-		 * @param {Boolean} attr Optional flag to specify if the text is attribute contents.
+		 * @param {Boolean} attr Optional flag to specify if the text is attributes contents.
 		 * @param {Object} entities Optional parameter with entities to use.
 		 * @return {String} Entity encoded text.
 		 */
@@ -8231,18 +8231,18 @@ define("tinymce/dom/DOMUtils", [
 		},
 
 		/**
-		 * Sets the specified attribute of an element or elements.
+		 * Sets the specified attributes of an element or elements.
 		 *
 		 * @method setAttrib
-		 * @param {Element/String/Array} elm DOM element, element id string or array of elements/ids to set attribute on.
-		 * @param {String} name Name of attribute to set.
-		 * @param {String} value Value to set on the attribute - if this value is falsy like null, 0 or '' it will remove
-		 * the attribute instead.
+		 * @param {Element/String/Array} elm DOM element, element id string or array of elements/ids to set attributes on.
+		 * @param {String} name Name of attributes to set.
+		 * @param {String} value Value to set on the attributes - if this value is falsy like null, 0 or '' it will remove
+		 * the attributes instead.
 		 * @example
-		 * // Sets class attribute on all paragraphs in the active editor
+		 * // Sets class attributes on all paragraphs in the active editor
 		 * tinymce.activeEditor.dom.setAttrib(tinymce.activeEditor.dom.select('p'), 'class', 'myclass');
 		 *
-		 * // Sets class attribute on a specific element in the current page
+		 * // Sets class attributes on a specific element in the current page
 		 * tinymce.dom.setAttrib('mydiv', 'class', 'myclass');
 		 */
 		setAttrib: function(elm, name, value) {
@@ -8280,7 +8280,7 @@ define("tinymce/dom/DOMUtils", [
 		 *
 		 * @method setAttribs
 		 * @param {Element/String/Array} elm DOM element, element id string or array of elements/ids to set attributes on.
-		 * @param {Object} attrs Name/Value collection of attribute items to add to the element(s).
+		 * @param {Object} attrs Name/Value collection of attributes items to add to the element(s).
 		 * @example
 		 * // Sets class and title attributes on all paragraphs in the active editor
 		 * tinymce.activeEditor.dom.setAttribs(tinymce.activeEditor.dom.select('p'), {'class': 'myclass', title: 'some title'});
@@ -8299,13 +8299,13 @@ define("tinymce/dom/DOMUtils", [
 		},
 
 		/**
-		 * Returns the specified attribute by name.
+		 * Returns the specified attributes by name.
 		 *
 		 * @method getAttrib
-		 * @param {String/Element} elm Element string id or DOM element to get attribute from.
-		 * @param {String} name Name of attribute to get.
-		 * @param {String} defaultVal Optional default value to return if the attribute didn't exist.
-		 * @return {String} Attribute value string, default value or null if the attribute wasn't found.
+		 * @param {String/Element} elm Element string id or DOM element to get attributes from.
+		 * @param {String} name Name of attributes to get.
+		 * @param {String} defaultVal Optional default value to return if the attributes didn't exist.
+		 * @return {String} Attribute value string, default value or null if the attributes wasn't found.
 		 */
 		getAttrib: function(elm, name, defaultVal) {
 			var self = this, hook, value;
@@ -8920,7 +8920,7 @@ define("tinymce/dom/DOMUtils", [
 					return elm.attributes;
 				}
 
-				// IE doesn't keep the selected attribute if you clone option elements
+				// IE doesn't keep the selected attributes if you clone option elements
 				if (elm.nodeName === 'OPTION' && this.getAttrib(elm, 'selected')) {
 					attrs.push({specified: 1, nodeName: 'selected'});
 				}
@@ -8975,7 +8975,7 @@ define("tinymce/dom/DOMUtils", [
 							return false;
 						}
 
-						// Keep elements with data-bookmark attributes or name attribute like <a name="1"></a>
+						// Keep elements with data-bookmark attributes or name attributes like <a name="1"></a>
 						attributes = self.getAttribs(node);
 						i = attributes.length;
 						while (i--) {
@@ -11076,12 +11076,12 @@ define("tinymce/html/Node", [], function() {
 		},
 
 		/**
-		 * Gets/sets or removes an attribute by name.
+		 * Gets/sets or removes an attributes by name.
 		 *
 		 * @example
-		 * someNode.attr("name", "value"); // Sets an attribute
-		 * console.log(someNode.attr("name")); // Gets an attribute
-		 * someNode.attr("name", null); // Removes an attribute
+		 * someNode.attr("name", "value"); // Sets an attributes
+		 * console.log(someNode.attr("name")); // Gets an attributes
+		 * someNode.attr("name", null); // Removes an attributes
 		 *
 		 * @method attr
 		 * @param {String} name Attribute name to set or get.
@@ -11101,7 +11101,7 @@ define("tinymce/html/Node", [], function() {
 
 			if ((attrs = self.attributes)) {
 				if (value !== undef) {
-					// Remove attribute
+					// Remove attributes
 					if (value === null) {
 						if (name in attrs.map) {
 							delete attrs.map[name];
@@ -11118,9 +11118,9 @@ define("tinymce/html/Node", [], function() {
 						return self;
 					}
 
-					// Set attribute
+					// Set attributes
 					if (name in attrs.map) {
-						// Set attribute
+						// Set attributes
 						i = attrs.length;
 						while (i--) {
 							if (attrs[i].name === name) {
@@ -11408,7 +11408,7 @@ define("tinymce/html/Node", [], function() {
 							return false;
 						}
 
-						// Keep bookmark nodes and name attribute like <a name="1"></a>
+						// Keep bookmark nodes and name attributes like <a name="1"></a>
 						i = node.attributes.length;
 						while (i--) {
 							name = node.attributes[i].name;
@@ -11998,13 +11998,13 @@ define("tinymce/html/Schema", [
 										}
 									}
 
-									// Check for attribute patterns
+									// Check for attributes patterns
 									if (hasPatternsRegExp.test(attrName)) {
 										element.attributePatterns = element.attributePatterns || [];
 										attr.pattern = patternToRegExp(attrName);
 										element.attributePatterns.push(attr);
 									} else {
-										// Add attribute to order list if it doesn't already exist
+										// Add attributes to order list if it doesn't already exist
 										if (!attributes[attrName]) {
 											attributesOrder.push(attrName);
 										}
@@ -12168,7 +12168,7 @@ define("tinymce/html/Schema", [
 				});
 			}
 
-			// Add default alt attribute for images, removed since alt="" is treated as presentational.
+			// Add default alt attributes for images, removed since alt="" is treated as presentational.
 			// elements.img.attributesDefault = [{name: 'alt', value: ''}];
 
 			// Remove these if they are empty by default
@@ -12380,13 +12380,13 @@ define("tinymce/html/Schema", [
 		};
 
 		/**
-		 * Returns true/false if the specified element name and optional attribute is
+		 * Returns true/false if the specified element name and optional attributes is
 		 * valid according to the schema.
 		 *
 		 * @method isValid
 		 * @param {String} name Name of element to check.
-		 * @param {String} attr Optional attribute name to check for.
-		 * @return {Boolean} True/false if the element and attribute is valid.
+		 * @param {String} attr Optional attributes name to check for.
+		 * @return {Boolean} True/false if the element and attributes is valid.
 		 */
 		self.isValid = function(name, attr) {
 			var attrPatterns, i, rule = getElementRule(name);
@@ -12394,12 +12394,12 @@ define("tinymce/html/Schema", [
 			// Check if it's a valid element
 			if (rule) {
 				if (attr) {
-					// Check if attribute name exists
+					// Check if attributes name exists
 					if (rule.attributes[attr]) {
 						return true;
 					}
 
-					// Check if attribute matches a regexp pattern
+					// Check if attributes matches a regexp pattern
 					attrPatterns = rule.attributePatterns;
 					if (attrPatterns) {
 						i = attrPatterns.length;
@@ -12654,7 +12654,7 @@ define("tinymce/html/SaxParser", [
 				var attrRule, i, trimRegExp = /[\s\u0000-\u001F]+/g;
 
 				name = name.toLowerCase();
-				value = name in fillAttrsMap ? name : decode(value || val2 || val3 || ''); // Handle boolean attribute than value attribute
+				value = name in fillAttrsMap ? name : decode(value || val2 || val3 || ''); // Handle boolean attributes than value attributes
 
 				// Validate name and value pass through all data- attributes
 				if (validate && !isInternalElement && name.indexOf('data-') !== 0) {
@@ -12676,7 +12676,7 @@ define("tinymce/html/SaxParser", [
 						}
 					}
 
-					// No attribute rule found
+					// No attributes rule found
 					if (!attrRule) {
 						return;
 					}
@@ -12708,7 +12708,7 @@ define("tinymce/html/SaxParser", [
 					}
 				}
 
-				// Add attribute to list and map
+				// Add attributes to list and map
 				attrList.map[name] = value;
 				attrList.push({
 					name: name,
@@ -12802,7 +12802,7 @@ define("tinymce/html/SaxParser", [
 							attributesForced = elementRule.attributesForced;
 							anyAttributesRequired = elementRule.removeEmptyAttrs;
 
-							// Check if any attribute exists
+							// Check if any attributes exists
 							if (anyAttributesRequired && !attrList.length) {
 								isValidElement = false;
 							}
@@ -13143,7 +13143,7 @@ define("tinymce/html/DomParser", [
 				}
 			}
 
-			// Run attribute filters
+			// Run attributes filters
 			i = attributeFilters.length;
 			while (i--) {
 				name = attributeFilters[i].name;
@@ -13189,7 +13189,7 @@ define("tinymce/html/DomParser", [
 		};
 
 		/**
-		 * Adds a attribute filter function to the parser, the parser will collect nodes that has the specified attributes
+		 * Adds a attributes filter function to the parser, the parser will collect nodes that has the specified attributes
 		 * and then execute the callback ones it has finished parsing the document.
 		 *
 		 * @example
@@ -13608,7 +13608,7 @@ define("tinymce/html/DomParser", [
 					}
 				}
 
-				// Run attribute filters
+				// Run attributes filters
 				for (i = 0, l = attributeFilters.length; i < l; i++) {
 					list = attributeFilters[i];
 
@@ -13834,7 +13834,7 @@ define("tinymce/html/Writer", [
 			 *
 			 * @method start
 			 * @param {String} name Name of the element.
-			 * @param {Array} attrs Optional attribute array or undefined if it hasn't any.
+			 * @param {Array} attrs Optional attributes array or undefined if it hasn't any.
 			 * @param {Boolean} empty Optional empty state if the tag should end like <br />.
 			 */
 			start: function(name, attrs, empty) {
@@ -14314,7 +14314,7 @@ define("tinymce/dom/Serializer", [
 					node.attr(name, value.length > 0 ? value : null);
 					node.attr(internalName, null);
 				} else {
-					// No internal attribute found then convert the value we have in the DOM
+					// No internal attributes found then convert the value we have in the DOM
 					value = node.attributes.map[name];
 
 					if (name === "style") {
@@ -14387,7 +14387,7 @@ define("tinymce/dom/Serializer", [
 
 				if (name === "script") {
 					// Remove mce- prefix from script elements and remove default type since the user specified
-					// a script element without type attribute
+					// a script element without type attributes
 					type = node.attr('type');
 					if (type) {
 						node.attr('type', type == 'mce-no/type' ? null : type.replace(/^mce\-/, ''));
@@ -14498,7 +14498,7 @@ define("tinymce/dom/Serializer", [
 			addNodeFilter: htmlParser.addNodeFilter,
 
 			/**
-			 * Adds a attribute filter function to the parser used by the serializer, the parser will
+			 * Adds a attributes filter function to the parser used by the serializer, the parser will
 			 * collect nodes that has the specified attributes
 			 * and then execute the callback ones it has finished parsing the document.
 			 *
@@ -14638,7 +14638,7 @@ define("tinymce/dom/Serializer", [
 			},
 
 			/**
-			 * Adds a temporary internal attribute these attributes will get removed on undo and
+			 * Adds a temporary internal attributes these attributes will get removed on undo and
 			 * when getting contents out of the editor.
 			 *
 			 * @method addTempAttr
@@ -15404,7 +15404,7 @@ define("tinymce/dom/ControlSelection", [
 
 			function setSizeProp(name, value) {
 				if (value) {
-					// Resize by using style or attribute
+					// Resize by using style or attributes
 					if (selectedElm.style[name] || !editor.schema.isValid(selectedElm.nodeName.toLowerCase(), name)) {
 						dom.setStyle(selectedElm, name, value);
 					} else {
@@ -18387,7 +18387,7 @@ define("tinymce/dom/ElementUtils", [
 			 *
 			 * @private
 			 * @param {Node} node Node to get attributes from.
-			 * @return {Object} Name/value object with attributes and attribute values.
+			 * @return {Object} Name/value object with attributes and attributes values.
 			 */
 			function getAttribs(node) {
 				var attribs = {};
@@ -20517,7 +20517,7 @@ define("tinymce/Formatter", [
 					stylesModified = 1;
 				});
 
-				// Remove style attribute if it's empty
+				// Remove style attributes if it's empty
 				if (stylesModified && dom.getAttrib(node, 'style') === '') {
 					node.removeAttribute('style');
 					node.removeAttribute('data-mce-style');
@@ -20556,7 +20556,7 @@ define("tinymce/Formatter", [
 							}
 						}
 
-						// IE6 has a bug where the attribute doesn't get removed correctly
+						// IE6 has a bug where the attributes doesn't get removed correctly
 						if (name == "class") {
 							node.removeAttribute('className');
 						}
@@ -32300,13 +32300,13 @@ define("tinymce/util/Quirks", [
 						elm.setAttribute('mce-data-marked', 1);
 					}
 
-					// Make sure all elements has a data-mce-style attribute
+					// Make sure all elements has a data-mce-style attributes
 					if (!elm.hasAttribute('data-mce-style') && elm.hasAttribute('style')) {
 						editor.dom.setAttrib(elm, 'style', editor.dom.getAttrib(elm, 'style'));
 					}
 				});
 
-				// Observe added nodes and style attribute changes
+				// Observe added nodes and style attributes changes
 				mutationObserver = new MutationObserver(function() {});
 				mutationObserver.observe(editor.getDoc(), {
 					childList: true,
@@ -32325,7 +32325,7 @@ define("tinymce/util/Quirks", [
 						return;
 					}
 
-					// Restore style attribute to previous value
+					// Restore style attributes to previous value
 					if (record.attributeName == "style") {
 						var oldValue = record.target.getAttribute('data-mce-style');
 
@@ -32729,7 +32729,7 @@ define("tinymce/util/Quirks", [
 		}
 
 		/**
-		 * Fixes a Gecko bug where the style attribute gets added to the wrong element when deleting between two block elements.
+		 * Fixes a Gecko bug where the style attributes gets added to the wrong element when deleting between two block elements.
 		 *
 		 * Fixes do backspace/delete on this:
 		 * <p>bla[ck</p><p style="color:red">r]ed</p>
@@ -32868,7 +32868,7 @@ define("tinymce/util/Quirks", [
 		}
 
 		/**
-		 * Moves style width/height to attribute width/height when the user resizes an image on IE.
+		 * Moves style width/height to attributes width/height when the user resizes an image on IE.
 		 */
 		function removePreSerializedStylesWhenSelectingControls() {
 			dom.bind(editor.getBody(), 'mouseup', function() {
@@ -32876,13 +32876,13 @@ define("tinymce/util/Quirks", [
 
 				// Moved styles to attributes on IMG eements
 				if (node.nodeName == 'IMG') {
-					// Convert style width to width attribute
+					// Convert style width to width attributes
 					if ((value = dom.getStyle(node, 'width'))) {
 						dom.setAttrib(node, 'width', value.replace(/[^0-9%]+/g, ''));
 						dom.setStyle(node, 'width', '');
 					}
 
-					// Convert style height to height attribute
+					// Convert style height to height attributes
 					if ((value = dom.getStyle(node, 'height'))) {
 						dom.setAttrib(node, 'height', value.replace(/[^0-9%]+/g, ''));
 						dom.setStyle(node, 'height', '');
@@ -33045,7 +33045,7 @@ define("tinymce/util/Quirks", [
 
 		/**
 		 * Old IE versions can't retain contents within noscript elements so this logic will store the contents
-		 * as a attribute and the insert that value as it's raw text when the DOM is serialized.
+		 * as a attributes and the insert that value as it's raw text when the DOM is serialized.
 		 */
 		function keepNoScriptContents() {
 			if (getDocumentMode() < 9) {
@@ -33072,7 +33072,7 @@ define("tinymce/util/Quirks", [
 						if (textNode) {
 							textNode.value = Entities.decode(textNode.value);
 						} else {
-							// Old IE can't retain noscript value so an attribute is used to store it
+							// Old IE can't retain noscript value so an attributes is used to store it
 							value = node.attributes.map['data-mce-innertext'];
 							if (value) {
 								node.attr('data-mce-innertext', null);
@@ -37457,7 +37457,7 @@ define("tinymce/Editor", [
 					value = node.attr(name);
 					internalName = 'data-mce-' + name;
 
-					// Add internal attribute if we need to we don't on a refresh of the document
+					// Add internal attributes if we need to we don't on a refresh of the document
 					if (!node.attributes.map[internalName]) {
 						// Don't duplicate these since they won't get modified by any browser
 						if (value.indexOf('data:') === 0 || value.indexOf('blob:') === 0) {

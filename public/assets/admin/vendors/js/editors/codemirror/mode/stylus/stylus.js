@@ -396,7 +396,7 @@
             }
           }
 
-          // tag is an attribute
+          // tag is an attributes
           if (stream.string.match(new RegExp("\\[\\s*" + word + "|" + word +"\\s*\\]"))) {
             override = "atom";
             return "block";

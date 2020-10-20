@@ -44,15 +44,15 @@
     "[keyword :>]", "[keyword <:]", "[keyword <:>]"
   );
 
-  MT("within an attribute list, attributes classify as attribute",
-    "[bracket [[][attribute label]",
-    "[attribute id]","[attribute url]","[attribute idurl]",
-    "[attribute linecolor]","[attribute linecolour]","[attribute textcolor]","[attribute textcolour]","[attribute textbgcolor]","[attribute textbgcolour]",
-    "[attribute arclinecolor]","[attribute arclinecolour]","[attribute arctextcolor]","[attribute arctextcolour]","[attribute arctextbgcolor]","[attribute arctextbgcolour]",
-    "[attribute arcskip][bracket ]]]"
+  MT("within an attributes list, attributes classify as attributes",
+    "[bracket [[][attributes label]",
+    "[attributes id]","[attributes url]","[attributes idurl]",
+    "[attributes linecolor]","[attributes linecolour]","[attributes textcolor]","[attributes textcolour]","[attributes textbgcolor]","[attributes textbgcolour]",
+    "[attributes arclinecolor]","[attributes arclinecolour]","[attributes arctextcolor]","[attributes arctextcolour]","[attributes arctextbgcolor]","[attributes arctextbgcolour]",
+    "[attributes arcskip][bracket ]]]"
   );
 
-  MT("outside an attribute list, attributes classify as base",
+  MT("outside an attributes list, attributes classify as base",
     "[base label]",
     "[base id]","[base url]","[base idurl]",
     "[base linecolor]","[base linecolour]","[base textcolor]","[base textcolour]","[base textbgcolor]","[base textbgcolour]",
@@ -64,12 +64,12 @@
     "[comment # typical mscgen program]",
     "[keyword msc][base  ][bracket {]",
     "[keyword wordwraparcs][operator =][string \"true\"][base , ][keyword hscale][operator =][string \"0.8\"][keyword arcgradient][operator =][base 30;]",
-    "[base   a][bracket [[][attribute label][operator =][string \"Entity A\"][bracket ]]][base ,]",
-    "[base   b][bracket [[][attribute label][operator =][string \"Entity B\"][bracket ]]][base ,]",
-    "[base   c][bracket [[][attribute label][operator =][string \"Entity C\"][bracket ]]][base ;]",
-    "[base   a ][keyword =>>][base  b][bracket [[][attribute label][operator =][string \"Hello entity B\"][bracket ]]][base ;]",
-    "[base   a ][keyword <<][base  b][bracket [[][attribute label][operator =][string \"Here's an answer dude!\"][bracket ]]][base ;]",
-    "[base   c ][keyword :>][base  *][bracket [[][attribute label][operator =][string \"What about me?\"][base , ][attribute textcolor][operator =][base red][bracket ]]][base ;]",
+    "[base   a][bracket [[][attributes label][operator =][string \"Entity A\"][bracket ]]][base ,]",
+    "[base   b][bracket [[][attributes label][operator =][string \"Entity B\"][bracket ]]][base ,]",
+    "[base   c][bracket [[][attributes label][operator =][string \"Entity C\"][bracket ]]][base ;]",
+    "[base   a ][keyword =>>][base  b][bracket [[][attributes label][operator =][string \"Hello entity B\"][bracket ]]][base ;]",
+    "[base   a ][keyword <<][base  b][bracket [[][attributes label][operator =][string \"Here's an answer dude!\"][bracket ]]][base ;]",
+    "[base   c ][keyword :>][base  *][bracket [[][attributes label][operator =][string \"What about me?\"][base , ][attributes textcolor][operator =][base red][bracket ]]][base ;]",
     "[bracket }]"
   );
 })();

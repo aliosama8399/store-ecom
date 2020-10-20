@@ -280,7 +280,7 @@ snippet parg\n\
 \n\
 # Moose has\n\
 snippet has\n\
-	has ${1:attribute} => (\n\
+	has ${1:attributes} => (\n\
 		is	    => '${2:ro|rw}',\n\
 		isa 	=> '${3:Str|Int|HashRef|ArrayRef|etc}',\n\
 		default => sub {\n\
@@ -292,7 +292,7 @@ snippet has\n\
 \n\
 # override\n\
 snippet override\n\
-	override ${1:attribute} => sub {\n\
+	override ${1:attributes} => sub {\n\
 		${2:# my $self = shift;};\n\
 		${3:# my ($self, $args) = @_;};\n\
 	};\n\

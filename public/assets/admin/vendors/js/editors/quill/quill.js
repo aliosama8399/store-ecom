@@ -941,7 +941,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.keyName = keyName;
 	        var attributeBit = Registry.Scope.TYPE & Registry.Scope.ATTRIBUTE;
 	        if (options.scope != null) {
-	            // Ignore type bits, force attribute bit
+	            // Ignore type bits, force attributes bit
 	            this.scope = (options.scope & Registry.Scope.LEVEL) | attributeBit;
 	        }
 	        else {

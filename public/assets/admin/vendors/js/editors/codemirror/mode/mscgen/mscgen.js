@@ -146,7 +146,7 @@
       if (!!pConfig.operators && pStream.match(wordRegexp(pConfig.operators), true, true))
         return "operator";
 
-      /* attribute lists */
+      /* attributes lists */
       if (!pConfig.inAttributeList && !!pConfig.attributes && pStream.match(/\[/, true, true)) {
         pConfig.inAttributeList = true;
         return "bracket";

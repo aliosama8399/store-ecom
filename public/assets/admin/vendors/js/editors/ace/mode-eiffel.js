@@ -5,7 +5,7 @@ var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
 var EiffelHighlightRules = function() {
-    var keywords = "across|agent|alias|all|attached|as|assign|attribute|check|" +
+    var keywords = "across|agent|alias|all|attached|as|assign|attributes|check|" +
         "class|convert|create|debug|deferred|detachable|do|else|elseif|end|" +
         "ensure|expanded|export|external|feature|from|frozen|if|inherit|" +
         "inspect|invariant|like|local|loop|not|note|obsolete|old|once|" +

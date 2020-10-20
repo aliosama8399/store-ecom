@@ -232,57 +232,57 @@
    */
 
   MT('divWithAttribute',
-      '[punctuation div][punctuation&attribute (#my-id)][punctuation . foo bar]');
+      '[punctuation div][punctuation&attributes (#my-id)][punctuation . foo bar]');
 
   MT('divWithAttributeAnd2emRightPadding',
-      '[punctuation div][punctuation&attribute (#my-id)((][punctuation . foo bar]');
+      '[punctuation div][punctuation&attributes (#my-id)((][punctuation . foo bar]');
 
   MT('divWithClassAndId',
-      '[punctuation div][punctuation&attribute (my-class#my-id)][punctuation . foo bar]');
+      '[punctuation div][punctuation&attributes (my-class#my-id)][punctuation . foo bar]');
 
   MT('paragraphWithCss',
-      'p[attribute {color:red;}]. foo bar');
+      'p[attributes {color:red;}]. foo bar');
 
   MT('paragraphNestedStyles',
       'p. [strong *foo ][strong&em _bar_][strong *]');
 
   MT('paragraphWithLanguage',
-      'p[attribute [[fr]]]. Parlez-vous français?');
+      'p[attributes [[fr]]]. Parlez-vous français?');
 
   MT('paragraphLeftAlign',
-      'p[attribute <]. Left');
+      'p[attributes <]. Left');
 
   MT('paragraphRightAlign',
-      'p[attribute >]. Right');
+      'p[attributes >]. Right');
 
   MT('paragraphRightAlign',
-      'p[attribute =]. Center');
+      'p[attributes =]. Center');
 
   MT('paragraphJustified',
-      'p[attribute <>]. Justified');
+      'p[attributes <>]. Justified');
 
   MT('paragraphWithLeftIndent1em',
-      'p[attribute (]. Left');
+      'p[attributes (]. Left');
 
   MT('paragraphWithRightIndent1em',
-      'p[attribute )]. Right');
+      'p[attributes )]. Right');
 
   MT('paragraphWithLeftIndent2em',
-      'p[attribute ((]. Left');
+      'p[attributes ((]. Left');
 
   MT('paragraphWithRightIndent2em',
-      'p[attribute ))]. Right');
+      'p[attributes ))]. Right');
 
   MT('paragraphWithLeftIndent3emRightIndent2em',
-      'p[attribute ((())]. Right');
+      'p[attributes ((())]. Right');
 
   MT('divFormatting',
       '[punctuation div. ][punctuation&strong *foo ]' +
         '[punctuation&strong&em _bar_][punctuation&strong *]');
 
   MT('phraseModifierAttributes',
-      'p[attribute (my-class)]. This is a paragraph that has a class and' +
-      ' this [em _][em&attribute (#special-phrase)][em emphasized phrase_]' +
+      'p[attributes (my-class)]. This is a paragraph that has a class and' +
+      ' this [em _][em&attributes (#special-phrase)][em emphasized phrase_]' +
       ' has an id.');
 
   MT('linkWithClass',
@@ -362,8 +362,8 @@
 
   MT('tableWithAttributes',
       '[variable-3&operator |_. name |_. age|]',
-      '[variable-3 |][variable-3&attribute /2.][variable-3  Jim |]',
-      '[variable-3 |][variable-3&attribute \\2{color: red}.][variable-3  Sam |]');
+      '[variable-3 |][variable-3&attributes /2.][variable-3  Jim |]',
+      '[variable-3 |][variable-3&attributes \\2{color: red}.][variable-3  Sam |]');
 
   /*
    * HTML

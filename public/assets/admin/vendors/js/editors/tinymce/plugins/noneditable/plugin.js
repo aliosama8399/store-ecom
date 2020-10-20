@@ -25,7 +25,7 @@ tinymce.PluginManager.add('noneditable', function(editor) {
 		function replaceMatchWithSpan(match) {
 			var args = arguments, index = args[args.length - 2];
 
-			// Is value inside an attribute then don't replace
+			// Is value inside an attributes then don't replace
 			if (index > 0 && content.charAt(index - 1) == '"') {
 				return match;
 			}

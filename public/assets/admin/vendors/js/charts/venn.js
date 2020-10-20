@@ -545,7 +545,7 @@
     }
 
     /** given a list of set objects, and their corresponding overlaps.
-    updates the (x, y, radius) attribute on each set such that their positions
+    updates the (x, y, radius) attributes on each set such that their positions
     roughly correspond to the desired overlaps */
     function venn(areas, parameters) {
         parameters = parameters || {};

@@ -723,7 +723,7 @@ var Lobibox = Lobibox || {};
 
     LobiboxPrompt.DEFAULT_OPTIONS = {
         width: 400,
-        attrs: {},          // Object of any valid attribute of input field
+        attrs: {},          // Object of any valid attributes of input field
         value: '',          // Value which is given to textfield when messagebox is created
         multiline: false,   // Set this true for multiline prompt
         lines: 3,           // This works only for multiline prompt. Number of lines

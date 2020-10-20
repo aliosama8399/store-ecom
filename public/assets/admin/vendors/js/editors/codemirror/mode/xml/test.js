@@ -31,7 +31,7 @@
 
   MT("selfclose",
      "[tag&bracket <][tag html][tag&bracket >]",
-     "  [tag&bracket <][tag link] [attribute rel]=[string stylesheet] [attribute href]=[string \"/foobar\"][tag&bracket >]",
+     "  [tag&bracket <][tag link] [attributes rel]=[string stylesheet] [attributes href]=[string \"/foobar\"][tag&bracket >]",
      "[tag&bracket </][tag html][tag&bracket >]");
 
   MT("list",
@@ -41,7 +41,7 @@
      "[tag&bracket </][tag ol][tag&bracket >]");
 
   MT("valueless",
-     "[tag&bracket <][tag input] [attribute type]=[string checkbox] [attribute checked][tag&bracket />]");
+     "[tag&bracket <][tag input] [attributes type]=[string checkbox] [attributes checked][tag&bracket />]");
 
   MT("pThenArticle",
      "[tag&bracket <][tag p][tag&bracket >]",

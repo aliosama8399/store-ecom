@@ -76,7 +76,7 @@ exports.spaces = [{
     type: 'xml-pe',
     prepend: true
 },{
-    type: 'entity.other.attribute-name',
+    type: 'entity.other.attributes-name',
     prepend: true
 }, {
     type: 'storage.type',
@@ -131,13 +131,13 @@ exports.singleTags = ['!doctype','area','base','br','hr','input','img','link','m
 
 exports.transform = function(iterator, maxPos, context) {
     var token = iterator.getCurrentToken();
-    
+
     var newLines = exports.newLines;
     var spaces = exports.spaces;
     var singleTags = exports.singleTags;
 
     var code = '';
-    
+
     var indentation = 0;
     var dontBreak = false;
     var tag;
@@ -295,7 +295,7 @@ exports.transform = function(iterator, maxPos, context) {
             break;
         }
     }
-    
+
     return code;
 };
 
@@ -331,4 +331,3 @@ exports.commands = [{
                 (function() {
                     window.require(["ace/ext/beautify"], function() {});
                 })();
-            

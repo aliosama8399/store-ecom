@@ -56,12 +56,12 @@ d3.tip = function() {
     return tip
   }
 
-  // Public: Proxy attr calls to the d3 tip container.  Sets or gets attribute value.
+  // Public: Proxy attr calls to the d3 tip container.  Sets or gets attributes value.
   //
-  // n - name of the attribute
-  // v - value of the attribute
+  // n - name of the attributes
+  // v - value of the attributes
   //
-  // Returns tip or attribute value
+  // Returns tip or attributes value
   tip.attr = function(n, v) {
     if (arguments.length < 2 && typeof n === 'string') {
       return d3.select(node).attr(n)

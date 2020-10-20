@@ -61,7 +61,7 @@ CodeMirror.defineMode("xquery", function() {
     for(var i=0, l=operators.length; i < l; i++) { kwObj[operators[i]] = operator;};
 
     // each axis_specifiers will add a property to kwObj with value of {type: "axis_specifier", style: "qualifier"}
-    var axis_specifiers = ["self::", "attribute::", "child::", "descendant::", "descendant-or-self::", "parent::",
+    var axis_specifiers = ["self::", "attributes::", "child::", "descendant::", "descendant-or-self::", "parent::",
     "ancestor::", "ancestor-or-self::", "following::", "preceding::", "following-sibling::", "preceding-sibling::"];
     for(var i=0, l=axis_specifiers.length; i < l; i++) { kwObj[axis_specifiers[i]] = qualifier; };
 
@@ -192,12 +192,12 @@ CodeMirror.defineMode("xquery", function() {
       // set style to variable for now for lack of something better
       if(mightBeFunction && !known) known = {type: "function_call", style: "variable def"};
 
-      // if the previous word was element, attribute, axis specifier, this word should be the name of that
+      // if the previous word was element, attributes, axis specifier, this word should be the name of that
       if(isInXmlConstructor(state)) {
         popStateStack(state);
         return "variable";
       }
-      // as previously checked, if the word is element,attribute, axis specifier, call it an "xmlconstructor" and
+      // as previously checked, if the word is element,attributes, axis specifier, call it an "xmlconstructor" and
       // push the stack so we know to look for it on the next word
       if(word == "element" || word == "attribute" || known.type == "axis_specifier") pushStateStack(state, {type: "xmlconstructor"});
 
@@ -256,7 +256,7 @@ CodeMirror.defineMode("xquery", function() {
           break;
         }
         else {
-          // if we're in a string and in an XML block, allow an embedded code block in an attribute
+          // if we're in a string and in an XML block, allow an embedded code block in an attributes
           if(stream.match("{", false) && isInXmlAttributeBlock(state)) {
             state.tokenize = tokenBase;
             return "string";
@@ -335,7 +335,7 @@ CodeMirror.defineMode("xquery", function() {
     stream.eatWhile(/[-a-zA-Z0-9_:.]/);
     stream.eatSpace();
 
-    // the case where the attribute has not value and the tag was closed
+    // the case where the attributes has not value and the tag was closed
     if(stream.match(">", false) || stream.match("/", false)) {
       popStateStack(state);
       state.tokenize = tokenBase;

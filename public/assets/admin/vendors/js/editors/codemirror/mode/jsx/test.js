@@ -12,10 +12,10 @@
      "([bracket&tag <][tag foo][bracket&tag >]hello [atom &amp;][bracket&tag </][tag foo][bracket&tag >][operator ++])")
 
   MT("attr",
-     "([bracket&tag <][tag foo] [attribute abc]=[string 'value'][bracket&tag >]hello [atom &amp;][bracket&tag </][tag foo][bracket&tag >][operator ++])")
+     "([bracket&tag <][tag foo] [attributes abc]=[string 'value'][bracket&tag >]hello [atom &amp;][bracket&tag </][tag foo][bracket&tag >][operator ++])")
 
   MT("braced_attr",
-     "([bracket&tag <][tag foo] [attribute abc]={[number 10]}[bracket&tag >]hello [atom &amp;][bracket&tag </][tag foo][bracket&tag >][operator ++])")
+     "([bracket&tag <][tag foo] [attributes abc]={[number 10]}[bracket&tag >]hello [atom &amp;][bracket&tag </][tag foo][bracket&tag >][operator ++])")
 
   MT("braced_text",
      "([bracket&tag <][tag foo][bracket&tag >]hello {[number 10]} [atom &amp;][bracket&tag </][tag foo][bracket&tag >][operator ++])")
@@ -26,7 +26,7 @@
   MT("nested_jsx",
      "[keyword return] (",
      "  [bracket&tag <][tag foo][bracket&tag >]",
-     "    say {[number 1] [operator +] [bracket&tag <][tag bar] [attribute attr]={[number 10]}[bracket&tag />]}!",
+     "    say {[number 1] [operator +] [bracket&tag <][tag bar] [attributes attr]={[number 10]}[bracket&tag />]}!",
      "  [bracket&tag </][tag foo][bracket&tag >][operator ++]",
      ")")
 
@@ -52,18 +52,18 @@
      "    line 3 */ [bracket&tag </][tag foo][bracket&tag >][operator ++])")
 
   MT("missing_attr",
-     "([bracket&tag <][tag foo] [attribute selected][bracket&tag />][operator ++])")
+     "([bracket&tag <][tag foo] [attributes selected][bracket&tag />][operator ++])")
 
   MT("indent_js",
      "([bracket&tag <][tag foo][bracket&tag >]",
-     "    [bracket&tag <][tag bar] [attribute baz]={[keyword function]() {",
+     "    [bracket&tag <][tag bar] [attributes baz]={[keyword function]() {",
      "        [keyword return] [number 10]",
      "      }}[bracket&tag />]",
      "  [bracket&tag </][tag foo][bracket&tag >])")
 
   MT("spread",
-     "([bracket&tag <][tag foo] [attribute bar]={[meta ...][variable baz] [operator /][number 2]}[bracket&tag />])")
+     "([bracket&tag <][tag foo] [attributes bar]={[meta ...][variable baz] [operator /][number 2]}[bracket&tag />])")
 
   MT("tag_attribute",
-     "([bracket&tag <][tag foo] [attribute bar]=[bracket&tag <][tag foo][bracket&tag />/>][operator ++])")
+     "([bracket&tag <][tag foo] [attributes bar]=[bracket&tag <][tag foo][bracket&tag />/>][operator ++])")
 })()

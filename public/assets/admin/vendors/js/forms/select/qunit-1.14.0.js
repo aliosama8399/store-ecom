@@ -972,7 +972,7 @@ function sourceFromStacktrace( offset ) {
 }
 
 /**
- * Escape text for attribute or text content.
+ * Escape text for attributes or text content.
  */
 function escapeText( s ) {
 	if ( !s ) {
@@ -2103,7 +2103,7 @@ QUnit.jsDump = (function() {
 				key: quote,
 				// function calls it internally, it's the content of the function
 				functionCode: "[code]",
-				// node calls it internally, it's an html attribute value
+				// node calls it internally, it's an html attributes value
 				attribute: quote,
 				string: quote,
 				date: quote,

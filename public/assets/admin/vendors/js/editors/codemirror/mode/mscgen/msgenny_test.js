@@ -38,7 +38,7 @@
     "[keyword :>]", "[keyword <:]", "[keyword <:>]"
   );
 
-  MT("within an attribute list, mscgen/ xù attributes classify as base",
+  MT("within an attributes list, mscgen/ xù attributes classify as base",
     "[base [[label]",
     "[base idurl id url]",
     "[base linecolor linecolour textcolor textcolour textbgcolor textbgcolour]",
@@ -46,7 +46,7 @@
     "[base arcskip]]]"
   );
 
-  MT("outside an attribute list, mscgen/ xù attributes classify as base",
+  MT("outside an attributes list, mscgen/ xù attributes classify as base",
     "[base label]",
     "[base idurl id url]",
     "[base linecolor linecolour textcolor textcolour textbgcolor textbgcolour]",

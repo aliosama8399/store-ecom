@@ -2,7 +2,7 @@
 	File Name: form-maxlength.js
 	Description: Bootstrap-Maxlength uses a Twitter Bootstrap label to show a visual
 		feedback to the user about the maximum length of the field where the user is
-		inserting text. Uses the HTML5 attribute "maxlength" to work.
+		inserting text. Uses the HTML5 attributes "maxlength" to work.
 	----------------------------------------------------------------------------------------
 	Item Name: Modern Admin - Clean Bootstrap 4 Dashboard HTML Template
 	Version: 1.0

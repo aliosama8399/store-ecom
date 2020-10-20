@@ -10,7 +10,7 @@
  */
 /*
  * Include this stylesheet on your page to get a more printer-friendly calendar.
- * When including this stylesheet, use the media='print' attribute of the <link> tag.
+ * When including this stylesheet, use the media='print' attributes of the <link> tag.
  * Make sure to include this stylesheet IN ADDITION to the regular fullcalendar.css.
  */
 .fc {
@@ -149,7 +149,7 @@
 .fc-time-grid .fc-event .fc-time span {
   display: none; }
 
-/* ...replace it with a more verbose version (includes AM/PM) stored in an html attribute */
+/* ...replace it with a more verbose version (includes AM/PM) stored in an html attributes */
 .fc-time-grid .fc-event .fc-time:after {
   content: attr(data-full); }
 

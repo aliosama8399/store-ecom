@@ -225,7 +225,7 @@
         });
       }
 
-      // Added data attribute brand-center for navbar-brand-center
+      // Added data attributes brand-center for navbar-brand-center
       // TODO:AJ: Shift this feature in PUG.
       if($('.header-navbar').hasClass('navbar-brand-center')){
         $('.header-navbar').attr('data-nav','brand-center');
@@ -918,7 +918,7 @@
       else{
         topPos = menutop + $menuItem.height() + borderWidth;
       }
-      
+
       if($body.data('menu') == 'vertical-content-menu'){
         ul.addClass('menu-popout').appendTo('.main-menu-content').css({
           'top' : topPos,

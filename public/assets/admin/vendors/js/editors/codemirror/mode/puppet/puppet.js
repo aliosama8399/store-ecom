@@ -117,7 +117,7 @@ CodeMirror.defineMode("puppet", function () {
       stream.backUp(1);
       return 'def';
     }
-    // Have we matched the prior attribute regex?
+    // Have we matched the prior attributes regex?
     if (attribute) {
       stream.match(/(\s+)?\w+/);
       return 'tag';

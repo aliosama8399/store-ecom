@@ -1217,7 +1217,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 		assert(function( div ) {
 			// Select is set to empty string on purpose
 			// This is to test IE's treatment of not explicitly
-			// setting a boolean content attribute,
+			// setting a boolean content attributes,
 			// since its presence should be enough
 			// http://bugs.jquery.com/ticket/12359
 			docElem.appendChild( div ).innerHTML = "<a id='" + expando + "'></a>" +
@@ -1226,7 +1226,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 
 			// Support: IE8, Opera 11-12.16
 			// Nothing should be selected when empty strings follow ^= or $= or *=
-			// The test attribute must be unknown in Opera but "safe" for WinRT
+			// The test attributes must be unknown in Opera but "safe" for WinRT
 			// http://msdn.microsoft.com/en-us/library/ie/hh465388.aspx#attribute_section
 			if ( div.querySelectorAll("[msallowcapture^='']").length ) {
 				rbuggyQSA.push( "[*^$]=" + whitespace + "*(?:''|\"\")" );
@@ -1266,7 +1266,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			div.appendChild( input ).setAttribute( "name", "D" );
 
 			// Support: IE8
-			// Enforce case-sensitivity of name attribute
+			// Enforce case-sensitivity of name attributes
 			if ( div.querySelectorAll("[name=d]").length ) {
 				rbuggyQSA.push( "name" + whitespace + "*[*^$|!~]?=" );
 			}
@@ -1445,7 +1445,7 @@ Sizzle.matchesSelector = function( elem, expr ) {
 		setDocument( elem );
 	}
 
-	// Make sure that attribute selectors are quoted
+	// Make sure that attributes selectors are quoted
 	expr = expr.replace( rattributeQuotes, "='$1']" );
 
 	if ( support.matchesSelector && documentIsHTML &&
@@ -2028,7 +2028,7 @@ Expr = Sizzle.selectors = {
 				elem.type === "text" &&
 
 				// Support: IE<8
-				// New HTML5 attribute values (e.g., "search") appear with elem.type === "text"
+				// New HTML5 attributes values (e.g., "search") appear with elem.type === "text"
 				( (attr = elem.getAttribute("type")) == null || attr.toLowerCase() === "text" );
 		},
 
@@ -2665,7 +2665,7 @@ support.sortDetached = assert(function( div1 ) {
 });
 
 // Support: IE<8
-// Prevent attribute/property "interpolation"
+// Prevent attributes/property "interpolation"
 // http://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
 if ( !assert(function( div ) {
 	div.innerHTML = "<a href='#'></a>";
@@ -3779,7 +3779,7 @@ var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
 function dataAttr( elem, key, data ) {
 
 	// If nothing was found internally, try to fetch any
-	// data from the HTML5 data-* attribute
+	// data from the HTML5 data-* attributes
 	if ( data === undefined && elem.nodeType === 1 ) {
 
 		var name = "data-" + key.replace( rmultiDash, "-$1" ).toLowerCase();
@@ -4492,7 +4492,7 @@ function createSafeFragment( document ) {
 	div.innerHTML = "<textarea>x</textarea>";
 	support.noCloneChecked = !!div.cloneNode( true ).lastChild.defaultValue;
 
-	// #11217 - WebKit loses check when the name is after the checked attribute
+	// #11217 - WebKit loses check when the name is after the checked attributes
 	fragment.appendChild( div );
 
 	// Support: Windows Web Apps (WWA)
@@ -5896,7 +5896,7 @@ function manipulationTarget( elem, content ) {
 		elem;
 }
 
-// Replace/restore the type attribute of script elements for safe DOM manipulation
+// Replace/restore the type attributes of script elements for safe DOM manipulation
 function disableScript( elem ) {
 	elem.type = ( jQuery.find.attr( elem, "type" ) !== null ) + "/" + elem.type;
 	return elem;
@@ -7253,7 +7253,7 @@ if ( !support.opacity ) {
 			style.zoom = 1;
 
 			// if setting opacity to 1, and no other filters exist -
-			// attempt to remove filter attribute #6652
+			// attempt to remove filter attributes #6652
 			// if value === "", then remove inline opacity #12685
 			if ( ( value >= 1 || value === "" ) &&
 					jQuery.trim( filter.replace( ralpha, "" ) ) === "" &&
@@ -7590,7 +7590,7 @@ function defaultPrefilter( elem, props, opts ) {
 
 		// Make sure that nothing sneaks out
 		// Record all 3 overflow attributes because IE does not
-		// change the overflow attribute when overflowX and
+		// change the overflow attributes when overflowX and
 		// overflowY are set to the same value
 		opts.overflow = [ style.overflow, style.overflowX, style.overflowY ];
 
@@ -8408,7 +8408,7 @@ jQuery.extend( {
 		var ret, hooks,
 			nType = elem.nodeType;
 
-		// Don't get/set attributes on text, comment and attribute nodes
+		// Don't get/set attributes on text, comment and attributes nodes
 		if ( nType === 3 || nType === 8 || nType === 2 ) {
 			return;
 		}
@@ -8575,12 +8575,12 @@ if ( !getSetInput || !getSetAttribute ) {
 // IE6/7 do not support getting/setting some attributes with get/setAttribute
 if ( !getSetAttribute ) {
 
-	// Use this for any attribute in IE6/7
+	// Use this for any attributes in IE6/7
 	// This fixes almost every IE6/7 issue
 	nodeHook = {
 		set: function( elem, value, name ) {
 
-			// Set the existing or create a new attribute node
+			// Set the existing or create a new attributes node
 			var ret = elem.getAttributeNode( name );
 			if ( !ret ) {
 				elem.setAttributeNode(
@@ -8685,7 +8685,7 @@ jQuery.extend( {
 		var ret, hooks,
 			nType = elem.nodeType;
 
-		// Don't get/set properties on text, comment and attribute nodes
+		// Don't get/set properties on text, comment and attributes nodes
 		if ( nType === 3 || nType === 8 || nType === 2 ) {
 			return;
 		}
@@ -8720,7 +8720,7 @@ jQuery.extend( {
 				// elem.tabIndex doesn't always return the
 				// correct value when it hasn't been explicitly set
 				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
-				// Use proper attribute retrieval(#12072)
+				// Use proper attributes retrieval(#12072)
 				var tabindex = jQuery.find.attr( elem, "tabindex" );
 
 				return tabindex ?
