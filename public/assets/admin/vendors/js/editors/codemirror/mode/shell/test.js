@@ -52,7 +52,7 @@
      "  [builtin sleep] [number 3]",
      "[keyword done]");
   MT("options",
-     "[builtin ls] [attribute -l] [attribute --human-readable]");
+     "[builtin ls] [attributes -l] [attributes --human-readable]");
   MT("operator",
      "[def var][operator =]value");
 })();

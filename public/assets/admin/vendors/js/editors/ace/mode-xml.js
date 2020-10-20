@@ -31,10 +31,10 @@ var XmlHighlightRules = function(normalize) {
         ],
 
         xml_decl : [{
-            token : "entity.other.attribute-name.decl-attribute-name.xml",
+            token : "entity.other.attributes-name.decl-attributes-name.xml",
             regex : "(?:" + tagRegex + ":)?" + tagRegex + ""
         }, {
-            token : "keyword.operator.decl-attribute-equals.xml",
+            token : "keyword.operator.decl-attributes-equals.xml",
             regex : "="
         }, {
             include: "whitespace"
@@ -98,7 +98,7 @@ var XmlHighlightRules = function(normalize) {
         }],
 
         attr_reference : [{
-            token : "constant.language.escape.reference.attribute-value.xml",
+            token : "constant.language.escape.reference.attributes-value.xml",
             regex : "(?:&#[0-9]+;)|(?:&#x[0-9a-fA-F]+;)|(?:&[a-zA-Z0-9_:\\.-]+;)"
         }],
 
@@ -134,10 +134,10 @@ var XmlHighlightRules = function(normalize) {
         }],
 
         attributes: [{
-            token : "entity.other.attribute-name.xml",
+            token : "entity.other.attributes-name.xml",
             regex : "(?:" + tagRegex + ":)?" + tagRegex + ""
         }, {
-            token : "keyword.operator.attribute-equals.xml",
+            token : "keyword.operator.attributes-equals.xml",
             regex : "="
         }, {
             include: "tag_whitespace"
@@ -146,20 +146,20 @@ var XmlHighlightRules = function(normalize) {
         }],
 
         attribute_value: [{
-            token : "string.attribute-value.xml",
+            token : "string.attributes-value.xml",
             regex : "'",
             push : [
-                {token : "string.attribute-value.xml", regex: "'", next: "pop"},
+                {token : "string.attributes-value.xml", regex: "'", next: "pop"},
                 {include : "attr_reference"},
-                {defaultToken : "string.attribute-value.xml"}
+                {defaultToken : "string.attributes-value.xml"}
             ]
         }, {
-            token : "string.attribute-value.xml",
+            token : "string.attributes-value.xml",
             regex : '"',
             push : [
-                {token : "string.attribute-value.xml", regex: '"', next: "pop"},
+                {token : "string.attributes-value.xml", regex: '"', next: "pop"},
                 {include : "attr_reference"},
-                {defaultToken : "string.attribute-value.xml"}
+                {defaultToken : "string.attributes-value.xml"}
             ]
         }]
     };
@@ -241,7 +241,7 @@ var XmlBehaviour = function () {
             var iterator = new TokenIterator(session, cursor.row, cursor.column);
             var token = iterator.getCurrentToken();
 
-            if (rightChar == quote && (is(token, "attribute-value") || is(token, "string"))) {
+            if (rightChar == quote && (is(token, "attributes-value") || is(token, "string"))) {
                 return {
                     text: "",
                     selection: [1, 1]
@@ -258,7 +258,7 @@ var XmlBehaviour = function () {
                 token = iterator.stepBackward();
             }
             var rightSpace = !rightChar || rightChar.match(/\s/);
-            if (is(token, "attribute-equals") && (rightSpace || rightChar == '>') || (is(token, "decl-attribute-equals") && (rightSpace || rightChar == '?'))) {
+            if (is(token, "attributes-equals") && (rightSpace || rightChar == '>') || (is(token, "decl-attributes-equals") && (rightSpace || rightChar == '?'))) {
                 return {
                     text: quote + quote,
                     selection: [1, 1]
@@ -284,11 +284,11 @@ var XmlBehaviour = function () {
             var position = editor.getCursorPosition();
             var iterator = new TokenIterator(session, position.row, position.column);
             var token = iterator.getCurrentToken() || iterator.stepBackward();
-            if (!token || !(is(token, "tag-name") || is(token, "tag-whitespace") || is(token, "attribute-name") || is(token, "attribute-equals") || is(token, "attribute-value")))
+            if (!token || !(is(token, "tag-name") || is(token, "tag-whitespace") || is(token, "attributes-name") || is(token, "attributes-equals") || is(token, "attributes-value")))
                 return;
-            if (is(token, "reference.attribute-value"))
+            if (is(token, "reference.attributes-value"))
                 return;
-            if (is(token, "attribute-value")) {
+            if (is(token, "attributes-value")) {
                 var firstChar = token.value.charAt(0);
                 if (firstChar == '"' || firstChar == "'") {
                     var lastChar = token.value.charAt(token.value.length - 1);
@@ -388,7 +388,7 @@ var FoldMode = exports.FoldMode = function(voidElements, optionalEndTags) {
     this.optionalEndTags = oop.mixin({}, this.voidElements);
     if (optionalEndTags)
         oop.mixin(this.optionalEndTags, optionalEndTags);
-    
+
 };
 oop.inherits(FoldMode, BaseFoldMode);
 
@@ -496,7 +496,7 @@ function is(token, type) {
 
         return null;
     };
-    
+
     this._readTagBackward = function(iterator) {
         var token = iterator.getCurrentToken();
         if (!token)
@@ -521,10 +521,10 @@ function is(token, type) {
 
         return null;
     };
-    
+
     this._pop = function(stack, tag) {
         while (stack.length) {
-            
+
             var top = stack[stack.length-1];
             if (!tag || top.tagName == tag.tagName) {
                 return stack.pop();
@@ -537,17 +537,17 @@ function is(token, type) {
             }
         }
     };
-    
+
     this.getFoldWidgetRange = function(session, foldStyle, row) {
         var firstTag = this._getFirstTagInLine(session, row);
-        
+
         if (!firstTag)
             return null;
-        
+
         var isBackward = firstTag.closing || firstTag.selfClosing;
         var stack = [];
         var tag;
-        
+
         if (!isBackward) {
             var iterator = new TokenIterator(session, row, firstTag.start.column);
             var start = {
@@ -565,7 +565,7 @@ function is(token, type) {
                     } else
                         continue;
                 }
-                
+
                 if (tag.closing) {
                     this._pop(stack, tag);
                     if (stack.length == 0)
@@ -582,7 +582,7 @@ function is(token, type) {
                 row: row,
                 column: firstTag.start.column
             };
-            
+
             while (tag = this._readTagBackward(iterator)) {
                 if (tag.selfClosing) {
                     if (!stack.length) {
@@ -592,7 +592,7 @@ function is(token, type) {
                     } else
                         continue;
                 }
-                
+
                 if (!tag.closing) {
                     this._pop(stack, tag);
                     if (stack.length == 0) {
@@ -607,7 +607,7 @@ function is(token, type) {
                 }
             }
         }
-        
+
     };
 
 }).call(FoldMode.prototype);
@@ -653,7 +653,7 @@ oop.inherits(Mode, TextMode);
 
         return worker;
     };
-    
+
     this.$id = "ace/mode/xml";
 }).call(Mode.prototype);
 

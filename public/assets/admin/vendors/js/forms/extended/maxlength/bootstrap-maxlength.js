@@ -34,12 +34,12 @@
           placement: 'bottom',
           message: null, // an alternative way to provide the message text
           showCharsTyped: true, // show the number of characters typed and not the number of characters remaining
-          validate: false, // if the browser doesn't support the maxlength attribute, attempt to type more than
+          validate: false, // if the browser doesn't support the maxlength attributes, attempt to type more than
           // the indicated chars, will be prevented.
           utf8: false, // counts using bytesize rather than length. eg: '£' is counted as 2 characters.
           appendToParent: false, // append the indicator to the input field's parent instead of body
           twoCharLinebreak: true,  // count linebreak as 2 characters to match IE/Chrome textarea validation. As well as DB storage.
-          customMaxAttribute: null,  // null = use maxlength attribute and browser functionality, string = use specified attribute instead.
+          customMaxAttribute: null,  // null = use maxlength attributes and browser functionality, string = use specified attributes instead.
           allowOverMax: false
           // Form submit validation is handled on your own.  when maxlength has been exceeded 'overmax' class added to element
         };
@@ -256,7 +256,7 @@
         }
 
         if (options.customMaxAttribute) {
-          // class to use for form validation on custom maxlength attribute
+          // class to use for form validation on custom maxlength attributes
           if (remaining < 0) {
             currentInput.addClass('overmax');
           } else {

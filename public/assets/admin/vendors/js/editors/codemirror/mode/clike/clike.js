@@ -603,7 +603,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
     name: "clike",
     keywords: words("sampler1D sampler2D sampler3D samplerCube " +
                     "sampler1DShadow sampler2DShadow " +
-                    "const attribute uniform varying " +
+                    "const attributes uniform varying " +
                     "break continue discard return " +
                     "for while do if else struct " +
                     "in out inout"),

@@ -13,10 +13,10 @@
      "[tag %h1] Hey There %h2");
 
   MT("idSelector",
-     "[tag %h1][attribute #test] Hey There");
+     "[tag %h1][attributes #test] Hey There");
 
   MT("classSelector",
-     "[tag %h1][attribute .hello] Hey There");
+     "[tag %h1][attributes .hello] Hey There");
 
   MT("docType",
      "[tag !!! XML]");
@@ -78,11 +78,11 @@
     "  [comment -->]");
 
   MT("hamlAfterRubyTag",
-    "[attribute .block]",
+    "[attributes .block]",
     "  [tag %strong=] [variable now]",
-    "  [attribute .test]",
+    "  [attributes .test]",
     "     [operator =][variable now]",
-    "  [attribute .right]");
+    "  [attributes .right]");
 
   MT("stretchedRuby",
      "[operator =] [variable puts] [string \"Hello\"],",

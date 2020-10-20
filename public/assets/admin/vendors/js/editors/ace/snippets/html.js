@@ -100,9 +100,9 @@ snippet docx\n\
 	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\
 # Attributes\n\
 snippet attr\n\
-	${1:attribute}=\"${2:property}\"\n\
+	${1:attributes}=\"${2:property}\"\n\
 snippet attr+\n\
-	${1:attribute}=\"${2:property}\" attr+${3}\n\
+	${1:attributes}=\"${2:property}\" attr+${3}\n\
 snippet .\n\
 	class=\"${1}\"${2}\n\
 snippet #\n\

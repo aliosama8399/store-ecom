@@ -145,7 +145,7 @@
                                 .prop('enctype', 'multipart/form-data')
                                 // enctype must be set as encoding for IE:
                                 .prop('encoding', 'multipart/form-data');
-                            // Remove the HTML5 form attribute from the input(s):
+                            // Remove the HTML5 form attributes from the input(s):
                             options.fileInput.removeAttr('form');
                         }
                         form.submit();

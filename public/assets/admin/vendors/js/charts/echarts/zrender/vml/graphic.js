@@ -196,7 +196,7 @@ if (!require('../core/env').canvasSupported) {
                     el.color = color1;
                     el.color2 = color2;
                     el.colors = colors.join(',');
-                    // When colors attribute is used, the meanings of opacity and o:opacity2
+                    // When colors attributes is used, the meanings of opacity and o:opacity2
                     // are reversed.
                     el.opacity = opacity2;
                     // FIXME g_o_:opacity ?

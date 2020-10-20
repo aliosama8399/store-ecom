@@ -15,8 +15,8 @@
      "      [keyword let] [variable $let] [keyword :=] [variable &lt;x] [variable attr][keyword =][variable &quot;value&quot;&gt;&quot;test&quot;&lt;func&gt][def&variable ;function]() [variable $var] {[keyword function]()} {[variable $var]}[variable &lt;][keyword /][variable func&gt;&lt;][keyword /][variable x&gt;]",
      "      [keyword let] [variable $joe][keyword :=][atom 1]",
      "      [keyword return] [keyword element] [variable element] {",
-     "          [keyword attribute] [variable attribute] { [atom 1] },",
-     "          [keyword element] [variable test] { [variable &#39;a&#39;] },           [keyword attribute] [variable foo] { [variable &quot;bar&quot;] },",
+     "          [keyword attributes] [variable attributes] { [atom 1] },",
+     "          [keyword element] [variable test] { [variable &#39;a&#39;] },           [keyword attributes] [variable foo] { [variable &quot;bar&quot;] },",
      "          [def&variable fn:doc]()[[ [variable foo][keyword /][variable @bar] [keyword eq] [variable $let] ]],",
      "          [keyword //][variable x] }                 [comment (: a more 'evil' test :)]",
      "      [comment (: Modified Blakeley example (: with nested comment :) ... :)]",
@@ -26,10 +26,10 @@
      "      [keyword declare] [keyword private] [keyword function] [def&variable local:local]() {()}[variable ;]",
      "      [keyword let] [variable $let] [keyword :=] [variable &lt;let&gt;let] [variable $let] [keyword :=] [variable &quot;let&quot;&lt;][keyword /let][variable &gt;]",
      "      [keyword return] [keyword element] [variable element] {",
-     "          [keyword attribute] [variable attribute] { [keyword try] { [def&variable xdmp:version]() } [keyword catch]([variable $e]) { [def&variable xdmp:log]([variable $e]) } },",
-     "          [keyword attribute] [variable fn:doc] { [variable &quot;bar&quot;] [variable castable] [keyword as] [atom xs:string] },",
+     "          [keyword attributes] [variable attributes] { [keyword try] { [def&variable xdmp:version]() } [keyword catch]([variable $e]) { [def&variable xdmp:log]([variable $e]) } },",
+     "          [keyword attributes] [variable fn:doc] { [variable &quot;bar&quot;] [variable castable] [keyword as] [atom xs:string] },",
      "          [keyword element] [variable text] { [keyword text] { [variable &quot;text&quot;] } },",
-     "          [def&variable fn:doc]()[[ [qualifier child::][variable eq][keyword /]([variable @bar] [keyword |] [qualifier attribute::][variable attribute]) [keyword eq] [variable $let] ]],",
+     "          [def&variable fn:doc]()[[ [qualifier child::][variable eq][keyword /]([variable @bar] [keyword |] [qualifier attributes::][variable attributes]) [keyword eq] [variable $let] ]],",
      "          [keyword //][variable fn:doc]",
      "      }");
 
@@ -37,7 +37,7 @@
      "[string \"foo\"] [keyword instance] [keyword of] [keyword empty-sequence]()");
 
   MT("testMultiAttr",
-     "[tag <p ][attribute a1]=[string \"foo\"] [attribute a2]=[string \"bar\"][tag >][variable hello] [variable world][tag </p>]");
+     "[tag <p ][attributes a1]=[string \"foo\"] [attributes a2]=[string \"bar\"][tag >][variable hello] [variable world][tag </p>]");
 
   MT("test namespaced variable",
      "[keyword declare] [keyword namespace] [variable e] [keyword =] [string \"http://example.com/ANamespace\"][variable ;declare] [keyword variable] [variable $e:exampleComThisVarIsNotRecognized] [keyword as] [keyword element]([keyword *]) [variable external;]");

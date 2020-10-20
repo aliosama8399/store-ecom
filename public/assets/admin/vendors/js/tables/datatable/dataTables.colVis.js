@@ -321,7 +321,7 @@ ColVis.prototype = {
 			this.s.restore = this.s.sRestore;
 		}
 
-		// CamelCase to Hungarian for the column groups 
+		// CamelCase to Hungarian for the column groups
 		var groups = this.s.groups;
 		var hungarianGroups = this.s.aoGroups;
 		if ( groups ) {
@@ -785,7 +785,7 @@ ColVis.prototype = {
 		 */
 		$(nHidden).animate({"opacity": 1}, that.s.iOverlayFade);
 		$(nBackground).animate({"opacity": 0.1}, that.s.iOverlayFade, 'linear', function () {
-			/* In IE6 if you set the checked attribute of a hidden checkbox, then this is not visually
+			/* In IE6 if you set the checked attributes of a hidden checkbox, then this is not visually
 			 * reflected. As such, we need to do it here, once it is visible. Unbelievable.
 			 */
 			if ( $.browser && $.browser.msie && $.browser.version == "6.0" )

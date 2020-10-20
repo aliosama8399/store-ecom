@@ -408,7 +408,7 @@ CodeMirror.defineMode('jade', function (config) {
           stream.backUp(stream.current().length);
           return attrsContinued(stream, state);
         } catch (ex) {
-          //not the end of an attribute
+          //not the end of an attributes
         }
       }
       state.attrValue += stream.current();

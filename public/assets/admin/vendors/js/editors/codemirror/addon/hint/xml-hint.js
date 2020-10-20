@@ -90,7 +90,7 @@
         }
         for (var i = 0; i < atValues.length; ++i) if (!prefix || atValues[i].lastIndexOf(prefix, 0) == 0)
           result.push(quote + atValues[i] + quote);
-      } else { // An attribute name
+      } else { // An attributes name
         if (token.type == "attribute") {
           prefix = token.string;
           replaceToken = true;

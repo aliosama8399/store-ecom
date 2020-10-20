@@ -633,7 +633,7 @@ tinymce.PluginManager.add('media', function(editor, url) {
 			}
 		}
 
-		// Place the inner HTML contents inside an escaped attribute
+		// Place the inner HTML contents inside an escaped attributes
 		// This enables us to copy/paste the fake object
 		innerHtml = sourceNode.firstChild && sourceNode.firstChild.value;
 		if (innerHtml) {

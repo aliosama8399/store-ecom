@@ -8,15 +8,15 @@
   // Error, because "foobarhello" is neither a known type or property, but
   // property was expected (after "and"), and it should be in parentheses.
   MT("atMediaUnknownType",
-     "[def @media] [attribute screen] [keyword and] [error foobarhello] { }");
+     "[def @media] [attributes screen] [keyword and] [error foobarhello] { }");
 
   // Soft error, because "foobarhello" is not a known property or type.
   MT("atMediaUnknownProperty",
-     "[def @media] [attribute screen] [keyword and] ([error foobarhello]) { }");
+     "[def @media] [attributes screen] [keyword and] ([error foobarhello]) { }");
 
   // Make sure nesting works with media queries
   MT("atMediaMaxWidthNested",
-     "[def @media] [attribute screen] [keyword and] ([property max-width]: [number 25px]) { [tag foo] { } }");
+     "[def @media] [attributes screen] [keyword and] ([property max-width]: [number 25px]) { [tag foo] { } }");
 
   MT("atMediaFeatureValueKeyword",
      "[def @media] ([property orientation]: [keyword landscape]) { }");
@@ -126,7 +126,7 @@
      "}");
 
   MT("empty_url",
-     "[def @import] [atom url]() [attribute screen];");
+     "[def @import] [atom url]() [attributes screen];");
 
   MT("parens",
      "[qualifier .foo] {",

@@ -3893,7 +3893,7 @@
 				// first check if filtering is enabled via the class being applied
 				if (self.ft.$el.hasClass('footable-filtering'))
 					self.enabled = true;
-				// then check if the data-filtering-enabled attribute has been set
+				// then check if the data-filtering-enabled attributes has been set
 				self.enabled = F.is.boolean(data.filtering)
 					? data.filtering
 					: self.enabled;
@@ -4609,7 +4609,7 @@
 (function(F){
 
 	/**
-	 * The value used by the filtering component during filter operations. Must be a string and can be set using the data-filter-value attribute on the cell itself.
+	 * The value used by the filtering component during filter operations. Must be a string and can be set using the data-filter-value attributes on the cell itself.
 	 * If this is not supplied it is set to the result of the toString method called on the value for the cell. Added by the {@link FooTable.Filtering} component.
 	 * @type {string}
 	 * @default null
@@ -5046,7 +5046,7 @@
 (function(F){
 
 	/**
-	 * The value used by the sorting component during sort operations. Can be set using the data-sort-value attribute on the cell itself.
+	 * The value used by the sorting component during sort operations. Can be set using the data-sort-value attributes on the cell itself.
 	 * If this is not supplied it is set to the result of the toString method called on the value for the cell. Added by the {@link FooTable.Sorting} component.
 	 * @type {string}
 	 * @default null

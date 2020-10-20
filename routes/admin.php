@@ -86,6 +86,17 @@ Route::group(
             Route::get('delete/{id}', 'ProductController@delete')->name('admin.products.delete');
         });
 
+        Route::group(['prefix' => 'attributes'], function () {
+            Route::get('/', 'AttributesController@index')->name('admin.attributes');
+            Route::get('create', 'AttributesController@create')->name('admin.attributes.create');
+            Route::post('store', 'AttributesController@store')->name('admin.attributes.store');
+            Route::get('edit/{id}', 'AttributesController@edit')->name('admin.attributes.edit');
+            Route::PUT('update/{id}', 'AttributesController@update')->name('admin.attributes.update');
+            Route::get('delete/{id}', 'AttributesController@delete')->name('admin.attributes.delete');
+        });
+
+
+
     });
 
 });

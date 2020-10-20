@@ -1070,7 +1070,7 @@ PickerConstructor._ = {
 
 
     /**
-     * Create ARIA attribute strings.
+     * Create ARIA attributes strings.
      */
     ariaAttr: ariaAttr
 } //PickerConstructor._

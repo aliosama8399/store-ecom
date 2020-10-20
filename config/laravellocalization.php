@@ -308,7 +308,7 @@ return [
     // The locale will be stored in session and only be computed from browser
     // again if the session expires.
     //
-    // If false, system will take app.php locale attribute
+    // If false, system will take app.php locale attributes
     'useAcceptLanguageHeader' => false,
 
     // If `hideDefaultLocaleInURL` is true, then a url without locale

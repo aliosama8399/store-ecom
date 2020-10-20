@@ -56,11 +56,11 @@ require.helper.semVerSort = function(a, b) {
 
 /**
  * Find and require a module which name starts with the provided name.
- * If multiple modules exists, the highest semver is used. 
+ * If multiple modules exists, the highest semver is used.
  * This function can only be used for remote dependencies.
 
  * @param {String} name - module name: `user~repo`
- * @param {Boolean} returnPath - returns the canonical require path if true, 
+ * @param {Boolean} returnPath - returns the canonical require path if true,
  *                               otherwise it returns the epxorted module
  */
 require.latest = function (name, returnPath) {
@@ -83,7 +83,7 @@ require.latest = function (name, returnPath) {
           semVerCandidates.push({version: version, name: moduleName});
         } else {
           otherCandidates.push({version: version, name: moduleName});
-        } 
+        }
     }
   }
   if (semVerCandidates.concat(otherCandidates).length === 0) {
@@ -359,7 +359,7 @@ function FastClick(layer) {
 		};
 	}
 
-	// If a handler is already declared in the element's onclick attribute, it will be fired before
+	// If a handler is already declared in the element's onclick attributes, it will be fired before
 	// FastClick's onClick handler. Fix this by pulling out the user-defined handler function and
 	// adding it as listener.
 	if (typeof layer.onclick === 'function') {
@@ -492,7 +492,7 @@ FastClick.prototype.sendClick = function(targetElement, event) {
 
 	touch = event.changedTouches[0];
 
-	// Synthesise a click event, with an extra attribute so it can be tracked
+	// Synthesise a click event, with an extra attributes so it can be tracked
 	clickEvent = document.createEvent('MouseEvents');
 	clickEvent.initMouseEvent(this.determineEventType(targetElement), true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
 	clickEvent.forwardedTouchEvent = true;
@@ -692,17 +692,17 @@ FastClick.prototype.onTouchMove = function(event) {
 FastClick.prototype.findControl = function(labelElement) {
 	'use strict';
 
-	// Fast path for newer browsers supporting the HTML5 control attribute
+	// Fast path for newer browsers supporting the HTML5 control attributes
 	if (labelElement.control !== undefined) {
 		return labelElement.control;
 	}
 
-	// All browsers under test that support touch events also support the HTML5 htmlFor attribute
+	// All browsers under test that support touch events also support the HTML5 htmlFor attributes
 	if (labelElement.htmlFor) {
 		return document.getElementById(labelElement.htmlFor);
 	}
 
-	// If no for attribute exists, attempt to retrieve the first labellable descendant element
+	// If no for attributes exists, attempt to retrieve the first labellable descendant element
 	// the list of which is defined here: http://www.w3.org/TR/html5/forms.html#category-label
 	return labelElement.querySelector('button, input:not([type=hidden]), keygen, meter, output, progress, select, textarea');
 };
@@ -763,7 +763,7 @@ FastClick.prototype.onTouchEnd = function(event) {
 	} else if (this.needsFocus(targetElement)) {
 
 		// Case 1: If the touch started a while ago (best guess is 100ms based on tests for issue #36) then focus will be triggered anyway. Return early and unset the target element reference so that the subsequent click will be allowed through.
-		// Case 2: Without this exception for input elements tapped when the document is contained in an iframe, then any inputted text won't be visible even though the value attribute is updated as the user types (issue #37).
+		// Case 2: Without this exception for input elements tapped when the document is contained in an iframe, then any inputted text won't be visible even though the value attributes is updated as the user types (issue #37).
 		if ((event.timeStamp - trackingClickStart) > 100 || (this.deviceIsIOS && window.top !== window && targetTagName === 'input')) {
 			this.targetElement = null;
 			return false;
@@ -943,7 +943,7 @@ FastClick.notNeeded = function(layer) {
 
 		if (FastClick.prototype.deviceIsAndroid) {
 			metaViewport = document.querySelector('meta[name=viewport]');
-			
+
 			if (metaViewport) {
 				// Chrome on Android with user-scalable="no" doesn't need FastClick (issue #89)
 				if (metaViewport.content.indexOf('user-scalable=no') !== -1) {

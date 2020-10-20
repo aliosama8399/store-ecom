@@ -329,7 +329,7 @@
                         var hasOverrideMessage = !!message;
                         var foundValidator = false;
                         if (!message) {
-                            message = "'" + el + "' validation failed <!-- Add attribute 'data-validation-" + el.toLowerCase() + "-message' to input to change this message -->";
+                            message = "'" + el + "' validation failed <!-- Add attributes 'data-validation-" + el.toLowerCase() + "-message' to input to change this message -->";
                         }
 
                         $.each(

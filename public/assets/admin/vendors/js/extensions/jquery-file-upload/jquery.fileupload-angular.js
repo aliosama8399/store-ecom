@@ -403,7 +403,7 @@
             };
         })
 
-        // Enhance the HTML5 download attribute to
+        // Enhance the HTML5 download attributes to
         // allow drag&drop of files to the desktop:
         .directive('download', function () {
             return function (scope, elm) {

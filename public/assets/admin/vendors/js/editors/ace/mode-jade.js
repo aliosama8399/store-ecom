@@ -9,7 +9,7 @@ var DocCommentHighlightRules = function() {
         "start" : [ {
             token : "comment.doc.tag",
             regex : "@[\\w\\d_]+" // TODO: fix email addresses
-        }, 
+        },
         DocCommentHighlightRules.getTagRule(),
         {
             defaultToken : "comment.doc",
@@ -342,8 +342,8 @@ var JavaScriptHighlightRules = function(options) {
             }
         ]
     };
-    
-    
+
+
     if (!options || !options.noES6) {
         this.$rules.no_regex.unshift({
             regex: "[{}]", onMatch: function(val, state, stack) {
@@ -378,14 +378,14 @@ var JavaScriptHighlightRules = function(options) {
                 defaultToken: "string.quasi"
             }]
         });
-        
+
         if (!options || !options.noJSX)
             JSX.call(this);
     }
-    
+
     this.embedRules(DocCommentHighlightRules, "doc-",
         [ DocCommentHighlightRules.getEndRule("no_regex") ]);
-    
+
     this.normalizeRules();
 };
 
@@ -436,8 +436,8 @@ function JSX() {
         {defaultToken: "string"}
     ];
     this.$rules.jsxAttributes = [{
-        token : "meta.tag.punctuation.tag-close.xml", 
-        regex : "/?>", 
+        token : "meta.tag.punctuation.tag-close.xml",
+        regex : "/?>",
         onMatch : function(value, currentState, stack) {
             if (currentState == stack[0])
                 stack.shift();
@@ -452,35 +452,35 @@ function JSX() {
             return [{type: this.token, value: value}];
         },
         nextState: "jsx"
-    }, 
+    },
     jsxJsRule,
     comments("jsxAttributes"),
     {
-        token : "entity.other.attribute-name.xml",
+        token : "entity.other.attributes-name.xml",
         regex : tagRegex
     }, {
-        token : "keyword.operator.attribute-equals.xml",
+        token : "keyword.operator.attributes-equals.xml",
         regex : "="
     }, {
         token : "text.tag-whitespace.xml",
         regex : "\\s+"
     }, {
-        token : "string.attribute-value.xml",
+        token : "string.attributes-value.xml",
         regex : "'",
         stateName : "jsx_attr_q",
         push : [
-            {token : "string.attribute-value.xml", regex: "'", next: "pop"},
+            {token : "string.attributes-value.xml", regex: "'", next: "pop"},
             {include : "reference"},
-            {defaultToken : "string.attribute-value.xml"}
+            {defaultToken : "string.attributes-value.xml"}
         ]
     }, {
-        token : "string.attribute-value.xml",
+        token : "string.attributes-value.xml",
         regex : '"',
         stateName : "jsx_attr_qq",
         push : [
-            {token : "string.attribute-value.xml", regex: '"', next: "pop"},
+            {token : "string.attributes-value.xml", regex: '"', next: "pop"},
             {include : "reference"},
-            {defaultToken : "string.attribute-value.xml"}
+            {defaultToken : "string.attributes-value.xml"}
         ]
     },
     jsxTag
@@ -548,10 +548,10 @@ var XmlHighlightRules = function(normalize) {
         ],
 
         xml_decl : [{
-            token : "entity.other.attribute-name.decl-attribute-name.xml",
+            token : "entity.other.attributes-name.decl-attributes-name.xml",
             regex : "(?:" + tagRegex + ":)?" + tagRegex + ""
         }, {
-            token : "keyword.operator.decl-attribute-equals.xml",
+            token : "keyword.operator.decl-attributes-equals.xml",
             regex : "="
         }, {
             include: "whitespace"
@@ -615,7 +615,7 @@ var XmlHighlightRules = function(normalize) {
         }],
 
         attr_reference : [{
-            token : "constant.language.escape.reference.attribute-value.xml",
+            token : "constant.language.escape.reference.attributes-value.xml",
             regex : "(?:&#[0-9]+;)|(?:&#x[0-9a-fA-F]+;)|(?:&[a-zA-Z0-9_:\\.-]+;)"
         }],
 
@@ -651,10 +651,10 @@ var XmlHighlightRules = function(normalize) {
         }],
 
         attributes: [{
-            token : "entity.other.attribute-name.xml",
+            token : "entity.other.attributes-name.xml",
             regex : "(?:" + tagRegex + ":)?" + tagRegex + ""
         }, {
-            token : "keyword.operator.attribute-equals.xml",
+            token : "keyword.operator.attributes-equals.xml",
             regex : "="
         }, {
             include: "tag_whitespace"
@@ -663,20 +663,20 @@ var XmlHighlightRules = function(normalize) {
         }],
 
         attribute_value: [{
-            token : "string.attribute-value.xml",
+            token : "string.attributes-value.xml",
             regex : "'",
             push : [
-                {token : "string.attribute-value.xml", regex: "'", next: "pop"},
+                {token : "string.attributes-value.xml", regex: "'", next: "pop"},
                 {include : "attr_reference"},
-                {defaultToken : "string.attribute-value.xml"}
+                {defaultToken : "string.attributes-value.xml"}
             ]
         }, {
-            token : "string.attribute-value.xml",
+            token : "string.attributes-value.xml",
             regex : '"',
             push : [
-                {token : "string.attribute-value.xml", regex: '"', next: "pop"},
+                {token : "string.attributes-value.xml", regex: '"', next: "pop"},
                 {include : "attr_reference"},
-                {defaultToken : "string.attribute-value.xml"}
+                {defaultToken : "string.attributes-value.xml"}
             ]
         }]
     };
@@ -846,10 +846,10 @@ var CssHighlightRules = function() {
             token : "constant.numeric", // hex3 color
             regex : "#[a-f0-9]{3}"
         }, {
-            token : ["punctuation", "entity.other.attribute-name.pseudo-element.css"],
+            token : ["punctuation", "entity.other.attributes-name.pseudo-element.css"],
             regex : pseudoElements
         }, {
-            token : ["punctuation", "entity.other.attribute-name.pseudo-class.css"],
+            token : ["punctuation", "entity.other.attributes-name.pseudo-class.css"],
             regex : pseudoClasses
         }, {
             token : ["support.function", "string", "support.function"],
@@ -907,15 +907,15 @@ var HtmlHighlightRules = function() {
         attributes: [{
             include : "tag_whitespace"
         }, {
-            token : "entity.other.attribute-name.xml",
+            token : "entity.other.attributes-name.xml",
             regex : "[-_a-zA-Z0-9:.]+"
         }, {
-            token : "keyword.operator.attribute-equals.xml",
+            token : "keyword.operator.attributes-equals.xml",
             regex : "=",
             push : [{
                 include: "tag_whitespace"
             }, {
-                token : "string.unquoted.attribute-value.html",
+                token : "string.unquoted.attributes-value.html",
                 regex : "[^<>='\"`\\s]+",
                 next : "pop"
             }, {
@@ -1157,30 +1157,30 @@ var lang = require("../lib/lang");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
 var ScssHighlightRules = function() {
-    
+
     var properties = lang.arrayToMap( (function () {
 
         var browserPrefix = ("-webkit-|-moz-|-o-|-ms-|-svg-|-pie-|-khtml-").split("|");
-        
-        var prefixProperties = ("appearance|background-clip|background-inline-policy|background-origin|" + 
-             "background-size|binding|border-bottom-colors|border-left-colors|" + 
-             "border-right-colors|border-top-colors|border-end|border-end-color|" + 
-             "border-end-style|border-end-width|border-image|border-start|" + 
-             "border-start-color|border-start-style|border-start-width|box-align|" + 
-             "box-direction|box-flex|box-flexgroup|box-ordinal-group|box-orient|" + 
-             "box-pack|box-sizing|column-count|column-gap|column-width|column-rule|" + 
-             "column-rule-width|column-rule-style|column-rule-color|float-edge|" + 
-             "font-feature-settings|font-language-override|force-broken-image-icon|" + 
-             "image-region|margin-end|margin-start|opacity|outline|outline-color|" + 
-             "outline-offset|outline-radius|outline-radius-bottomleft|" + 
-             "outline-radius-bottomright|outline-radius-topleft|outline-radius-topright|" + 
-             "outline-style|outline-width|padding-end|padding-start|stack-sizing|" + 
-             "tab-size|text-blink|text-decoration-color|text-decoration-line|" + 
-             "text-decoration-style|transform|transform-origin|transition|" + 
-             "transition-delay|transition-duration|transition-property|" + 
+
+        var prefixProperties = ("appearance|background-clip|background-inline-policy|background-origin|" +
+             "background-size|binding|border-bottom-colors|border-left-colors|" +
+             "border-right-colors|border-top-colors|border-end|border-end-color|" +
+             "border-end-style|border-end-width|border-image|border-start|" +
+             "border-start-color|border-start-style|border-start-width|box-align|" +
+             "box-direction|box-flex|box-flexgroup|box-ordinal-group|box-orient|" +
+             "box-pack|box-sizing|column-count|column-gap|column-width|column-rule|" +
+             "column-rule-width|column-rule-style|column-rule-color|float-edge|" +
+             "font-feature-settings|font-language-override|force-broken-image-icon|" +
+             "image-region|margin-end|margin-start|opacity|outline|outline-color|" +
+             "outline-offset|outline-radius|outline-radius-bottomleft|" +
+             "outline-radius-bottomright|outline-radius-topleft|outline-radius-topright|" +
+             "outline-style|outline-width|padding-end|padding-start|stack-sizing|" +
+             "tab-size|text-blink|text-decoration-color|text-decoration-line|" +
+             "text-decoration-style|transform|transform-origin|transition|" +
+             "transition-delay|transition-duration|transition-property|" +
              "transition-timing-function|user-focus|user-input|user-modify|user-select|" +
              "window-shadow|border-radius").split("|");
-        
+
         var properties = ("azimuth|background-attachment|background-color|background-image|" +
             "background-position|background-repeat|background|border-bottom-color|" +
             "border-bottom-style|border-bottom-width|border-bottom|border-collapse|" +
@@ -1214,17 +1214,17 @@ var ScssHighlightRules = function() {
         }
         Array.prototype.push.apply(ret, prefixProperties);
         Array.prototype.push.apply(ret, properties);
-        
+
         return ret;
-        
+
     })() );
-    
+
 
 
     var functions = lang.arrayToMap(
         ("hsl|hsla|rgb|rgba|url|attr|counter|counters|abs|adjust_color|adjust_hue|" +
-         "alpha|join|blue|ceil|change_color|comparable|complement|darken|desaturate|" + 
-         "floor|grayscale|green|hue|if|invert|join|length|lighten|lightness|mix|" + 
+         "alpha|join|blue|ceil|change_color|comparable|complement|darken|desaturate|" +
+         "floor|grayscale|green|hue|if|invert|join|length|lighten|lightness|mix|" +
          "nth|opacify|opacity|percentage|quote|red|round|saturate|saturation|" +
          "scale_color|transparentize|type_of|unit|unitless|unqoute").split("|")
     );
@@ -1257,20 +1257,20 @@ var ScssHighlightRules = function() {
         ("aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|" +
         "purple|red|silver|teal|white|yellow").split("|")
     );
-    
+
     var keywords = lang.arrayToMap(
         ("@mixin|@extend|@include|@import|@media|@debug|@warn|@if|@for|@each|@while|@else|@font-face|@-webkit-keyframes|if|and|!default|module|def|end|declare").split("|")
     )
-    
+
     var tags = lang.arrayToMap(
-        ("a|abbr|acronym|address|applet|area|article|aside|audio|b|base|basefont|bdo|" + 
-         "big|blockquote|body|br|button|canvas|caption|center|cite|code|col|colgroup|" + 
-         "command|datalist|dd|del|details|dfn|dir|div|dl|dt|em|embed|fieldset|" + 
-         "figcaption|figure|font|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|" + 
-         "header|hgroup|hr|html|i|iframe|img|input|ins|keygen|kbd|label|legend|li|" + 
-         "link|map|mark|menu|meta|meter|nav|noframes|noscript|object|ol|optgroup|" + 
-         "option|output|p|param|pre|progress|q|rp|rt|ruby|s|samp|script|section|select|" + 
-         "small|source|span|strike|strong|style|sub|summary|sup|table|tbody|td|" + 
+        ("a|abbr|acronym|address|applet|area|article|aside|audio|b|base|basefont|bdo|" +
+         "big|blockquote|body|br|button|canvas|caption|center|cite|code|col|colgroup|" +
+         "command|datalist|dd|del|details|dfn|dir|div|dl|dt|em|embed|fieldset|" +
+         "figcaption|figure|font|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|" +
+         "header|hgroup|hr|html|i|iframe|img|input|ins|keygen|kbd|label|legend|li|" +
+         "link|map|mark|menu|meta|meter|nav|noframes|noscript|object|ol|optgroup|" +
+         "option|output|p|param|pre|progress|q|rp|rt|ruby|s|samp|script|section|select|" +
+         "small|source|span|strike|strong|style|sub|summary|sup|table|tbody|td|" +
          "textarea|tfoot|th|thead|time|title|tr|tt|u|ul|var|video|wbr|xmp").split("|")
     );
 
@@ -1413,7 +1413,7 @@ var CssHighlightRules = require('./css_highlight_rules');
 var LessHighlightRules = function() {
 
 
-    var keywordList = "@import|@media|@font-face|@keyframes|@-webkit-keyframes|@supports|" + 
+    var keywordList = "@import|@media|@font-face|@keyframes|@-webkit-keyframes|@supports|" +
         "@charset|@plugin|@namespace|@document|@page|@viewport|@-ms-viewport|" +
         "or|and|when|not";
 
@@ -1426,7 +1426,7 @@ var LessHighlightRules = function() {
         "keyword": keywordList,
         "support.constant.color": CssHighlightRules.supportConstantColor,
         "support.constant.fonts": CssHighlightRules.supportConstantFonts
-    }, "identifier", true);   
+    }, "identifier", true);
 
     var numRe = "\\-?(?:(?:[0-9]+)|(?:[0-9]*\\.[0-9]+))";
 
@@ -1686,8 +1686,8 @@ define("ace/mode/coffee_highlight_rules",["require","exports","module","ace/lib/
                 }, {
                     token : ["entity.name.function", "text", "keyword.operator", "text"].concat(functionRule.token),
                     regex : "(" + identifier + ")(\\s*)([=:])(\\s*)" + functionRule.regex
-                }, 
-                functionRule, 
+                },
+                functionRule,
                 {
                     token : "variable",
                     regex : "@(?:" + identifier + ")?"
@@ -1753,7 +1753,7 @@ var CoffeeHighlightRules = require("./coffee_highlight_rules").CoffeeHighlightRu
 var JavaScriptHighlightRules = require("./javascript_highlight_rules").JavaScriptHighlightRules;
 
 function mixin_embed(tag, prefix) {
-    return { 
+    return {
         token : "entity.name.function.jade",
         regex : "^\\s*\\:" + tag,
         next  : prefix + "start"
@@ -1770,7 +1770,7 @@ var JadeHighlightRules = function() {
         "[4-7][0-7]?|" + //oct
         ".)";
 
-    this.$rules = 
+    this.$rules =
         {
     "start": [
         {
@@ -1821,11 +1821,11 @@ var JadeHighlightRules = function() {
             next: "tag_single"
         },
         {
-            token: "suport.type.attribute.id.jade",
+            token: "suport.type.attributes.id.jade",
             regex: "#\\w+"
         },
         {
-            token: "suport.type.attribute.class.jade",
+            token: "suport.type.attributes.class.jade",
             regex: "\\.\\w+"
         },
         {
@@ -1855,11 +1855,11 @@ var JadeHighlightRules = function() {
     ],
     "tag_single": [
         {
-            token: "entity.other.attribute-name.class.jade",
+            token: "entity.other.attributes-name.class.jade",
             regex: "\\.[\\w-]+"
         },
         {
-            token: "entity.other.attribute-name.id.jade",
+            token: "entity.other.attributes-name.id.jade",
             regex: "#[\\w-]+"
         },
         {
@@ -1868,19 +1868,19 @@ var JadeHighlightRules = function() {
             next: "start"
         }
     ],
-    "tag_attributes": [ 
+    "tag_attributes": [
         {
             token : "string",
             regex : "'(?=.)",
             next  : "qstring"
-        }, 
+        },
         {
             token : "string",
             regex : '"(?=.)',
             next  : "qqstring"
         },
         {
-            token: ["entity.other.attribute-name.jade", "punctuation"],
+            token: ["entity.other.attributes-name.jade", "punctuation"],
             regex: "([a-zA-Z:\\.-]+)(=)?",
             next: "attribute_strings"
         },
@@ -1895,7 +1895,7 @@ var JadeHighlightRules = function() {
             token : "string",
             regex : "'(?=.)",
             next  : "qstring"
-        }, 
+        },
         {
             token : "string",
             regex : '"(?=.)',
@@ -2052,12 +2052,12 @@ var FoldMode = require("./folding/coffee").FoldMode;
 
 var Mode = function() {
     this.HighlightRules = JadeHighlightRules;
-    
+
     this.foldingRules = new FoldMode();
 };
 oop.inherits(Mode, TextMode);
 
-(function() { 
+(function() {
 	this.lineCommentStart = "//";
     this.$id = "ace/mode/jade";
 }).call(Mode.prototype);

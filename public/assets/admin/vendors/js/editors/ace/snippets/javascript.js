@@ -74,7 +74,7 @@ snippet do\n\
 # Object Method\n\
 snippet :f\n\
 regex /([,{[])|^\\s*/:f/\n\
-	${1:method_name}: function(${2:attribute}) {\n\
+	${1:method_name}: function(${2:attributes}) {\n\
 		${0}\n\
 	}${3:,}\n\
 # setTimeout function\n\

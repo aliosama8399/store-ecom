@@ -361,7 +361,7 @@
 				if ( code.children.length != 1 || code.children[ 0 ].type != CKEDITOR.NODE_TEXT )
 					return;
 
-				// Read language-* from <code> class attribute.
+				// Read language-* from <code> class attributes.
 				var matchResult = editor._.codesnippet.langsRegex.exec( code.attributes[ 'class' ] );
 
 				if ( matchResult )

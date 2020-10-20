@@ -1992,7 +1992,7 @@ S2.define('select2/selection/search',[
   };
 
   /**
-   * This method will transfer the tabindex attribute from the rendered
+   * This method will transfer the tabindex attributes from the rendered
    * selection to the search box. This allows for the search box to be used as
    * the primary focus instead of the selection container.
    *
@@ -4984,7 +4984,7 @@ S2.define('select2/options',[
     if ($e.data('select2Tags')) {
       if (this.options.debug && window.console && console.warn) {
         console.warn(
-          'Select2: The `data-select2-tags` attribute has been changed to ' +
+          'Select2: The `data-select2-tags` attributes has been changed to ' +
           'use the `data-data` and `data-tags="true"` attributes and will be ' +
           'removed in future versions of Select2.'
         );
@@ -4997,8 +4997,8 @@ S2.define('select2/options',[
     if ($e.data('ajaxUrl')) {
       if (this.options.debug && window.console && console.warn) {
         console.warn(
-          'Select2: The `data-ajax-url` attribute has been changed to ' +
-          '`data-ajax--url` and support for the old attribute will be removed' +
+          'Select2: The `data-ajax-url` attributes has been changed to ' +
+          '`data-ajax--url` and support for the old attributes will be removed' +
           ' in future versions of Select2.'
         );
       }
@@ -5009,7 +5009,7 @@ S2.define('select2/options',[
 
     var dataset = {};
 
-    // Prefer the element's `dataset` attribute if it exists
+    // Prefer the element's `dataset` attributes if it exists
     // jQuery 1.x does not correctly handle data attributes with multiple dashes
     if ($.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' && $e[0].dataset) {
       dataset = $.extend(true, {}, $e[0].dataset, $e.data());

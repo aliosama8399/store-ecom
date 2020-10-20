@@ -117,10 +117,10 @@ var CssHighlightRules = function() {
             token : "constant.numeric", // hex3 color
             regex : "#[a-f0-9]{3}"
         }, {
-            token : ["punctuation", "entity.other.attribute-name.pseudo-element.css"],
+            token : ["punctuation", "entity.other.attributes-name.pseudo-element.css"],
             regex : pseudoElements
         }, {
-            token : ["punctuation", "entity.other.attribute-name.pseudo-class.css"],
+            token : ["punctuation", "entity.other.attributes-name.pseudo-class.css"],
             regex : pseudoClasses
         }, {
             token : ["support.function", "string", "support.function"],
@@ -153,7 +153,7 @@ var DocCommentHighlightRules = function() {
         "start" : [ {
             token : "comment.doc.tag",
             regex : "@[\\w\\d_]+" // TODO: fix email addresses
-        }, 
+        },
         DocCommentHighlightRules.getTagRule(),
         {
             defaultToken : "comment.doc",
@@ -486,8 +486,8 @@ var JavaScriptHighlightRules = function(options) {
             }
         ]
     };
-    
-    
+
+
     if (!options || !options.noES6) {
         this.$rules.no_regex.unshift({
             regex: "[{}]", onMatch: function(val, state, stack) {
@@ -522,14 +522,14 @@ var JavaScriptHighlightRules = function(options) {
                 defaultToken: "string.quasi"
             }]
         });
-        
+
         if (!options || !options.noJSX)
             JSX.call(this);
     }
-    
+
     this.embedRules(DocCommentHighlightRules, "doc-",
         [ DocCommentHighlightRules.getEndRule("no_regex") ]);
-    
+
     this.normalizeRules();
 };
 
@@ -580,8 +580,8 @@ function JSX() {
         {defaultToken: "string"}
     ];
     this.$rules.jsxAttributes = [{
-        token : "meta.tag.punctuation.tag-close.xml", 
-        regex : "/?>", 
+        token : "meta.tag.punctuation.tag-close.xml",
+        regex : "/?>",
         onMatch : function(value, currentState, stack) {
             if (currentState == stack[0])
                 stack.shift();
@@ -596,35 +596,35 @@ function JSX() {
             return [{type: this.token, value: value}];
         },
         nextState: "jsx"
-    }, 
+    },
     jsxJsRule,
     comments("jsxAttributes"),
     {
-        token : "entity.other.attribute-name.xml",
+        token : "entity.other.attributes-name.xml",
         regex : tagRegex
     }, {
-        token : "keyword.operator.attribute-equals.xml",
+        token : "keyword.operator.attributes-equals.xml",
         regex : "="
     }, {
         token : "text.tag-whitespace.xml",
         regex : "\\s+"
     }, {
-        token : "string.attribute-value.xml",
+        token : "string.attributes-value.xml",
         regex : "'",
         stateName : "jsx_attr_q",
         push : [
-            {token : "string.attribute-value.xml", regex: "'", next: "pop"},
+            {token : "string.attributes-value.xml", regex: "'", next: "pop"},
             {include : "reference"},
-            {defaultToken : "string.attribute-value.xml"}
+            {defaultToken : "string.attributes-value.xml"}
         ]
     }, {
-        token : "string.attribute-value.xml",
+        token : "string.attributes-value.xml",
         regex : '"',
         stateName : "jsx_attr_qq",
         push : [
-            {token : "string.attribute-value.xml", regex: '"', next: "pop"},
+            {token : "string.attributes-value.xml", regex: '"', next: "pop"},
             {include : "reference"},
-            {defaultToken : "string.attribute-value.xml"}
+            {defaultToken : "string.attributes-value.xml"}
         ]
     },
     jsxTag
@@ -692,10 +692,10 @@ var XmlHighlightRules = function(normalize) {
         ],
 
         xml_decl : [{
-            token : "entity.other.attribute-name.decl-attribute-name.xml",
+            token : "entity.other.attributes-name.decl-attributes-name.xml",
             regex : "(?:" + tagRegex + ":)?" + tagRegex + ""
         }, {
-            token : "keyword.operator.decl-attribute-equals.xml",
+            token : "keyword.operator.decl-attributes-equals.xml",
             regex : "="
         }, {
             include: "whitespace"
@@ -759,7 +759,7 @@ var XmlHighlightRules = function(normalize) {
         }],
 
         attr_reference : [{
-            token : "constant.language.escape.reference.attribute-value.xml",
+            token : "constant.language.escape.reference.attributes-value.xml",
             regex : "(?:&#[0-9]+;)|(?:&#x[0-9a-fA-F]+;)|(?:&[a-zA-Z0-9_:\\.-]+;)"
         }],
 
@@ -795,10 +795,10 @@ var XmlHighlightRules = function(normalize) {
         }],
 
         attributes: [{
-            token : "entity.other.attribute-name.xml",
+            token : "entity.other.attributes-name.xml",
             regex : "(?:" + tagRegex + ":)?" + tagRegex + ""
         }, {
-            token : "keyword.operator.attribute-equals.xml",
+            token : "keyword.operator.attributes-equals.xml",
             regex : "="
         }, {
             include: "tag_whitespace"
@@ -807,20 +807,20 @@ var XmlHighlightRules = function(normalize) {
         }],
 
         attribute_value: [{
-            token : "string.attribute-value.xml",
+            token : "string.attributes-value.xml",
             regex : "'",
             push : [
-                {token : "string.attribute-value.xml", regex: "'", next: "pop"},
+                {token : "string.attributes-value.xml", regex: "'", next: "pop"},
                 {include : "attr_reference"},
-                {defaultToken : "string.attribute-value.xml"}
+                {defaultToken : "string.attributes-value.xml"}
             ]
         }, {
-            token : "string.attribute-value.xml",
+            token : "string.attributes-value.xml",
             regex : '"',
             push : [
-                {token : "string.attribute-value.xml", regex: '"', next: "pop"},
+                {token : "string.attributes-value.xml", regex: '"', next: "pop"},
                 {include : "attr_reference"},
-                {defaultToken : "string.attribute-value.xml"}
+                {defaultToken : "string.attributes-value.xml"}
             ]
         }]
     };
@@ -907,15 +907,15 @@ var HtmlHighlightRules = function() {
         attributes: [{
             include : "tag_whitespace"
         }, {
-            token : "entity.other.attribute-name.xml",
+            token : "entity.other.attributes-name.xml",
             regex : "[-_a-zA-Z0-9:.]+"
         }, {
-            token : "keyword.operator.attribute-equals.xml",
+            token : "keyword.operator.attributes-equals.xml",
             regex : "=",
             push : [{
                 include: "tag_whitespace"
             }, {
-                token : "string.unquoted.attribute-value.html",
+                token : "string.unquoted.attributes-value.html",
                 regex : "[^<>='\"`\\s]+",
                 next : "pop"
             }, {
@@ -1571,15 +1571,15 @@ var CstyleBehaviour = function() {
                 var line = session.doc.getLine(cursor.row);
                 var leftChar = line.substring(cursor.column-1, cursor.column);
                 var rightChar = line.substring(cursor.column, cursor.column + 1);
-                
+
                 var token = session.getTokenAt(cursor.row, cursor.column);
                 var rightToken = session.getTokenAt(cursor.row, cursor.column + 1);
                 if (leftChar == "\\" && token && /escape/.test(token.type))
                     return null;
-                
+
                 var stringBefore = token && /string|escape/.test(token.type);
                 var stringAfter = !rightToken || /string|escape/.test(rightToken.type);
-                
+
                 var pair;
                 if (rightChar == quote) {
                     pair = stringBefore !== stringAfter;
@@ -1622,7 +1622,7 @@ var CstyleBehaviour = function() {
 
 };
 
-    
+
 CstyleBehaviour.isSaneInsertion = function(editor, session) {
     var cursor = editor.getCursorPosition();
     var iterator = new TokenIterator(session, cursor.row, cursor.column);
@@ -1714,7 +1714,7 @@ var FoldMode = exports.FoldMode = function(commentRegex) {
 oop.inherits(FoldMode, BaseFoldMode);
 
 (function() {
-    
+
     this.foldingStartMarker = /(\{|\[)[^\}\]]*$|^\s*(\/\*)/;
     this.foldingStopMarker = /^[^\[\{]*(\}|\])|^[\s\*]*(\*\/)/;
     this.singleLineBlockCommentRe= /^\s*(\/\*).*\*\/\s*$/;
@@ -1723,42 +1723,42 @@ oop.inherits(FoldMode, BaseFoldMode);
     this._getFoldWidgetBase = this.getFoldWidget;
     this.getFoldWidget = function(session, foldStyle, row) {
         var line = session.getLine(row);
-    
+
         if (this.singleLineBlockCommentRe.test(line)) {
             if (!this.startRegionRe.test(line) && !this.tripleStarBlockCommentRe.test(line))
                 return "";
         }
-    
+
         var fw = this._getFoldWidgetBase(session, foldStyle, row);
-    
+
         if (!fw && this.startRegionRe.test(line))
             return "start"; // lineCommentRegionStart
-    
+
         return fw;
     };
 
     this.getFoldWidgetRange = function(session, foldStyle, row, forceMultiline) {
         var line = session.getLine(row);
-        
+
         if (this.startRegionRe.test(line))
             return this.getCommentRegionBlock(session, line, row);
-        
+
         var match = line.match(this.foldingStartMarker);
         if (match) {
             var i = match.index;
 
             if (match[1])
                 return this.openingBracketBlock(session, match[1], row, i);
-                
+
             var range = session.getCommentFoldRange(row, i + match[0].length, 1);
-            
+
             if (range && !range.isMultiLine()) {
                 if (forceMultiline) {
                     range = this.getSectionRange(session, row);
                 } else if (foldStyle != "all")
                     range = null;
             }
-            
+
             return range;
         }
 
@@ -1775,7 +1775,7 @@ oop.inherits(FoldMode, BaseFoldMode);
             return session.getCommentFoldRange(row, i, -1);
         }
     };
-    
+
     this.getSectionRange = function(session, row) {
         var line = session.getLine(row);
         var startIndent = line.search(/\S/);
@@ -1792,7 +1792,7 @@ oop.inherits(FoldMode, BaseFoldMode);
             if  (startIndent > indent)
                 break;
             var subRange = this.getFoldWidgetRange(session, "all", row);
-            
+
             if (subRange) {
                 if (subRange.start.row <= startRow) {
                     break;
@@ -1804,14 +1804,14 @@ oop.inherits(FoldMode, BaseFoldMode);
             }
             endRow = row;
         }
-        
+
         return new Range(startRow, startColumn, endRow, session.getLine(endRow).length);
     };
     this.getCommentRegionBlock = function(session, line, row) {
         var startColumn = line.search(/\s*$/);
         var maxRow = session.getLength();
         var startRow = row;
-        
+
         var re = /^\s*(?:\/\*|\/\/|--)#?(end)?region\b/;
         var depth = 1;
         while (++row < maxRow) {
@@ -1848,7 +1848,7 @@ var CStyleFoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
     this.HighlightRules = JavaScriptHighlightRules;
-    
+
     this.$outdent = new MatchingBraceOutdent();
     this.$behaviour = new CstyleBehaviour();
     this.foldingRules = new CStyleFoldMode();
@@ -2280,7 +2280,7 @@ var XmlBehaviour = function () {
             var iterator = new TokenIterator(session, cursor.row, cursor.column);
             var token = iterator.getCurrentToken();
 
-            if (rightChar == quote && (is(token, "attribute-value") || is(token, "string"))) {
+            if (rightChar == quote && (is(token, "attributes-value") || is(token, "string"))) {
                 return {
                     text: "",
                     selection: [1, 1]
@@ -2297,7 +2297,7 @@ var XmlBehaviour = function () {
                 token = iterator.stepBackward();
             }
             var rightSpace = !rightChar || rightChar.match(/\s/);
-            if (is(token, "attribute-equals") && (rightSpace || rightChar == '>') || (is(token, "decl-attribute-equals") && (rightSpace || rightChar == '?'))) {
+            if (is(token, "attributes-equals") && (rightSpace || rightChar == '>') || (is(token, "decl-attributes-equals") && (rightSpace || rightChar == '?'))) {
                 return {
                     text: quote + quote,
                     selection: [1, 1]
@@ -2323,11 +2323,11 @@ var XmlBehaviour = function () {
             var position = editor.getCursorPosition();
             var iterator = new TokenIterator(session, position.row, position.column);
             var token = iterator.getCurrentToken() || iterator.stepBackward();
-            if (!token || !(is(token, "tag-name") || is(token, "tag-whitespace") || is(token, "attribute-name") || is(token, "attribute-equals") || is(token, "attribute-value")))
+            if (!token || !(is(token, "tag-name") || is(token, "tag-whitespace") || is(token, "attributes-name") || is(token, "attributes-equals") || is(token, "attributes-value")))
                 return;
-            if (is(token, "reference.attribute-value"))
+            if (is(token, "reference.attributes-value"))
                 return;
-            if (is(token, "attribute-value")) {
+            if (is(token, "attributes-value")) {
                 var firstChar = token.value.charAt(0);
                 if (firstChar == '"' || firstChar == "'") {
                     var lastChar = token.value.charAt(token.value.length - 1);
@@ -2428,7 +2428,7 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 
     this.$getMode = function(state) {
-        if (typeof state != "string") 
+        if (typeof state != "string")
             state = state[0];
         for (var key in this.subModes) {
             if (state.indexOf(key) === 0)
@@ -2436,7 +2436,7 @@ oop.inherits(FoldMode, BaseFoldMode);
         }
         return null;
     };
-    
+
     this.$tryMode = function(state, session, foldStyle, row) {
         var mode = this.$getMode(state);
         return (mode ? mode.getFoldWidget(session, foldStyle, row) : "");
@@ -2452,13 +2452,13 @@ oop.inherits(FoldMode, BaseFoldMode);
 
     this.getFoldWidgetRange = function(session, foldStyle, row) {
         var mode = this.$getMode(session.getState(row-1));
-        
+
         if (!mode || !mode.getFoldWidget(session, foldStyle, row))
             mode = this.$getMode(session.getState(row));
-        
+
         if (!mode || !mode.getFoldWidget(session, foldStyle, row))
             mode = this.defaultMode;
-        
+
         return mode.getFoldWidgetRange(session, foldStyle, row);
     };
 
@@ -2481,7 +2481,7 @@ var FoldMode = exports.FoldMode = function(voidElements, optionalEndTags) {
     this.optionalEndTags = oop.mixin({}, this.voidElements);
     if (optionalEndTags)
         oop.mixin(this.optionalEndTags, optionalEndTags);
-    
+
 };
 oop.inherits(FoldMode, BaseFoldMode);
 
@@ -2589,7 +2589,7 @@ function is(token, type) {
 
         return null;
     };
-    
+
     this._readTagBackward = function(iterator) {
         var token = iterator.getCurrentToken();
         if (!token)
@@ -2614,10 +2614,10 @@ function is(token, type) {
 
         return null;
     };
-    
+
     this._pop = function(stack, tag) {
         while (stack.length) {
-            
+
             var top = stack[stack.length-1];
             if (!tag || top.tagName == tag.tagName) {
                 return stack.pop();
@@ -2630,17 +2630,17 @@ function is(token, type) {
             }
         }
     };
-    
+
     this.getFoldWidgetRange = function(session, foldStyle, row) {
         var firstTag = this._getFirstTagInLine(session, row);
-        
+
         if (!firstTag)
             return null;
-        
+
         var isBackward = firstTag.closing || firstTag.selfClosing;
         var stack = [];
         var tag;
-        
+
         if (!isBackward) {
             var iterator = new TokenIterator(session, row, firstTag.start.column);
             var start = {
@@ -2658,7 +2658,7 @@ function is(token, type) {
                     } else
                         continue;
                 }
-                
+
                 if (tag.closing) {
                     this._pop(stack, tag);
                     if (stack.length == 0)
@@ -2675,7 +2675,7 @@ function is(token, type) {
                 row: row,
                 column: firstTag.start.column
             };
-            
+
             while (tag = this._readTagBackward(iterator)) {
                 if (tag.selfClosing) {
                     if (!stack.length) {
@@ -2685,7 +2685,7 @@ function is(token, type) {
                     } else
                         continue;
                 }
-                
+
                 if (!tag.closing) {
                     this._pop(stack, tag);
                     if (stack.length == 0) {
@@ -2700,7 +2700,7 @@ function is(token, type) {
                 }
             }
         }
-        
+
     };
 
 }).call(FoldMode.prototype);
@@ -2951,7 +2951,7 @@ function findTagName(session, pos) {
 function findAttributeName(session, pos) {
     var iterator = new TokenIterator(session, pos.row, pos.column);
     var token = iterator.getCurrentToken();
-    while (token && !is(token, "attribute-name")){
+    while (token && !is(token, "attributes-name")){
         token = iterator.stepBackward();
     }
     if (token)
@@ -2971,9 +2971,9 @@ var HtmlCompletions = function() {
             return [];
         if (is(token, "tag-name") || is(token, "tag-open") || is(token, "end-tag-open"))
             return this.getTagCompletions(state, session, pos, prefix);
-        if (is(token, "tag-whitespace") || is(token, "attribute-name"))
+        if (is(token, "tag-whitespace") || is(token, "attributes-name"))
             return this.getAttributeCompletions(state, session, pos, prefix);
-        if (is(token, "attribute-value"))
+        if (is(token, "attributes-value"))
             return this.getAttributeValueCompletions(state, session, pos, prefix);
         var line = session.getLine(pos.row).substr(0, pos.column);
         if (/&[A-z]*$/i.test(line))
@@ -3013,7 +3013,7 @@ var HtmlCompletions = function() {
     this.getAttributeValueCompletions = function(state, session, pos, prefix) {
         var tagName = findTagName(session, pos);
         var attributeName = findAttributeName(session, pos);
-        
+
         if (!tagName)
             return [];
         var values = [];
@@ -3024,7 +3024,7 @@ var HtmlCompletions = function() {
             return {
                 caption: value,
                 snippet: value,
-                meta: "attribute value",
+                meta: "attributes value",
                 score: Number.MAX_VALUE
             };
         });
@@ -3069,12 +3069,12 @@ var Mode = function(options) {
     this.HighlightRules = HtmlHighlightRules;
     this.$behaviour = new XmlBehaviour();
     this.$completer = new HtmlCompletions();
-    
+
     this.createModeDelegates({
         "js-": JavaScriptMode,
         "css-": CssMode
     });
-    
+
     this.foldingRules = new HtmlFoldMode(this.voidElements, lang.arrayToMap(optionalEndTags));
 };
 oop.inherits(Mode, TextMode);
@@ -3292,8 +3292,8 @@ var CssMode = require("./css").Mode;
 var RubyMode = require("./ruby").Mode;
 
 var Mode = function() {
-    HtmlMode.call(this);   
-    this.HighlightRules = HtmlRubyHighlightRules;    
+    HtmlMode.call(this);
+    this.HighlightRules = HtmlRubyHighlightRules;
     this.createModeDelegates({
         "js-": JavaScriptMode,
         "css-": CssMode,
