@@ -13720,9 +13720,9 @@ exports.JSONParseTreeHandler = function (code) {
 
   function parse_AttributeName()
   {
-    eventHandler.startNonterminal("AttributeName", e0);
+    eventHandler.startNonterminal("UniqueAttributeName", e0);
     parse_EQName();
-    eventHandler.endNonterminal("AttributeName", e0);
+    eventHandler.endNonterminal("UniqueAttributeName", e0);
   }
 
   function try_AttributeName()
@@ -37270,9 +37270,9 @@ JSONiqParser.TOKEN =
 
   function parse_AttributeName()
   {
-    eventHandler.startNonterminal("AttributeName", e0);
+    eventHandler.startNonterminal("UniqueAttributeName", e0);
     parse_EQName();
-    eventHandler.endNonterminal("AttributeName", e0);
+    eventHandler.endNonterminal("UniqueAttributeName", e0);
   }
 
   function try_AttributeName()
