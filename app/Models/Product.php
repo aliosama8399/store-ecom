@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use Translatable,SoftDeletes;
+    use Translatable, SoftDeletes;
+
     protected $with = ['translations'];
 
     protected $fillable = [
@@ -70,6 +71,9 @@ class Product extends Model
         return $this->is_active == 0 ? __('admin/maincategories.deactive') : __('admin/maincategories.active');
     }
 
+    public function scopeActive($query){
+        return $query -> where('is_active',1);
+    }
 
     public function brand()
     {
@@ -82,17 +86,16 @@ class Product extends Model
     }
 
 
-
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'product_tags');
     }
 
+    public function options()
+    {
+        return $this->hasMany(Option::class, 'product_id');
 
-
-
-
-
+    }
 
 
 }

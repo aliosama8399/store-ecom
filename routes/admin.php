@@ -20,12 +20,12 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ], function () {
 
-    Route::group(['namespace' => 'Dashboard' ,'prefix'=>'admin','middleware' => 'guest:admin'], function () {
+    Route::group(['namespace' => 'Dashboard', 'prefix' => 'admin', 'middleware' => 'guest:admin'], function () {
         Route::get('login', 'LoginController@index')->name('admin.login');
         Route::post('login', 'LoginController@login')->name('admin.getlogin');
     });
 
-    Route::group(['namespace' => 'Dashboard','prefix'=>'admin', 'middleware' => 'auth:admin'], function () {
+    Route::group(['namespace' => 'Dashboard', 'prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
         Route::get('/', 'DashboardController@index')->name('admin.dashboard');
         Route::get('logout', 'LoginController@logout')->name('admin.logout');
 
@@ -96,6 +96,14 @@ Route::group(
         });
 
 
+        Route::group(['prefix' => 'options'], function () {
+            Route::get('/', 'OptionsController@index')->name('admin.options');
+            Route::get('create', 'OptionsController@create')->name('admin.options.create');
+            Route::post('store', 'OptionsController@store')->name('admin.options.store');
+            Route::get('edit/{id}', 'OptionsController@edit')->name('admin.options.edit');
+            Route::PUT('update/{id}', 'OptionsController@update')->name('admin.options.update');
+            Route::get('delete/{id}', 'OptionsController@delete')->name('admin.options.delete');
+        });
 
     });
 
