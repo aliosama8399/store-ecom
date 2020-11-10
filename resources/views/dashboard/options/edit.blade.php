@@ -12,7 +12,7 @@
                                 </li>
                                 <li class="breadcrumb-item"><a href="{{route('admin.tags')}}"> {{__('admin/tags.tag')}} </a>
                                 </li>
-                                <li class="breadcrumb-item active"> {{__('admin/tags.edittag')}} - {{$tag->name}}
+                                <li class="breadcrumb-item active"> {{__('admin/tags.edittag')}} - {{$option->name}}
                                 </li>
                             </ol>
                         </div>
@@ -43,47 +43,98 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.tags.update',$tag->id)}} "
+                                              action="{{route('admin.options.update',$option->id)}} "
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
 
-                                            <input name="id" value="{{$tag->id}}" type="hidden">
+                                            <input name="id" value="{{$option->id}}" type="hidden">
 
                                             <div class="form-body">
-                                                <h4 class="form-section"><i class="ft-home"></i> {{__('admin/tags.taginfo')}} </h4>
 
+                                                <h4 class="form-section"><i class="ft-home"></i> options data </h4>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label
-                                                                for="projectinput1"> {{__('admin/tags.name')}}   </label>
+                                                            <label for="projectinput1"> الاسم
+                                                            </label>
                                                             <input type="text" id="name"
                                                                    class="form-control"
-                                                                   value="  {{$tag->name}} "
+                                                                   placeholder="  "
+                                                                   value="{{$option->name}}"
                                                                    name="name">
                                                             @error("name")
                                                             <span class="text-danger">{{$message}}</span>
                                                             @enderror
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 " >
-                                                        <div class="form-group">
-                                                            <label for="projectinput1"> {{__('admin/maincategories.slug')}}</label>
-                                                            <input type="text" id="slug"
-                                                                   class="form-control"
-                                                                   value="{{$tag->slug}}"
-                                                                   name="slug">
 
-                                                            @error("slug")
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput1"> ألسعر
+                                                            </label>
+                                                            <input type="text" id="price"
+                                                                   class="form-control"
+                                                                   placeholder="  "
+                                                                   value="{{$option->price}}"
+                                                                   name="price">
+                                                            @error("price")
                                                             <span class="text-danger">{{$message}}</span>
                                                             @enderror
                                                         </div>
                                                     </div>
 
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput1"> اختر ألمنتج
+                                                            </label>
+                                                            <select name="product_id" class="select2 form-control" >
+                                                                <optgroup label="من فضلك أختر المنتج ">
+                                                                    @if($products && $products -> count() > 0)
+                                                                        @foreach($products as $product)
+                                                                            <option
+                                                                                value="{{$product -> id }}"
+                                                                                 @if($product->id == $option -> product_id) selected @endif
+                                                                            >{{$product -> name}}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </optgroup>
+                                                            </select>
+                                                            @error('product_id')
+                                                            <span class="text-danger"> {{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput1"> اختر خاصيه
+                                                            </label>
+                                                            <select name="attribute_id" class="select2 form-control" >
+                                                                <optgroup label="من فضلك أختر قيمه">
+                                                                    @if($attributes && $attributes -> count() > 0)
+                                                                        @foreach($attributes as $attribute)
+                                                                            <option
+                                                                                value="{{$attribute -> id }}"
+                                                                                @if($attribute->id == $option -> attribute_id) selected @endif
+
+                                                                            >{{$attribute -> name}}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </optgroup>
+                                                            </select>
+                                                            @error('attribute_id')
+                                                            <span class="text-danger"> {{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
 
                                                 </div>
+
                                             </div>
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-warning mr-1"

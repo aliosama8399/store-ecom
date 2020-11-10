@@ -23,12 +23,12 @@ class OptionsController extends Controller
 
     public function index()
     {
-           $options =  Option::with(['product'=>function($prod){
-          $prod->select('id');
-      }
-          ,'attribute'=>function($attr){
-              $attr->select('id');
-          }])->select('id', 'product_id' , 'attribute_id','price' )->paginate(PAGENATE);
+        $options = Option::with(['product' => function ($prod) {
+            $prod->select('id');
+        }
+            , 'attribute' => function ($attr) {
+                $attr->select('id');
+            }])->select('id', 'product_id', 'attribute_id', 'price')->paginate(PAGENATE);
 
         return view('dashboard.options.index', compact('options'));
 
@@ -65,4 +65,40 @@ class OptionsController extends Controller
 
         }
     }
+
+    public function edit($option_id)
+    {
+        $data = [];
+        $data['option'] = Option::find($option_id);
+        if (!$data['option'])
+            return redirect()->route('admin.options')->with(['error' => __('admin/maincategories.exists')]);
+
+        $data['products'] = Product::active()->select('id')->get();
+        $data['attributes'] = Attribute::select('id')->get();
+        return view('dashboard.options.edit', $data);
+
+    }
+
+    public function update($option_id,OptionsRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $option = Option::find($option_id);
+            if (!$option)
+                return redirect()->route('admin.options')->with(['error' => __('admin/maincategories.exists')]);
+            $option->update($request->except('_token', 'id'));
+            $option->name = $request->name;
+            $option->save();
+            DB::commit();
+            return redirect()->route('admin.options')->with(['success' => __('messages.success')]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('admin.options')->with(['error' => __('messages.error')]);
+
+        }
+
+
+    }
+
 }
