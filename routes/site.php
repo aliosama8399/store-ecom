@@ -11,29 +11,39 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/Auth::routes();
+*/
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/', function () {
-    return view('front.home');
-})->name('home');
 
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ], function () {
-    Route::group(['namespace' => 'Site', 'middleware' => 'auth'], function () {
 
+    Route::get('/', function () {
+        return view('front.home');
+    })->name('home')->middleware('VerifyUser');
+
+
+    Route::group(['namespace' => 'Site', 'middleware' => ['auth','VerifyUser']], function () {
+        Route::get('profile', function () {
+            return "You Are Auth";
+
+        });
+
+    });
+    Route::group(['namespace' => 'Site', 'middleware' => 'auth'], function () {
+        Route::post('verify-user','VerificationCodeController@verify')->name('verify-user');
+        Route::get('verified','VerificationCodeController@getVerifiedPage')->name('get.verification.form');
 
     });
 
 
     Route::group(['namespace' => 'Site', 'middleware' => 'guest'], function () {
-//        Route::get('login', 'LoginController@index')->name('login');
-//        Route::post('login', 'LoginController@login')->name('post.login');
     });
 
 
