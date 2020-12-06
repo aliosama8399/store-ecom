@@ -24,9 +24,13 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ], function () {
 
-    Route::get('/', function () {
-        return view('front.home');
-    })->name('home')->middleware('VerifyUser');
+    Route::group(['namespace' => 'Site'/*, 'middleware' => 'guest'*/], function () {
+        Route::get('/','HomeController@home')->name('home')->middleware('VerifyUser');
+        Route::get('category/{slug}','CategoryController@productBySlug')->name('category');
+
+    });
+
+
 
 
     Route::group(['namespace' => 'Site', 'middleware' => ['auth','VerifyUser']], function () {
@@ -42,9 +46,13 @@ Route::group(
 
     });
 
+    Route::group(['namespace' => 'Site', 'middleware' => 'auth'], function () {
+        Route::post('wishlist','WishlistController@store')->name('wishlist.store');
+        Route::delete('wishlist/{productId}','WishlistController@destroy')->name('wishlist.destroy');
+        Route::get('wishlist/products','WishlistController@index')->name('wishlist.products.index');
 
-    Route::group(['namespace' => 'Site', 'middleware' => 'guest'], function () {
     });
+
 
 
 });
