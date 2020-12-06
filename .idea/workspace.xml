@@ -20,26 +20,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37bb898a-c21f-483a-9e06-81b93bccc6aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/VerificationCodeController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCode.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/VerificationRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Services/SMSGatewayServices.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Services/SMSGateways/VictoryLinkSms.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Services/VerificationServices.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/User_verfication.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_21_202220_add_mobile_column_to_user_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_21_202628_drop_email_column_to_user_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_21_205856_create_users_verfication_code_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/verification.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SliderController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/CategoryController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/WishlistController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/SliderImagesRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Slider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_28_182605_create_wish_list_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_12_05_174300_create_sliders_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/sliders/g9PKlFILGexKTJA84AqNi8zi6LZyuH4q7wwEnbtF.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/sliders/q5JVbMdfMTTKcgkrxGv55IRk2szdewD8CIFv2fOO.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/sliders/qlV3QHvKzuJqvwq9y3Cxtj0QqSpbJXLv5sYqG4yJ.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/sliders/s3PzDM6Gx7RDXX94X3MSt2iRX3zzO63p14KrfNGW.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/sliders/images/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/front/includes/not-logged.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/front/includes/product-details.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/front/products.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front/includes/header-top.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/includes/header-top.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front/includes/header-bottom.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/includes/header-bottom.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/site.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/site.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/site.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/site.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -185,7 +191,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Requests" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/dashboard/sliders" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
@@ -199,11 +205,11 @@
       <recent name="E:\xampp\htdocs\ecommercev2\public\assets\images\maincategories" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\sliders" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Dashboard" />
       <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Requests" />
       <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Auth" />
       <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Services" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Models" />
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard" />
     </key>
   </component>
   <component name="RunManager">
@@ -300,6 +306,9 @@
       <workItem from="1605896974874" duration="7135000" />
       <workItem from="1605985549998" duration="7379000" />
       <workItem from="1606064438604" duration="10766000" />
+      <workItem from="1606346760575" duration="5000" />
+      <workItem from="1607188826810" duration="6926000" />
+      <workItem from="1607274159334" duration="11599000" />
     </task>
     <servers />
   </component>
@@ -370,10 +379,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="726" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600721550159" />
-    <state x="918" y="138" key="NewPhpClassDialog" timestamp="1604222545662">
+    <state x="918" y="138" key="NewPhpClassDialog" timestamp="1607207034290">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="918" y="138" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1604222545662" />
+    <state x="918" y="138" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1607207034290" />
     <state x="988" y="338" key="NewPhpFileDialog" timestamp="1600629628907">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

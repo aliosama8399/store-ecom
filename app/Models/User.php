@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',  'password','mobile',
+        'name', 'password', 'mobile',
     ];
 
     /**
@@ -37,8 +37,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-public function codes(){
-    return $this ->hasMany(User_verfication::class,'user_id');
-}
+    public function codes()
+    {
+        return $this->hasMany(User_verfication::class, 'user_id');
+    }
+
+    public function wishlist()
+    {
+        return $this->belongsToMany(Product::class, 'wish_lists')->withTimestamps();
+    }
+
+    public function wishlistHas($productId)
+    {
+        return self::wishlist()->where('product_id',$productId)->exists();
+    }
+
 
 }
