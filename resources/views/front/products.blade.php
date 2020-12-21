@@ -93,7 +93,7 @@
                                                      data-id-product="22" data-id-product-attribute="408" itemscope=""
                                                      itemtype="http://schema.org/Product">
                                                     <div class="thumbnail-container">
-                                                        <a href="audio/22-408-aenean-porta-ligula-egestas-east.html#/1-size-s/10-color-red"
+                                                        <a href="{{route('product.details',$product -> slug)}}"
                                                            class="thumbnail product-thumbnail two-image">
                                                             <img class="img-fluid image-cover"
                                                                  src="{{$product -> images[0] -> photo ?? ''}}"
@@ -166,7 +166,7 @@
                                                                 @csrf
                                                                 <input type="hidden" name="id_product"
                                                                        value="{{$product -> id}}">
-                                                                <a class="add-to-cart" href="#"
+                                                                <a class="add-to-cart cart-addition" data-product-id="{{$product -> id}}" data-product-slug="{{$product -> slug}}" href="#"
                                                                    data-button-action="add-to-cart"><i
                                                                         class="novicon-cart"></i><span>Add to cart</span></a>
                                                             </form>
@@ -236,18 +236,20 @@
         });
         $(document).on('click', '.close', function () {
             $('.quickview-modal-product-details-' + $(this).attr('data-product-id')).css("display", "none");
+
             $('.not-loggedin-modal').css("display", "none");
             $('.alert-modal').css("display", "none");
             $('.alert-modal2').css("display", "none");
-
         });
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         $(document).on('click', '.addToWishlist', function (e) {
             e.preventDefault();
+
             @guest()
             $('.not-loggedin-modal').css('display','block');
             @endguest
@@ -258,10 +260,26 @@
                     'productId': $(this).attr('data-product-id'),
                 },
                 success: function (data) {
-                    if(data.wished)
+                    if(data.wished )
                         $('.alert-modal').css('display','block');
                     else
                         $('.alert-modal2').css('display','block');
+                }
+            });
+        });
+
+        $(document).on('click', '.cart-addition', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'post',
+                url: "{{Route('site.cart.add')}}",
+                data: {
+                    'product_id': $(this).attr('data-product-id'),
+                    'product_slug' : $(this).attr('data-product-slug'),
+                },
+                success: function (data) {
+
                 }
             });
         });

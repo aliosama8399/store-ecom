@@ -72,7 +72,8 @@
                                 <div class="col-lg-7 col-md-8 col-xs-12 mt-sm-20">
                                     <div class="product-information">
                                         <div class="product-actions">
-                                            <form action="{{route('products.reviews.store',$product -> id )}}"
+                                            <form action=""
+{{--                                                  {{route('products.reviews.store',$product -> id )}}--}}
                                                   method="post" id="add-to-cart-or-refresh" class="row">
                                                 @csrf
                                                 <input type="hidden" name="id_product" value="{{$product -> id }}"

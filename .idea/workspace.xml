@@ -20,10 +20,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37bb898a-c21f-483a-9e06-81b93bccc6aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/front/products-details.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Basket/Basket.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Exceptions/QuantityExceededException.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/CartController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/OrderController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/PaymentController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Support/SessionStorage.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Support/Storage/Contracts/StorageInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/front/cart/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/front/cart/payments.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Site/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front/includes/header-center.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/includes/header-center.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front/products-details.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/products-details.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/front/products.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/products.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/site.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/site.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,18 +178,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/front" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Support" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\front" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Support" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Support\Storage\Contracts" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Basket" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Exceptions" />
       <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Site" />
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\front\includes" />
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\sliders" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Dashboard" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Site" />
@@ -288,12 +298,16 @@
       <workItem from="1607274159334" duration="11874000" />
       <workItem from="1607625937367" duration="60000" />
       <workItem from="1607895145871" duration="77000" />
-      <workItem from="1608551793965" duration="9692000" />
+      <workItem from="1608551793965" duration="17214000" />
+      <workItem from="1608580803784" duration="347000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
