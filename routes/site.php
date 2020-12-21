@@ -27,6 +27,7 @@ Route::group(
     Route::group(['namespace' => 'Site'/*, 'middleware' => 'guest'*/], function () {
         Route::get('/','HomeController@home')->name('home')->middleware('VerifyUser');
         Route::get('category/{slug}','CategoryController@productBySlug')->name('category');
+        Route::get('product/{slug}','ProductController@productBySlug')->name('product.details');
 
     });
 
@@ -48,7 +49,7 @@ Route::group(
 
     Route::group(['namespace' => 'Site', 'middleware' => 'auth'], function () {
         Route::post('wishlist','WishlistController@store')->name('wishlist.store');
-        Route::delete('wishlist/{productId}','WishlistController@destroy')->name('wishlist.destroy');
+        Route::delete('wishlist','WishlistController@destroy')->name('wishlist.destroy');
         Route::get('wishlist/products','WishlistController@index')->name('wishlist.products.index');
 
     });

@@ -21,22 +21,22 @@
 
                                                     </i>{{$category -> name}}</a>
 
-                                                @isset($category -> childrens)
+                                                @isset($category -> childs)
 
                                                     <span
                                                         class="show-sub fa-active-sub"></span>
                                                     <div class="dropdown-menu" style="width:222px">
                                                         <ul>
-                                                            @foreach($category -> childrens as $childern)
+                                                            @foreach($category -> childs as $childern)
                                                                 <li class="item ">
                                                                 <li class="item  parent">
                                                                     <a href="{{route('category',$childern -> slug )}}"
                                                                        title="Laptop Thinkpad">{{$childern -> name}}</a>
-                                                                    @isset($childern -> childrens )
+                                                                    @isset($childern -> childs )
                                                                         <span class="show-sub fa-active-sub"></span>
                                                                         <div class="dropdown-menu">
                                                                             <ul>
-                                                                                @foreach($childern -> childrens  as $_childern)
+                                                                                @foreach($childern -> childs  as $_childern)
                                                                                     <li class="item ">
                                                                                         <a href="{{route('category',$_childern -> slug )}}"
                                                                                            title="Aliquam lobortis">
