@@ -3,21 +3,15 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\GeneralProductRequest;
-use App\Http\Requests\ProductImagesRequest;
-use App\Http\Requests\ProductPriceRequest;
-use App\Http\Requests\StockRequest;
-use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Image;
 use App\Models\Product;
-use App\Models\Tag;
+use App\Models\Attribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function productsBySlug($slug)
+    public function productBySlug($slug)
     {
         $data=[];
         $data['product'] = Product::where('slug',$slug) -> first();  //improve select only required fields

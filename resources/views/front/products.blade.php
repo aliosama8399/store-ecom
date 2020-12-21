@@ -139,7 +139,7 @@
                                                             </div>
 
                                                             <div class="product-title" itemprop="name"><a
-                                                                    href="">{{$product -> name}}</a></div>
+                                                                    href="{{route('product.details',$product -> slug)}}">{{$product -> name}}</a></div>
 
                                                             <div class="product-group-price">
                                                                 <div class="product-price-and-shipping">
