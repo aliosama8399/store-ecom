@@ -156,7 +156,7 @@
 
                             <div class="blockreassurance_product">
                                 <div>
-            <span class="item-product">
+                                     <span class="item-product">
                                                         <img class="svg invisible"
                                                              src="../modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png">
                                     &nbsp;

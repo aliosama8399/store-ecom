@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\QuantityExceededException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Input;
+//use Illuminate\Support\Facades\Input;
 
 class CartController extends Controller
 {
@@ -48,9 +48,7 @@ class CartController extends Controller
     /**
      * Add items to the Basket.
      *
-     * @param $slug
-     * @param $quantity
-     *
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function postAdd(Request $request)

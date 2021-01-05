@@ -30,7 +30,8 @@
     <link rel="stylesheet" type="text/css"
           href="{{asset('assets/admin/vendors/css/forms/toggle/bootstrap-switch.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/forms/toggle/switchery.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/core/menu/menu-types/vertical-menu.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('assets/admin/'.getFolder().'/core/menu/menu-types/vertical-menu.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/pages/chat-application.css')}}">
 
     <!-- END VENDOR CSS-->
@@ -41,9 +42,11 @@
     <!-- BEGIN Page Level CSS-->
     <link rel="stylesheet" type="text/css"
           href="{{asset('assets/admin/'.getFolder().'/core/menu/menu-types/vertical-menu.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/core/colors/palette-gradient.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('assets/admin/'.getFolder().'/core/colors/palette-gradient.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/fonts/simple-line-icons/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/core/colors/palette-gradient.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('assets/admin/'.getFolder().'/core/colors/palette-gradient.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/pages/timeline.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/cryptocoins/cryptocoins.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/vendors/css/extensions/datedropper.min.css')}}">
@@ -71,7 +74,7 @@
 @include('dashboard.includes.header')
 <!-- end header -->
 <!-- begin sidebar -->
-@include('dashboard.includes.sidebar')
+@include('dashboard.includes.sidebare')
 
 <!-- end sidebar -->
 @yield('content')
@@ -83,6 +86,8 @@
 
 @notify_js
 @notify_render
+
+<script src="//js.pusher.com/3.1/pusher.min.js"></script>
 
 <!-- BEGIN VENDOR JS-->
 <script src="{{asset('assets/admin/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
@@ -134,14 +139,31 @@
 <script src="{{asset('assets/admin/js/scripts/forms/checkbox-radio.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/js/scripts/modal/components-modal.js')}}" type="text/javascript"></script>
 
-
 <script>
+    var previousCounter = $('.notification-counter').text(); //8
+    var notificationsCount = parseInt(previousCounter);
+    // Enable pusher logging - don't include this in production
+    var pusher = new Pusher('2203df2757e00ac59e6d', {
+        encrypted: true
+    });
+    //Pusher.logToConsole = true;
+    // Subscribe to the channel we specified in our Laravel Event
+    var channel = pusher.subscribe('order');
+    // Bind a function to a Our Event
+    channel.bind('App\\Events\\NewOrder', function(data) {
+        notificationsCount += 1;
+        $('.notification-counter').text(notificationsCount)
+    });
+</script>
+<script>
+
     $('#meridians1').timeDropper({
         meridians: true,
         setCurrentTime: false
     });
     $('#meridians2').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
+
     });
     $('#meridians3').timeDropper({
         meridians: true,
@@ -152,36 +174,38 @@
         setCurrentTime: false
     });
     $('#meridians5').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
+
     });
     $('#meridians6').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
     });
     $('#meridians7').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
     });
     $('#meridians8').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
     });
     $('#meridians9').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
     });
     $('#meridians10').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
     });
     $('#meridians11').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
     });
     $('#meridians12').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
     });
     $('#meridians13').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
     });
     $('#meridians14').timeDropper({
-        meridians: true,setCurrentTime: false
+        meridians: true, setCurrentTime: false
     });
 </script>
 @yield('script')
 </body>
 </html>
+

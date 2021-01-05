@@ -118,7 +118,7 @@
                                                             <input type="date"  name="special_price_start" id="description"
                                                                        class="form-control"
                                                                        placeholder="  "
-                                                                    value="{{ $product->special_price_start->format('Y-m-d') }}">
+                                                                    value="{{ $product->special_price_start }}">
                                                             @error("special_price_start")
                                                                         <span class="text-danger"> {{$message}}</span>
                                                             @enderror
@@ -134,7 +134,7 @@
                                                             <input type="date"  name="special_price_end" id="description"
                                                                    class="form-control"
                                                                    placeholder=" "
-                                                                   value="{{ $product->special_price_end->format('Y-m-d') }}" >
+                                                                   value="{{ $product->special_price_end }}" >
                                                             @error("special_price_end")
                                                             <span class="text-danger"> {{$message}}</span>
                                                             @enderror

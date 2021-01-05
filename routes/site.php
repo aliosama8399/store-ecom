@@ -32,7 +32,7 @@ Route::group(
 
         Route::group(['prefix' => 'cart'], function () {
             Route::get('/', 'CartController@getIndex')->name('site.cart.index');
-            Route::post('/cart/add/{slug?}', 'CartController@postAdd')->name('site.cart.add');
+            Route::POST('/cart/add/{slug?}', 'CartController@postAdd')->name('site.cart.add');
             Route::post('/update/{slug}', 'CartController@postUpdate')->name('site.cart.update');
             Route::post('/update-all', 'CartController@postUpdateAll')->name('site.cart.update-all');
         });

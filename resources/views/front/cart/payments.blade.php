@@ -101,7 +101,7 @@
             padding: 24px 1rem !important
         }
     </style>
-    @stop
+@stop
 
 @section('content')
     <nav data-depth="1" class="breadcrumb-bg">
@@ -128,7 +128,7 @@
                     <h1 class="page-title">Payment Methods</h1>
                     <div class="cart-grid row">
                         <form class="needs-validation" method="post" action="{{route('payment.process')}}" novalidate="">
-                                @csrf
+                            @csrf
                             <hr class="mb-4">
                             <h4 class="mb-3">Payment</h4>
 
@@ -217,4 +217,4 @@ remove-from-cart
             });
         });
     </script>
-    @stop
+@stop
