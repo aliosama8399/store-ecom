@@ -12,10 +12,11 @@ class WishlistController
      */
     public function index()
     {
-        return auth()->user()
+       $products= auth()->user()
             ->wishlist()
             ->latest()
-            ->paginate(20);
+            ->get();
+       return view('front.wishlists',compact('products'));
     }
 
     /**
@@ -28,7 +29,10 @@ class WishlistController
 
         if (! auth()->user()->wishlistHas(request('productId'))) {
             auth()->user()->wishlist()->attach(request('productId'));
+            return response()->json(['status'=>true,'wished'=>true]);
         }
+        return response()->json(['status'=>true,'wished'=>false]);
+
     }
 
     /**
@@ -37,8 +41,8 @@ class WishlistController
      * @param string $productId
      * @return void
      */
-    public function destroy($productId)
+    public function destroy()
     {
-        auth()->user()->wishlist()->detach($productId);
+        auth()->user()->wishlist()->detach(request('productId'));
     }
 }

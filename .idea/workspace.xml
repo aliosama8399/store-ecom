@@ -20,32 +20,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37bb898a-c21f-483a-9e06-81b93bccc6aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SliderController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/CategoryController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/WishlistController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/SliderImagesRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/Slider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_28_182605_create_wish_list_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_12_05_174300_create_sliders_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/sliders/g9PKlFILGexKTJA84AqNi8zi6LZyuH4q7wwEnbtF.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/sliders/q5JVbMdfMTTKcgkrxGv55IRk2szdewD8CIFv2fOO.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/sliders/qlV3QHvKzuJqvwq9y3Cxtj0QqSpbJXLv5sYqG4yJ.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/sliders/s3PzDM6Gx7RDXX94X3MSt2iRX3zzO63p14KrfNGW.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/sliders/images/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/front/includes/not-logged.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/front/includes/product-details.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/front/products.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Events/NewOrder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Transaction.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_08_07_135631306565_create_orders_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2018_09_11_213926106353_create_transactions_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_04_06_211526_add_note_column_to_orders_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ecommercev2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ecommercev2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Site/CartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/CartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Site/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/PaymentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front/includes/header-bottom.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/includes/header-bottom.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/site.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/site.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Support/SessionStorage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/SessionStorage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/products/price/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/products/price/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front/cart/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/cart/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front/cart/payments.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/cart/payments.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/site.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/site.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -176,6 +170,8 @@
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-enum" />
       <path value="$PROJECT_DIR$/vendor/spatie/enum" />
       <path value="$PROJECT_DIR$/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/vendor/pusher/pusher-php-server" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/sodium_compat" />
     </include_path>
   </component>
   <component name="ProjectId" id="1gBg4v28Fby8gesaBbm7AQEF23p" />
@@ -191,25 +187,25 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/dashboard/sliders" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Support" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Support" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Support\Storage\Contracts" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Basket" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Exceptions" />
+      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Site" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Site" />
       <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers" />
       <recent name="E:\xampp\htdocs\ecommercev2\app\Models" />
       <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\products\general" />
       <recent name="E:\xampp\htdocs\ecommercev2\public\assets\images\maincategories" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\xampp\htdocs\ecommercev2\resources\views\dashboard\sliders" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Dashboard" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Requests" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Auth" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Services" />
     </key>
   </component>
   <component name="RunManager">
@@ -308,12 +304,25 @@
       <workItem from="1606064438604" duration="10766000" />
       <workItem from="1606346760575" duration="5000" />
       <workItem from="1607188826810" duration="6926000" />
-      <workItem from="1607274159334" duration="11599000" />
+      <workItem from="1607274159334" duration="11874000" />
+      <workItem from="1607625937367" duration="60000" />
+      <workItem from="1607895145871" duration="77000" />
+      <workItem from="1608551793965" duration="17214000" />
+      <workItem from="1608580803784" duration="347000" />
+      <workItem from="1608748569778" duration="1479000" />
+      <workItem from="1609164688850" duration="3197000" />
+      <workItem from="1609168548960" duration="21000" />
+      <workItem from="1609617174955" duration="2211000" />
+      <workItem from="1609687384396" duration="598000" />
+      <workItem from="1609858633125" duration="8398000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -387,22 +396,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="988" y="338" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1600629628907" />
-    <state x="81" y="58" width="981" height="707" key="SettingsEditor" timestamp="1598908653037">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="81" y="58" width="981" height="707" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1598908653037" />
-    <state x="963" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1598911577791">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="963" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1598911577791" />
     <state x="810" y="190" key="run.anything.popup" timestamp="1601483021566">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="810" y="190" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1601483021566" />
-    <state x="815" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1601834951763">
+    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1608556980098">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="815" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1601834951763" />
+    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1608556980098" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

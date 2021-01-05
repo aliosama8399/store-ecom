@@ -142,7 +142,7 @@ class ProductController extends Controller
     {
 
         try {
-           if ($request->has('document') && count($request->document) > 0) {
+            if ($request->has('document') && count($request->document) > 0) {
                 foreach ($request->document as $image) {
                     Image::create([
                         'product_id' => $request->product_id,
@@ -154,12 +154,14 @@ class ProductController extends Controller
             return redirect()->route('admin.products')->with(['success' => __('messages.success')]);
 
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->route('admin.products')->with(['error' => __('messages.error')]);
 
         }
 
 
-
     }
+
+
+
 }
