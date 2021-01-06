@@ -80,6 +80,7 @@
                 </ul>
             </li>
 
+            @can('brands')
 
             <li class="nav-item"><a href=""><i class="la la-male"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/brand.brand')}}  </span>
@@ -94,6 +95,8 @@
                     </li>
                 </ul>
             </li>
+
+            @endcan
             <li class="nav-item   ">
                 <a href=""><i class="la la-home"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/tags.tag')}}</span>
@@ -109,18 +112,34 @@
                 </ul>
             </li>
 
-{{--            <li class="nav-item">--}}
-{{--                <a href=""><i class="la la-male"></i>--}}
-{{--                    <span class="menu-title" data-i18n="nav.dash.main">تذاكر المراسلات   </span>--}}
-{{--                    <span--}}
-{{--                        class="badge badge badge-danger  badge-pill float-right mr-2">0</span>--}}
-{{--                </a>--}}
-{{--                <ul class="menu-content">--}}
-{{--                    <li class="active"><a class="menu-item" href=""--}}
-{{--                                          data-i18n="nav.dash.ecommerce"> تذاكر الطلاب </a>--}}
-{{--                    </li>--}}
-{{--                </ul>--}}
-{{--            </li>--}}
+            <li class="nav-item">
+                <a href=""><i class="la la-male"></i>
+                    <span class="menu-title" data-i18n="nav.dash.main">الصلاحيات  </span>
+                    <span
+                        class="badge badge-striped  badge-pill float-right mr-2">0</span>
+                </a>
+                <ul class="menu-content">
+                    <li class=""><a class="menu-item" href="{{route('admin.roles.index')}}"
+                                          data-i18n="nav.dash.ecommerce">عرض الكل </a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('admin.roles.create')}}" data-i18n="nav.dash.crypto">اضافة صلاحية جديدة </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item"><a href=""><i class="la la-male"></i>
+                    <span class="menu-title" data-i18n="nav.dash.main">مستخدمي لوحه التحكم </span>
+                </a>
+                <ul class="menu-content">
+                    <li class="active"><a class="menu-item" href="{{route('admin.users.index')}}"
+                                          data-i18n="nav.dash.ecommerce"> عرض الكل </a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('admin.users.create')}}" data-i18n="nav.dash.crypto">أاضافة
+                            جديدة </a>
+                    </li>
+                </ul>
+            </li>
+
 
 
             <li class=" nav-item"><a href="#"><i class="la la-television"></i><span class="menu-title"

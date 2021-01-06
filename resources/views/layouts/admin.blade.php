@@ -74,7 +74,7 @@
 @include('dashboard.includes.header')
 <!-- end header -->
 <!-- begin sidebar -->
-@include('dashboard.includes.sidebare')
+@include('dashboard.includes.sidebar')
 
 <!-- end sidebar -->
 @yield('content')
