@@ -4,7 +4,7 @@ namespace App\Support\Storage;
 
 use App\Support\Storage\Contracts\StorageInterface;
 
-use Session;
+use Illuminate\Support\Facades\Session;
 class SessionStorage implements StorageInterface
 {
     /**

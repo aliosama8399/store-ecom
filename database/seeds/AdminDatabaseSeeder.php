@@ -14,7 +14,8 @@ class AdminDatabaseSeeder extends Seeder
         Admin ::create([
             'name'=>'ali osama',
             'email'=>'alo@gmail',
-            'password'=>'123456789',
+            'password'=>'$2a$10$BIP.tG.DmeiCqnQ9bYZWSeencfcWiraQQbolQ6HHLTyhPSP4ECZ12',
+            'role_id'=>1
 
 
 

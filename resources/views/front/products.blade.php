@@ -166,7 +166,7 @@
                                                                 @csrf
                                                                 <input type="hidden" name="id_product"
                                                                        value="{{$product -> id}}">
-                                                                <a class="add-to-cart cart-addition" data-product-id="{{$product -> id}}" data-product-slug="{{$product -> slug}}" href="#"
+                                                                <a class="add-to-cart cart-addition "  target="_blank" href="{{route('pay')}}"
                                                                    data-button-action="add-to-cart"><i
                                                                         class="novicon-cart"></i><span>Add to cart</span></a>
                                                             </form>
@@ -273,10 +273,10 @@
 
             $.ajax({
                 type: 'post',
-                url: "{{Route('site.cart.add')}}",
+                url: "{{route('pay')}}",
                 data: {
-                    'product_id': $(this).attr('data-product-id'),
-                    'product_slug' : $(this).attr('data-product-slug'),
+                    'id': $(this).attr('data-product-id'),
+                    'slug' : $(this).attr('data-product-slug'),
                 },
                 success: function (data) {
 

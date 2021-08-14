@@ -20,14 +20,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37bb898a-c21f-483a-9e06-81b93bccc6aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/config/multitenancy.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/landlord/2021_01_06_155813_create_landlord_tenants_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/FatoorahController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Services/FatoorahServices.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/brands/iF6F3e92fPDpTh8DvniTuzi0sQTDSrTqIKvnSi3o.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/maincategories/IvLgaH69E83DDVu796R0ItoRegAUgOu2XHChWC5L.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/ecommercev2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ecommercev2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/BrandController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/BrandController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/MainCategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/MainCategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Support/SessionStorage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Storage/SessionStorage.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_18_163359_create_admins_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_18_163359_create_admins_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_28_182605_create_wish_list_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_28_182605_create_wish_list_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/landlord/2021_01_06_155813_create_landlord_tenants_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/landlord/2021_01_06_155813_create_landlord_tenants_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/AdminDatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/AdminDatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front/products.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/products.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/site.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/site.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,13 +62,8 @@
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/asm89/stack-cors" />
-      <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
       <path value="$PROJECT_DIR$/vendor/dragonmantank/cron-expression" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/vendor/filp/whoops" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
-      <path value="$PROJECT_DIR$/vendor/scrivo/highlight.php" />
       <path value="$PROJECT_DIR$/vendor/ramsey/uuid" />
       <path value="$PROJECT_DIR$/vendor/ramsey/collection" />
       <path value="$PROJECT_DIR$/vendor/composer" />
@@ -76,7 +82,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
       <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php70" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
@@ -97,26 +102,16 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
       <path value="$PROJECT_DIR$/vendor/hamcrest/hamcrest-php" />
       <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-token-stream" />
       <path value="$PROJECT_DIR$/vendor/sebastian/type" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
       <path value="$PROJECT_DIR$/vendor/sebastian/version" />
       <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
       <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
       <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
       <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
       <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
       <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
       <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
       <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
-      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
-      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/vendor/laravel/tinker" />
       <path value="$PROJECT_DIR$/vendor/laravel/framework" />
@@ -134,19 +129,16 @@
       <path value="$PROJECT_DIR$/vendor/fideloper/proxy" />
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
       <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
       <path value="$PROJECT_DIR$/vendor/mockery/mockery" />
       <path value="$PROJECT_DIR$/vendor/opis/closure" />
       <path value="$PROJECT_DIR$/vendor/brick/math" />
       <path value="$PROJECT_DIR$/vendor/psr/log" />
       <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
-      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/psr/container" />
       <path value="$PROJECT_DIR$/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
-      <path value="$PROJECT_DIR$/vendor/dnoegel/php-xdg-base-dir" />
       <path value="$PROJECT_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
       <path value="$PROJECT_DIR$/vendor/league/flysystem" />
       <path value="$PROJECT_DIR$/vendor/league/commonmark" />
@@ -154,11 +146,40 @@
       <path value="$PROJECT_DIR$/vendor/astrotomic/laravel-translatable" />
       <path value="$PROJECT_DIR$/vendor/mcamara/laravel-localization" />
       <path value="$PROJECT_DIR$/vendor/yajra/laravel-datatables-oracle" />
-      <path value="$PROJECT_DIR$/vendor/spatie/laravel-enum" />
-      <path value="$PROJECT_DIR$/vendor/spatie/enum" />
       <path value="$PROJECT_DIR$/vendor/laravel/ui" />
       <path value="$PROJECT_DIR$/vendor/pusher/pusher-php-server" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/vendor/dflydev/dot-access-data" />
+      <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/nette/schema" />
+      <path value="$PROJECT_DIR$/vendor/nette/utils" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/league/config" />
+      <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
       <path value="$PROJECT_DIR$/vendor/paragonie/sodium_compat" />
+      <path value="$PROJECT_DIR$/vendor/spatie/enum" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-enum" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-multitenancy" />
     </include_path>
   </component>
@@ -175,18 +196,19 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Support" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/vendor" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\ecommercev2\vendor" />
+      <recent name="D:\xampp\htdocs\ecommercev2\vendor\guzzlehttp\guzzle\src" />
+      <recent name="D:\xampp\htdocs\ecommercev2\app\Http" />
+      <recent name="D:\xampp\htdocs\ecommercev2\app\Http\Controllers\Site" />
       <recent name="E:\xampp\htdocs\ecommercev2\app\Support" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Support\Storage\Contracts" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Basket" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Exceptions" />
-      <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Site" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\xampp\htdocs\ecommercev2\app\Http\Controllers\Site" />
@@ -202,7 +224,7 @@
       <method v="2" />
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -304,11 +326,19 @@
       <workItem from="1609687384396" duration="598000" />
       <workItem from="1609858633125" duration="9116000" />
       <workItem from="1609937892373" duration="11848000" />
+      <workItem from="1617459359251" duration="56000" />
+      <workItem from="1618524317309" duration="132000" />
+      <workItem from="1619651216897" duration="127000" />
+      <workItem from="1625855667777" duration="173000" />
+      <workItem from="1628877466184" duration="5307000" />
+      <workItem from="1628882865112" duration="2675000" />
+      <workItem from="1628956553558" duration="3020000" />
+      <workItem from="1628961436188" duration="6887000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
@@ -327,72 +357,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="779" y="93" key="#Inspections" timestamp="1600637827852">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="779" y="93" key="#Inspections/0.0.1536.824@0.0.1536.824" timestamp="1600637827852" />
-    <state x="860" y="59" key="#PHP" timestamp="1601483455385">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="860" y="59" key="#PHP/0.0.1536.824@0.0.1536.824" timestamp="1601483455385" />
-    <state x="958" y="97" key="#com.intellij.ide.util.MemberChooser" timestamp="1600630008123">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="958" y="97" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1600630008123" />
-    <state x="868" y="205" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1600629847081">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="868" y="205" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1600629847081" />
-    <state x="660" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1606074159025">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="660" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1606074159024" />
-    <state x="883" y="170" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604173053172">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="883" y="170" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1604173053172" />
-    <state x="837" y="46" key="#phpunit.xml" timestamp="1600719604285">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="837" y="46" key="#phpunit.xml/0.0.1536.824@0.0.1536.824" timestamp="1600719604285" />
-    <state x="947" y="174" key="FileChooserDialogImpl" timestamp="1604222537926">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="947" y="174" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1604222537926" />
-    <state width="726" height="208" key="GridCell.Tab.0.bottom" timestamp="1600721550159">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="726" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600721550159" />
-    <state width="726" height="208" key="GridCell.Tab.0.center" timestamp="1600721550159">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="726" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600721550159" />
-    <state width="726" height="208" key="GridCell.Tab.0.left" timestamp="1600721550159">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="726" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600721550159" />
-    <state width="726" height="208" key="GridCell.Tab.0.right" timestamp="1600721550159">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="726" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600721550159" />
-    <state x="918" y="138" key="NewPhpClassDialog" timestamp="1607207034290">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="918" y="138" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1607207034290" />
-    <state x="988" y="338" key="NewPhpFileDialog" timestamp="1600629628907">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="988" y="338" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1600629628907" />
-    <state x="810" y="190" key="run.anything.popup" timestamp="1601483021566">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="810" y="190" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1601483021566" />
-    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1608556980098">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1608556980098" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

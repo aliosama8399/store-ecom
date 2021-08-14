@@ -21,7 +21,7 @@ class MainCategoryController extends Controller
 
     public function create()
     {
-       // $maincategories = Category::select('parent_id', 'id')->get();
+        // $maincategories = Category::select('parent_id', 'id')->get();
         $maincategories = Category::with('mainparent')->get();
         return view('dashboard.categories.create', compact('maincategories'));
 
@@ -79,8 +79,6 @@ class MainCategoryController extends Controller
     public function update($id, MainCategoryRequest $request)
     {
         try {
-
-
 
 
             $maincategory = Category::find($id);
@@ -145,8 +143,38 @@ class MainCategoryController extends Controller
         }
     }
 
-    public function changestatus()
+    public function changestatus($id)
     {
+
+
+        try {
+
+
+            $maincategory = Category::find($id);
+
+            if (!$maincategory)
+                return redirect()->route('admin.maincategories')->with(['error' => __('admin/validation.exists1')]);
+
+
+            DB::beginTransaction();
+
+            $status = $maincategory-> is_active == false ? true : false;
+
+            $maincategory->update(['is_active'=>$status]);
+
+
+
+            DB::commit();
+
+            return redirect()->route('admin.maincategories')->with(['success' => __('messages.success')]);
+
+
+        } catch (\Exception $e) {
+            return $e;
+            DB::rollBack();
+            return redirect()->route('admin.maincategories')->with(['error' => __('messages.error')]);
+
+        }
 
     }
 
