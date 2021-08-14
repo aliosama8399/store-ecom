@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('pay', [\App\Http\Controllers\Site\FatoorahController::class, 'payOrder'])->name('pay');
+Route::get('call_back', [\App\Http\Controllers\Site\FatoorahController::class, 'callBack']);

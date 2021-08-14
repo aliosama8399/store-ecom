@@ -133,8 +133,37 @@ class BrandController extends Controller
         }
     }
 
-    public function changestatus()
+    public function changestatus($id)
     {
+        try {
+
+
+            $brand = Brand::find($id);
+
+            if (!$brand)
+                return redirect()->route('admin.brands')->with(['error' => __('admin/brand.exists')]);
+
+
+            DB::beginTransaction();
+
+            $status = $brand-> is_active == false ? true : false;
+
+            $brand->update(['is_active'=>$status]);
+
+
+
+            DB::commit();
+
+            return redirect()->route('admin.brands')->with(['success' => __('messages.success')]);
+
+
+        } catch (\Exception $e) {
+            return $e;
+            DB::rollBack();
+            return redirect()->route('admin.brands')->with(['error' => __('messages.error')]);
+
+        }
+
 
     }
 
